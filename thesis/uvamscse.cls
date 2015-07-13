@@ -32,7 +32,7 @@
 \newcommand{\email}[1]{\href{mailto:#1}{#1}}
 \newcommand{\doi}[1]{\texttt{\href{http://dx.doi.org/#1}{doi:#1}}}
 
-\newcommand{\uvahost}{Universiteit van Amsterdam}
+\newcommand{\uvahost}{University of Amsterdam}
 \newcommand{\host}[1]{\renewcommand{\uvahost}{#1}}
 
 \newcommand{\uvatitle}{Cool Story Bro. Name It with \texttt{$\backslash$title} and \texttt{$\backslash$subtitle}}
@@ -49,7 +49,7 @@
 \renewcommand{\date}[1]{\renewcommand{\uvadate}{#1}}
 \newcommand{\uvaemail}{}
 \newcommand{\authemail}[1]{\renewcommand{\uvaemail}{{\ttfamily\email{#1}}\par}}
-\newcommand{\uvasuper}{One does not simply do a thesis without \texttt{$\backslash$supervisor}!}
+\newcommand{\uvasuper}{Vadim Zaytsev}
 \newcommand{\supervisor}[1]{\renewcommand{\uvasuper}{#1}}
 
 \newcommand{\uvapic}{}
