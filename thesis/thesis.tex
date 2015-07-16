@@ -1,5 +1,6 @@
 \documentclass[parskip=full]{uvamscse}
 
+
 \input{program-listings}
 \newcommand{\cmd}[1]{\texttt{$\backslash$#1}}
 
@@ -76,6 +77,56 @@ conventions is illustrates in Chapter 4. The design and description of a DSL is 
 \chapter{Background}
 
 \section{Code conventions and style guides}
+
+\section{BWW ontology}
+
+Table 1
+Selected ontological constructs in the BWW representation model [!]
+\begin{center}
+\begin{longtable}{ | p{11em} | p{30em} | } 
+\hline
+ &  \\
+\textbf{Ontological construct} & \textbf{Explanation} \\
+ &  \\
+\hline
+Thing & A thing is the elementary unit in the BWW ontological model. The real world is made up of things. Two or more things (composite or simple) can be associated into a composite thing. \\ 
+\hline
+Property & \multirow{9}{30em}{Things possess properties. A property is modeled via a function that maps the thing into some value. For example, the attribute ``weight'' represents a property that all humans possess. In this regard, weight is an attribute standing for a property in general. If we focus on the weight of a specific individual, however, we would be concerned with a property in particular. Other properties are properties of pairs or many things. Such properties are called mutual. Non-binding mutual properties are those properties shared by two or more things that do not ``make a difference'' to the things involved; for example, order relations or equivalence relations. By contrast, binding mutual properties are those properties shared by two or more things that do ``make a difference'' to the things involved. A property of a composite thing that belongs to a component thing is called an hereditary property. Otherwise it is called an emergent property. Some properties are inherent properties of individual things. Such properties are called intrinsic. Attributes are the names that we use to represent certain properties of things (normally abstract properties).} \\ 
+-In general &  \\
+-In particular &  \\
+-Intrinsic &  \\
+-Non-binding mutual &  \\
+-Binding mutual &  \\
+-Hereditary &  \\
+-Emergent &  \\
+-Attributes &  \\
+ &  \\ 
+ &  \\
+ &  \\
+ &  \\
+ &  \\
+ &  \\ 
+ &  \\
+ &  \\
+ &  \\ 
+ \hline
+ Class&  A class is a set of things that can be defined via their possessing a characteristic property. \\ 
+ \hline
+ Kind&  A kind is a set of things that can be defined only via their possessing two or more properties. \\ 
+\hline
+Coupling & \multirow{4}{30em}{Two things are said to be coupled (or interact) if one thing acts on the other and vice versa. Furthermore, those two things are said to share a binding mutual property (or relation); that is, they participate in a relation that ``makes a difference'' to the things.} \\
+-Binding &  \\
+-Mutual Property &  \\
+ &  \\
+ \hline 
+ System& A set of things is a system if, for any bi-partitioning of the set, couplings exist among things in the two subsets. \\
+ \hline
+ System Composition& The things in the system are its composition. \\
+ \hline
+ System Environment&  Things that are not in the system but interact with things in the system are called the environment of the system. \\
+ \hline
+\end{longtable}
+\end{center}
 
 \section{Ontological analysis}
 
@@ -259,21 +310,430 @@ convention, or relaxes the constraints of another convention.
 
 \section{Abstract syntax}
 
-Here is a big diagram of my abstract syntax
+TODO: shall I add context and convention diagrams
+Types are still missing
+
+This section describes the abstract syntax of CssCoco. An overview of the abstract syntax is shows in Figure x. A detailed view of each of the .. is presented afterwards.
+
+\includegraphics[width=\textwidth]{general}
+
+\begin{description}
+
+\item\textbf{ConventionSet} represents a style guide. It comprises a number of conventions that form coherent guidelines. Attribute \texttt{contexts} is a list of Contexts that contain conventions.
+
+
+\item\textbf{Context} represents a group of conventions that belong to the same semantic group (e.g. whitespacing, syntax preference, programming style). Attribute \texttt{conventions} is a list of Contexts that contain conventions. Attribute \texttt{ignored\_patterns} is a list of Patterns that are ignored while searching for the target pattern. For example, while searching for violations of semantic conventions, the whitespacing and indentation nodes are ignored.
+
+
+\item\textbf{Convention} represents a rule that enforces specific constraints. Attribute \texttt{pattern} is the pattern that the convention targets. Attribute \texttt{description} is the description of the convention in natural text. This description is displayed to the user when a violation of the convention is discovered.
+
+
+\item\textbf{Pattern} represents a description of a node or a combination of related nodes that given convention constraints.  Attribute \texttt{root} is the top node described in the pattern. Attribute \texttt{nodes} is a collection of all nodes described by the pattern. Attribute \texttt{relations} is a collection of relationships between the nodes used in the pattern.
+
+
+\item\textbf{SequencePattern} represents a special type pattern in which nodes are allowed to be only siblings. Attribute \texttt{root} is the top node described in the pattern. Attribute \texttt{nodes} is a collection of all nodes described by the pattern. Attribute \texttt{relations} is a collection of relationships between the nodes used in the pattern.
+
+
+\item\textbf{Node} represents a description of a non-whitespace node used in a Pattern.  
+Attribute \texttt{descriptor} contains information about the type of the described node. Attribute \texttt{constraint} is an expression that designates additional constraints applied to the node. Attribute \texttt{identifier} is a given string that can be used as a reference to the matched node.
+
+
+\item\textbf{WhitespaceNode} represents a description of a whitespace node that references space, newline, indentation symbols. Attribute \texttt{descriptor} contains information about the type of the described node. Attribute \texttt{repeater} is an optional constraint that specific the number of times a whitespace node can appear consecutively. Repeaters are useful to express conventions that do not specify exact quantities of whitespace symbols. For example, the convention ``put at least one blank line between rules'' sets a lower limit of the number of blank lines, but not an upper limit.
+
+
+\item\textbf{WhitespaceVariation} represents a description of acceptable whitespace sequences. Whitespace variations are allowed to appear as operands of BeforeExpr, AfterExpr and BetweenExpr.  Attribute \texttt{descriptor} contains information about the type of the described node. Attribute \texttt{constraint} is an expression that designates additional constraints applied to the node. Attribute \texttt{identifier} is a given string that can be used as a reference to the matched node.
+
+
+\item\textbf{NodeDescriptor} represents a description of the type of the Node. Conventions refer to nodes using their CSS type, their function in the CSS program or their concrete syntax representation. For example, the code ``\#E6E6E6'' can be addressed both as a hexadecimal value and as a color. Attribute \texttt{func} is a lambda function that determines whether a node meets the type constraint. This function is used to select match candidates while searching the CSS tree for violation patterns. In this way the additional constraints imposed by the Node are evaluated only for the candidates.
+
+
+\item\textbf{NodeRelation} represents a relation between two Nodes. Specializations of node relation are previous sibling, next sibling, parent and ancestor relations. Attribute \texttt{target\_node} designates the Node targeted by the relation.
+
+\includegraphics[width=\textwidth]{expr}
+
+\item\textbf{LiteralExpr} represents an expression containing a literal value. Attribute \texttt{value} is the value of the literal expression.
+
+\item\textbf{VariableExpr} represents a reference to a matched node. Attribute \texttt{name} is the identifier used to reference the node.
+
+\item\textbf{UnaryExpr} represents expressions with a single operand. Attribute \texttt{operand} is operand of the expression.
+
+\item\textbf{NotExpr} represents logical negation expression.
+
+\item\textbf{UnaryMinusExpr} represents unary minus expression.
+
+\item\textbf{BinaryExpr} represents expressions with a two operands.
+
+Attributes \texttt{left} and \texttt{right} represent the first and second operands, respectively.
+
+\item\textbf{OrExpr} represents logical disjunction expression.
+
+\item\textbf{AndExpr} represents logical conjunction expression.
+
+\item\textbf{ComparisonExpr} represents expression that compares two operands.
+
+\item\textbf{IsExpr} represents expression that checks whether the first operand is of the given type, specified by the second operand.
+
+\item\textbf{InExpr} represents expression that checks whether the first operand is present in a list of values, specified by the second operand.
+
+\item\textbf{MatchExpr} represents expression that checks whether the first operand matches a regular expression, specified by the second operand.
+
+\item\textbf{CallExpr} represents expression that invokes a API property or method of the operand. Attribute \texttt{operand} is the operand of the expression. Attribute \texttt{value} is the name of the API property or method that is invoked.
+
+\item\textbf{NodeQueryExpr} represents expression that queries node context. Attribute \texttt{operand} is the node used as a reference point for the query.
+
+
+\includegraphics[width=0.9\textwidth]{literal}
+
+\item\textbf{IntegerExpr} represents expression containing a integer value.
+
+\item\textbf{StringExpr} represents expression containing a string value.
+
+\item\textbf{BooleanExpr} represents expression containing a boolean value.
+
+\item\textbf{ListExpr} represents expression containing a list value. The elements of the list are of type LiteralExpr.
+
+\item\textbf{NodeTypeExpr} represents expression containing a string value that describes node type.
+
+\item\textbf{PropertyExpr} represents an expression that returns the value of a property of the operand node. Attribute \texttt{operand} represents the node targeted by the expression. Attribute \texttt{value} holds the name of the property that is accessed.
+
+\item\textbf{MethodExpr} represents an expression that returns invokes a method of the operand node. Attribute \texttt{argument} represents argument passed to the invoked method.
+
+\includegraphics[width=0.9\textwidth]{nodequery}
+
+\item\textbf{NextSiblingExpr} represents expression that returns the following sibling of the operand node.
+
+\item\textbf{PreviousSiblingExpr} represents expression that returns the previous sibling of the operand node.
+
+\item\textbf{NodeQueryWithArgExpr} represents expression that queries node context and uses additional constraints for the query. Attribute \texttt{argument} represents the additional constraints used by the query.
+
+\item\textbf{ContainsExpr} represents an expression that checks whether the operand node contains a node that matches given constraints.
+
+\item\textbf{ContainsAllExpr} represents an expression that checks whether the operand node contains nodes that match given constraints.
+
+\item\textbf{CountExpr} represents an expression that counts the number of ancestor nodes of the operand that match a given constraint.
+
+\item\textbf{BeforeExpr} represents an expression that checks whether a given whitespace variation appears before the operand node.
+
+\item\textbf{AfterExpr} represents an expression that checks whether a given whitespace variation appears after the operand node.
+
+\item\textbf{BetweenExpr} represents an expression that checks whether a given whitespace variation appears between the two operand nodes.
+
+\end{description}
 
 \section{Concrete syntax}
 
-Here is my grammar
+This section contains the concrete syntax of the designed DSL. Below are presented the grammar rules accompanied by the mapping to the abstract syntax of the language.
 
-\section{Mapping concrete and abstract syntax}
 
-Here is how they map
+\begin{description}
+
+\item\textbf{stylesheet} represents a style guide.
+
+Abstract Syntax Mapping: ast.ConventionSet.
+
+\begin{snippet}
+\begin{verbatim}
+stylesheet : context* ;
+\end{verbatim}
+\end{snippet}
+
+\item\textbf{context} represents a group of logically related conventions. A single style guide can comprise a number of conventions that enforce various constraints, e.g. whitespacing, syntax preference, program style. Such categories refer to different types of nodes and require ignoring certain patterns.  
+
+Abstract Syntax Mapping: ast.Context.
+
+\begin{snippet}
+\begin{verbatim}
+context : Identifier '{' convention* '}' ;
+\end{verbatim}
+\end{snippet}
+
+\item\textbf{convention} represents a single rule in the style guide. Conventions are typically expressed by directly stating what is disallowed or describing a condition that if met, requires additional constraints. The former way of expressing conventions are represented by the \texttt{forbid} conventions. The latter approach uses the structure \texttt{find ... require ...}. To break down complex disallowing conventions, the structure \texttt{find ... forbid ...} has been introduced. It aims at improving readability of conventions. 
+
+Abstract Syntax Mapping: ast.Convention.
+
+\begin{snippet}
+\begin{verbatim}
+convention : 'forbid' pattern 'message' String
+           | 'find' pattern ('require'|'forbid') logic_expr 'message' String
+           ;
+\end{verbatim}
+\end{snippet}
+
+\item\textbf{pattern} represents a pattern of nodes and their relations. It can describe a horizontal sequence of sibling nodes and or a vertical pattern of nested nodes. Also, it can describe pairs of elements. 
+
+Abstract Syntax Mapping: ast.Pattern.
+
+\begin{snippet}
+\begin{verbatim}
+pattern : node_declaration (('in'|'next-to') node_declaration)*
+        | fork ('in' node_declaration)*
+        ;
+fork : '(' node_declaration (',' node_declaration)+ ')' ;
+node_declaration : (Identifier '=')? semantic_node ;
+\end{verbatim}
+\end{snippet}
+
+\item\textbf{semantic\_node} represents a non-whitespace node. It describes the type of the node and its additional constraints. 
+
+Abstract Syntax Mapping: ast.Node.
+
+\begin{snippet}
+\begin{verbatim}
+semantic_node : node_type ('{' logic_expr '}')? ;
+\end{verbatim}
+\end{snippet}
+
+\item\textbf{whitespace\_variation} represents a sequence of whitespace nodes. They differ from the rest of the nodes types because the user can specify how many times they need to be consecutively repeated. 
+
+Abstract Syntax Mapping: ast.WhitespaceVariation, ast.WhitespaceNode, ast.Repeater.
+
+\begin{snippet}
+\begin{verbatim}
+whitespace_variation : whitespace_node ('or' whitespace_node)* ;
+whitespace_node : Identifier ('{' repeater '}')? ;
+repeater : Integer ',' Integer? | (',')? Integer ;
+\end{verbatim}
+\end{snippet}
+
+\item\textbf{logic\_expr} represents expressions that perform logic operations and glue arithmetic and type expressions. 
+
+Abstract Syntax Mapping: ast.NotExpr, ast.AndExpr, ast.OrExpr and all arithmetic\_expression and type\_expression mappings.
+
+\begin{snippet}
+\begin{verbatim}
+logic_expr : '(' logic_expr ')'
+           | 'not' logic_expr
+           | logic_expr 'and' logic_expr
+           | logic_expr 'or' logic_expr
+           | type_expr
+           | arithmetic_expr
+           ;
+\end{verbatim}
+\end{snippet}
+
+\item\textbf{type\_expr} represents expressions that ensure node type and perform node queries of whitespace nodes. They are located in a separate parser rule because they interpret Identifiers as node type expressions instead of a API calls. 
+
+Abstract Syntax Mapping: ast.IsExpr, ast.BeforeExpr, ast.AfterExpr, ast.BetweenExpr.
+
+\begin{snippet}
+\begin{verbatim}
+type_expr : arithmetic_expr operator='is' type_=Identifier
+          | whitespace_variation ('before' | 'after') type_operand
+          | whitespace_variation 'between' type_operand 'and' type_operand
+          ;
+type_operand : Identifier | semantic_node ;
+\end{verbatim}
+\end{snippet}
+
+\item\textbf{arithmetic\_expr} represents arithmetic, comparison, set membership and regex expressions. These are located in a separate parser rule because they interpret identifiers as API calls instead of node type expressions.
+
+Abstract Syntax Mapping: ast.UnaryMinus, ast.UnaryPlus, ast.LessThan, ast.LessThanOrEq, ast.GreaterThan, ast.GreaterThanOrEq, ast.Equal, ast.NotEqual, ast.InExpr, ast.MatchExpr, ast.LiteralExpr.
+
+\begin{snippet}
+\begin{verbatim}
+arithmetic_expr : ('-'|'+') arithmetic_expr
+                | arithmetic_expr ('<'|'>'|'<='|'>='|'=='|'!=') arithmetic_expr
+                | arithmetic_expr ('in'|'not in'|'match'|'not match') arithmetic_expr
+                | call_expression
+                | element
+                ;
+element : Boolean | Integer | String | list_ ;
+\end{verbatim}
+\end{snippet}
+
+\item\textbf{call\_expr} represents an API call expression and also node query expression.
+
+Abstract Syntax Mapping: ast.CallExpr and ast.NodeQueryExpr.
+
+\begin{snippet}
+\begin{verbatim}
+call_expr : call_expr '.' call_expr
+          | Identifier ('(' (element | semantic_node ) ')')? 
+          ;
+\end{verbatim}
+\end{snippet}
+
+\item\textbf{Boolean:} represents Boolean literal expression. 
+
+Abstract Syntax Mapping: ast.BooleanExpr.
+
+\begin{snippet}
+\begin{verbatim}
+Boolean : 'true' | 'True' | 'false' | 'False' ;
+\end{verbatim}
+\end{snippet}
+
+\item\textbf{String:} represents String literal expression.
+
+Abstract Syntax Mapping: ast.StringExpr.
+
+\begin{snippet}
+\begin{verbatim}
+String : "'" (EscapeSequence | ~['])*? "'" ;
+EscapeSequence : "\\" "'" ;
+\end{verbatim}
+\end{snippet}
+
+\item\textbf{Integer:} represents Integer literal expression. 
+
+Abstract Syntax Mapping: ast.IntegerExpr.
+
+\begin{snippet}
+\begin{verbatim}
+Integer : (ZeroDigit | NonZeroDigit Digit*) ;
+Digit : ZeroDigit | NonZeroDigit ;
+NonZeroDigit : [1-9] ;
+ZeroDigit : [0] ;
+\end{verbatim}
+\end{snippet}
+
+\item\textbf{list} and \textbf{list\_element} represent the List literal expression. 
+
+Abstract Syntax Mapping: ast.ListExpr.
+
+\begin{snippet}
+\begin{verbatim}
+list_ : '[' list_element (',' list_element)* ']' ;
+list_element : Integer | String | semantic_node ;
+Letter : [a-zA-Z] ;
+Identifier : (Letter)(Letter|Digit|'_'|'-')* ;
+\end{verbatim}
+\end{snippet}
+
+\item\textbf{type\_expression} represents the NodeType literal expression.
+
+Abstract Syntax Mapping: ast.NodeType.
+
+\begin{snippet}
+\begin{verbatim}
+node_type : '(' node_type ')'
+          | 'not' node_type
+          | node_type 'and' node_type
+          | node_type 'or' node_type
+          | Identifier
+          ;
+\end{verbatim}
+\end{snippet}
+
+\end{description}
+
 
 \section{Validation}
+
+The method chosen for validating the designed domain-specific language is ontological analysis. It is an established way for evaluating software notations []. This approach requires designing a domain-specific ontology and using it as a reference for the ontological analysis. The leading top-level ontology used for ontological analysis is the Bunge-Wand-Weber (BWW) ontology [...]. The designed domain-specific ontology is based on it too.
 
 Why ontologies are helpful in DSL development [http://ceur-ws.org/Vol-395/paper02.pdf]
 
 \subsection{Ontology design}
+
+There is not a formal method for designing ontologies. Formulating concepts is always subjective. 
+
+\begin{description}
+
+\item\textit{Class} \textbf{Style Guide} describes the coding practices adopted in the context of a single project, organization, community or language. An individual Style Guide is a composite thing built of Conventions and their relations. Conventions in a Style Guide are interpreted together to form a coherent set of guidelines.
+
+\textit{Property} \textbf{Number of Conventions} indicates the size of the Style Guide.
+
+
+\item\textit{Class} \textbf{Convention} is a rule that imposes constraints on the CSS program. It is the building block of Style Guides. An individual Convention is a composite thing that consists of a Context.
+
+\textit{Intrinsic Property} \textbf{Description} explains the meaning of the Convention in natural text.
+
+\textit{Mutual Property} \textbf{Exception} is a relation between Conventions in which a given convention serves as an exception of another Convention.
+
+\textit{Mutual Property} \textbf{Allowance} is a relation between Conventions in which a given convention relaxes the constraints of another Convention. 
+
+
+\item\textit{Class} \textbf{Context} is a description of a Pattern that the Convention forbids. An individual Context is a composite thing that comprises a number of logically related Constraints.
+
+\textit{Property} \textbf{Ignored Constructs} specifies constructs that are disregarded while searching for a Context.
+
+
+\item\textit{Class} \textbf{Constraint} is a restriction that needs to be fulfilled. Different types of Constraints are represented as kinds.
+
+\textit{Property} \textbf{Subject} indicates the operand on which the Constraint operates. Things that can be a subject are the Type, Textual Representation or CSS-specific knowledge of a Construct.
+
+
+\item\textit{Kind} \textbf{Comparison Constraint} is a type of Constraint that compares the subject to another value.
+
+\textit{Property} \textbf{Subject} 
+
+\textit{Property} \textbf{Value}
+
+
+\item\textit{Kind} \textbf{Type Constraint} is a type of Constraint that checks whether the subject is of a given type.
+
+\textit{Property} \textbf{Subject} 
+
+\textit{Property} \textbf{Type}
+
+
+\item\textit{Kind} \textbf{Textual Form Constraint} is a type of Constraint that imposes restrictions on the textual representation of the subject.
+
+\textit{Property} \textbf{Subject} 
+
+\textit{Property} \textbf{Form}
+
+
+\item\textit{Kind} \textbf{Set Membership Constraint} is a type of Constraint that requires the subject to be a member of a set.
+
+\textit{Property} \textbf{Subject} 
+
+\textit{Property} \textbf{Set}
+
+
+\item\textit{Kind} \textbf{Context Constraint} is a type of Constraint that requires the subject to be in a particular context.
+
+\textit{Property} \textbf{Subject} 
+
+\textit{Property} \textbf{Context Description}
+
+
+\item\textit{Class} \textbf{Violation Log} is the final product of a violations search. An individual Violation Log is a composite thing that contains Violations.
+
+\textit{Property} \textbf{Number of Violations} indicates the size of the Violation Log. 
+
+
+\item\textit{Class} \textbf{Violation} A Violation occurs when a Pattern that matches the Context of a Convention is found.
+
+\textit{Property} \textbf{Description} explains in natural text what causes the Violation. Typically, the Description is extracted from the Convention that the Violation breaks.
+
+\textit{Property} \textbf{Position in Stylesheet} indicates the location of the Pattern that violates the Convention in the Stylesheet. 
+
+
+\item\textit{Class} \textbf{Stylesheet} is the CSS code that needs to be checked for compliance with the Style Guide. An instance of Stylesheet is a composite thing that comprises a number of Constructs
+
+
+\item\textit{Class} \textbf{Construct} is a part of the Stylesheet. It can refer to nodes in the CSS abstract syntax tree, concrete syntax tree and parse tree. Examples include whitespacing, indentation, comments, colons, delimiters, rulesets, declarations, etc.
+
+\textit{Property} \textbf{Type} identifies the function of a Construct in the program. Examples are strings, attribute values etc.
+
+\textit{Property} \textbf{Textual Representation} is the string of a Construct that appears in the CSS program. Examples are tabs, ‘;’, and ‘.myclass’
+
+\textit{Property} \textbf{CSS-specific knowledge} encapsulates properties of nodes specific to the CSS domain. For example, a CSS declaration node can possess knowledge whether it is vendor specific or not.
+
+\textit{Mutual Property} \textbf{Relation} is a relation between two Constructs. For example, two Constructs may be adjacent or nested.
+
+
+\item\textit{Class} \textbf{Pattern} is a particular part of the CSS program that matches the description of a Context. An instance of a Pattern is a composite thing built from one or many Constructs and Relations between them.
+
+\textit{Property} \textbf{Number of Constructs} denotes the size of the Pattern.
+
+
+\item\textit{Event} \textbf{Search for Violations in Stylesheet} occurs when the developer completes the search for violations in a Stylesheet, a Violation Log is created.
+
+\textit{New State} \textbf{Violation Log} \{ Violations = value \}
+
+
+\item\textit{Event} \textbf{Context (of Convention) Discovered} occurs when the Context of a convention is discovered, a Violation is recorded in the Violation Log. The state of the Violation contain its description and position in Stylesheet.
+
+\textit{New State} \textbf{Violation} \{ Description = value, Position in Stylesheet = value \}
+
+TODO: include property and event of the Stylesheet!
+TODO: include couplings diagram with explanation!
+
+
+\end{description}
 
 \subsection{Ontological analysis}
 

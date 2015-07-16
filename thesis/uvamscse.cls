@@ -20,6 +20,11 @@
 \newcommand{\subsubsectionautorefname}{\S}
 
 \usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{array}
+\usepackage{multirow}
+\graphicspath{ {figures/} }
 \usepackage{tocloft}
 \usepackage{boxedminipage}
 \usepackage{float}
