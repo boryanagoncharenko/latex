@@ -78,9 +78,19 @@ conventions is illustrates in Chapter 4. The design and description of a DSL is 
 
 \section{Bunge-Wand-Weber ontology}
 
-A \textbf{conceptualization} is an abstract, simplified view of the world that is represented for some purpose~\cite{gruber1995toward}. It consists of the concepts that are assumed to exist in some area of interest and their relationships~\cite{gruber1995toward}. An \textbf{ontology} is an explicit specification of a conceptualization~\cite{gruber1995toward}. It describes what is fundamental in the totality of what exists and it defines the most general categories to which we need to refer in constructing a description of reality~\cite{milton2004top}. 
+A \textbf{conceptualization} is an abstract, simplified view of the world that is represented for
+some purpose~\cite{gruber1995toward}. It consists of the concepts that are assumed to exist in some
+area of interest and their relationships~\cite{gruber1995toward}. An \textbf{ontology} is an
+explicit specification of a conceptualization~\cite{gruber1995toward}. It describes what is
+fundamental in the totality of what exists and it defines the most general categories to which we
+need to refer in constructing a description of reality~\cite{milton2004top}.
 
-Milton further distinguishes between two kinds of ontologies: top-level and domain-specific~\cite{milton2004top}. Ontologies of the former type are highly general and provide the theoretical foundations for representation and modeling of systems. Ontologies of the latter type are restricted to define concepts and their relations that fall in a particular domain. Every domain-specific ontology needs to use categories that are captured in a top-level ontology. In this sense a domain-specific ontology is based on a specific top-level ontology~\cite{milton2004top}.
+Milton further distinguishes between two kinds of ontologies: top-level and domain-
+specific~\cite{milton2004top}. Ontologies of the former type are highly general and provide the
+theoretical foundations for representation and modeling of systems. Ontologies of the latter type
+are restricted to define concepts and their relations that fall in a particular domain. Every
+domain-specific ontology needs to use categories that are captured in a top-level ontology. In this
+sense a domain-specific ontology is based on a specific top-level ontology~\cite{milton2004top}.
 
 The Bunge-Wand-Weber (BWW) ontology~\cite{wand1990ontological} is a high-level ontology used in the representation model developed by Wand and Weber~\cite{wand1995deep}. Table 2.1 presents a selected set of the ontological constructs in the BWW ontology.
 
@@ -92,7 +102,7 @@ The Bunge-Wand-Weber (BWW) ontology~\cite{wand1990ontological} is a high-level o
 \textbf{Ontological construct} & \textbf{Explanation} \\
  &  \\
 \hline
-Thing & The elementary unit in the BWW ontological model. The real world is made up of things. A composite thing may be made up of other things (composite or primitive) \\ 
+Thing & The elementary unit in the BWW ontological model. The real world is made up of things. A composite thing may be made up of other things (composite or primitive). \\ 
 \hline
 Properties & \multirow{7}{30em}{Things possess properties. A property is modeled via a function that maps the thing into some value. A property of a composite thing that belongs to a component thing is called an hereditary property. Otherwise it is called an emergent property. A property that is inherently a property of an individual thing is called an intrinsic property. A property that is meaningful only in the context of two or mode things is called a mutual or relational property.} \\ 
  &  \\ 
@@ -102,13 +112,13 @@ Properties & \multirow{7}{30em}{Things possess properties. A property is modeled
  &  \\
  &  \\
  \hline
- State & A vector of values for all property functions of a thing \\
+ State & A vector of values for all property functions of a thing. \\
  \hline
  Event & A change of state of a thing. It is effected via a transformation. \\
  \hline
- Transformation & A mapping from a domain comprising states to a codomain comprising states \\
+ Transformation & A mapping from a domain comprising states to a codomain comprising states. \\
  \hline
- History & The chronologically ordered states that a thing traverses \\
+ History & The chronologically ordered states that a thing traverses. \\
  \hline
  Coupling & A thing acts on another thing if its existence affects the history of the other thing. The two things are said to be coupled or interact. \\
  \hline
@@ -145,24 +155,28 @@ I will talk about answering the first research question.
 
 \section{Research Method}
 
-Despite the new features added in the second [1] and third [5] versions of CSS, the language has
-obvious limita- tions, e.g. lack of variables. A number of preprocessors have evolved to tackle the
-downsides of CSS. Solutions such as SASS [3], LESS [9] and Stylus [7] offer enhanced or even
-different syntax and translate it to CSS. Pre- processors are not only ubiquitously recommended, but
-also widely adopted in practice. Obviously, using such solutions avoids the need for CSS code
-conventions because the code is generated and not maintained directly. Thus, CSS code conventions
-make sense only if developers handcraft the CSS files.
+Despite the new features added in the second~\cite{CSS2} and third~\cite{CSS3} versions of CSS, the
+language has obvious limitations, for example, lack of variables. A number of preprocessors have
+evolved to tackle the downsides of CSS. Solutions such as SASS~\cite{SASS}, LESS~\cite{LESS} and
+Stylus~\cite{Stylus} offer enhanced or even different syntax and translate it to CSS. Preprocessors
+are not only ubiquitously recommended, but also widely adopted in practice. The presence of such
+solutions poses the question whether conventions for CSS are required at all. If nowadays CSS is
+generated and not handcrafted, there is not need for conventions for CSS. There is need for
+conventions for the preprocessor languages.
 
-To determine whether CSS is written and maintained as opposed to being generated, all commits to
-open source repositories hosted on GitHub for 2015 (up to April) are being analyzed. If the commit
-contains a file with extension .scss, .sass, .less or .styl, it is considered preprocessor
-maintenance. In case the commit contains files with the .css extension and no preprocessor
-extensions, it is considered maintenance of CSS. To exclude cases in which developers commit third-
-party CSS, only commits that modify CSS files are taken into consideration. Commits that add or
-delete CSS files are ignored.
+To determine whether CSS is still handcrafted, all commits to open source repositories hosted on
+GitHub for the period Jan-Apr 2015 have been analyzed. To differentiate between plain CSS and
+preprocessor code, the extensions of all files in the commits were inspected. In case the commit
+contains a file with extension \texttt{.scss}, \texttt{.sass}, \texttt{.less} or \texttt{.styl}, it
+is considered preprocessor maintenance. In case the commit contains files with the \texttt{.css}
+extension and no preprocessor extensions, it is considered maintenance of plain CSS. Since the main
+objective of the search is to determine maintenance, only files that were modified are taken into
+consideration. Files that were added are excluded from the results, since developers often add
+third-party CSS libraries to their repositories.
 
 \section{Results}
 
+A total of X repositories and X commits have been analyzed. The number of commits that maintain any form of CSS is X. Almost 60 percent of these commits still show plain CSS. 
 Despite of the popular belief that nowadays preprocessors are prevailing than CSS, results
 illustrate plain CSS is still used. Figure 1 summarizes the findings.
 
@@ -618,13 +632,15 @@ node_type : '(' node_type ')'
 
 \section{Validation}
 
-The method chosen for validating the designed domain-specific language is ontological analysis. It is an established way for evaluating software notations []. This approach requires designing a domain-specific ontology and using it as a reference for the ontological analysis. The leading top-level ontology used for ontological analysis is the Bunge-Wand-Weber (BWW) ontology [...]. The designed domain-specific ontology is based on it too.
-
-Why ontologies are helpful in DSL development [http://ceur-ws.org/Vol-395/paper02.pdf]
+The method chosen for validating the designed domain-specific language is ontological analysis, since it is a widely-accepted way for evaluating software notations~\cite{opdahl2002ontological, green2000integrated, moody2009physics, parsons1997using, weber1996analytical}. The particular approach used for conducting ontological analysis consists of several steps. First, a domain-specific ontology is designed. Second, the ontology is used as a reference point for the interpretation and representation mappings. Third, emerged anomalies are analyzed and conclusion about the quality of the notation is made.
 
 \subsection{Ontology design}
 
-There is not a formal method for designing ontologies. Formulating concepts is always subjective. 
+The first stage of validation requires designing a domain-specific ontology. The specific domain of the developed ontology is limited to detecting violations of CSS code conventions. In other words, the designed ontology tries to capture only the concepts and their relations, that exist when an agent searches a CSS program for violations of given set of code conventions.
+
+The designed domain-specific ontology is based on the BWW top-level ontology~\cite{wand1990ontological}, i.e. it uses the high-level categories of the BWW ontology to describe the objects, concepts and entities in the specific domain. The rationale behind the decision to use BWW ontology is that it has been the leading ontology used for ontological analysis~\cite{moody2009physics}. The main ontological constructs used in the BWW ontology are listed in section 2.1. 
+
+Following is a list with the main concepts discovered in the domain along with their descriptions. The used BWW concepts are written in \textit{italics} and the domain-specific concepts are written in \textbf{bold}.
 
 \begin{description}
 
@@ -699,14 +715,14 @@ There is not a formal method for designing ontologies. Formulating concepts is a
 \textit{Property} \textbf{Position in Stylesheet} indicates the location of the Pattern that violates the Convention in the Stylesheet. 
 
 
-\item\textit{Class} \textbf{Stylesheet} is the CSS code that needs to be checked for compliance with the Style Guide. An instance of Stylesheet is a composite thing that comprises a number of Constructs
+\item\textit{Class} \textbf{Stylesheet} is the CSS code that needs to be checked for compliance with the Style Guide. An instance of Stylesheet is a composite thing that comprises a number of Constructs.
 
 
 \item\textit{Class} \textbf{Construct} is a part of the Stylesheet. It can refer to nodes in the CSS abstract syntax tree, concrete syntax tree and parse tree. Examples include whitespacing, indentation, comments, colons, delimiters, rulesets, declarations, etc.
 
 \textit{Property} \textbf{Type} identifies the function of a Construct in the program. Examples are strings, attribute values etc.
 
-\textit{Property} \textbf{Textual Representation} is the string of a Construct that appears in the CSS program. Examples are tabs, ‘;’, and ‘.myclass’
+\textit{Property} \textbf{Textual Representation} is the string of a Construct that appears in the CSS program. Examples are tabs, ``;'', and ``.myclass''
 
 \textit{Property} \textbf{CSS-specific knowledge} encapsulates properties of nodes specific to the CSS domain. For example, a CSS declaration node can possess knowledge whether it is vendor specific or not.
 
@@ -727,16 +743,128 @@ There is not a formal method for designing ontologies. Formulating concepts is a
 
 \textit{New State} \textbf{Violation} \{ Description = value, Position in Stylesheet = value \}
 
+\end{description}
+
 TODO: include property and event of the Stylesheet!
 TODO: include couplings diagram with explanation!
 
+The descriptions provided in the listing above often state that an instance of a class is a composite thing that consists of other things. To provide a better understanding of the relations between the entities defined in the ontology, the concepts are also expressed using the Backus-Naur Form (BNF) notation.
 
-\end{description}
+\begin{snippet}
+\begin{verbatim}
+STYLE_GUIDE     ::= CONVENTIONS
+CONVENTIONS     ::= CONVENTIONS CONVENTION | CONVENTION | EPSILON
+CONVETION       ::= CONTEXT
+CONTEXT         ::= CONSTRAINTS
+CONSTRAINTS     ::= CONSTRAINTS CONSTRAINT | CONSTRAINT
+CONSTRAINT      ::= COMPARISON_CONSTRAINT | TYPE_CONSTRAINT | TEXT_CONSTRAINT 
+                  | SET_CONSTRAINT | CONTEXT_CONSTRAINT 
+VIOLATION_LOG   ::= VIOLATIONS
+VIOLATIONS      ::= VIOLATIONS VIOLATION | VIOLATION | EPSILON
+STYLESHEET      ::= CONSTRUCTS
+CONSTRUCTS      ::= CONSTRUCTS CONSTRUCT | CONSTRUCT | EPSILON
+PATTERN         ::= CONSTRUCTS CONSTRUCT_RELATIONS
+\end{verbatim}
+\end{snippet}
+
+While the above listing presents the composition of things, it does not illustrate how things interact with each other. To provide a better understanding of the dynamics between things defined in the ontology, a diagram of the system is presented in Figure 5.1.
+
+\begin{figure}[h!]
+  \centering
+  \caption{Graph of the system}
+  \includegraphics[width=0.8\textwidth]{ontology}
+\end{figure}
+
+According to the theory, a coupling occurs when the existence of a given thing affects the history of another thing and, in turn, history is defined as the chronological ordered states that a thing traverses~\cite{wand1990ontological}. Thus, in the domain-specific ontology a coupling exist between the Style Guide and the Convention things, because the existence of a Convention alters the state of the Style Guide. Similarly, a Context changes the state of a Convention and a Constraint affects the state of a Context. 
+
+There are also couplings between Construct, Pattern and Stylesheet things. Both Stylesheet and Pattern are composed of Constructs, and thus affected by their existence. Since a Pattern is a specific occurrence of a combination of Constructs, it is also coupled to Stylesheet.
+
+A Violation is coupled to a Violation Log, since the presence of a new a Violation alters the state of the log. Further, a Violation Log contains information about the violations of a particular Style Guide that occur in a specific Stylesheet. In this sense, a Violation Log is a function of a Style Guide and a Stylesheet and it is coupled to both things.
+
+There are two external events that an Actor can initiate: searching for violations and discovering violations. Both of these events express couplings, because they change the state of the Violation Log and the Violation, respectively. Note that an Actor can create any of the things that appear in Figure 5.1. In practice, the Actor can introduce additional Conventions, change the Style Guide, alter the existing Constructs and rewrite the Stylesheet. However, these events are considered outside the domain of the designed ontology. 
 
 \subsection{Ontological analysis}
 
-You can refer to pretty much anything (websites, blog posts, software) through
-\texttt{misc} type of entry~\cite{ANTLR}:
+\textbf{Representation Mapping}
+
+\begin{center}
+\begin{longtable}{ | p{17em} | p{23em} | } 
+\caption{Representation mapping}\\
+\hline
+ &  \\
+Ontological concepts & Semantic constructs \\
+ &  \\
+\hline
+Style Guide & Convention Set \\ \hline
+Number of Conventions of Style Guide & Conventions of Convention Set \\ \hline
+Convention & Convention \\ \hline
+Description of Convention  & Description of Convention \\ \hline
+Exception of Conventions & Exceptions of Convention \\ \hline
+Allowance of Conventions & Relaxing Conventions of Convention \\ \hline
+Context & Pattern descriptor, Node descriptor, Node Relation \\ \hline
+Ignored Constructs & Convention Context \\ \hline
+Constraint & Expression \\ \hline
+Subject of Constraint & API Call, Literal Expression, Variable Expression \\ \hline
+Comparison Constraint & Comparison Expression \\ \hline
+Type Constraint & Is Expression \\ \hline
+Textual Form Constraint & Match Expression \\ \hline
+Set Membership Constraint & Set Membership Expression \\ \hline
+Context Constraint & Context Query Expression \\ \hline
+Violation Log & Violation Log \\ \hline
+Number of Violations & Violations of Violation Log \\ \hline
+Violation & Violation \\ \hline
+Description of Violation & Description of Violation \\ \hline
+Position in Stylesheet of Violation & Position of Violation \\ \hline
+Stylesheet & Tree \\ \hline
+Construct & Node \\ \hline
+Type of Construct & Search Categories of Node \\ \hline
+Textual Representation of Construct & String of Node \\ \hline
+CSS-specific knowledge & API of Node \\ \hline
+Relation between Constructs & Node Relation \\ \hline
+Pattern & Node, Node Relation \\ \hline
+Number of Constructs of Pattern & Node Descriptors of Pattern Descriptor \\ \hline
+\end{longtable}
+\end{center}
+
+
+\begin{center}
+\begin{longtable}{ | p{23em} | p{17em} | } 
+\caption{Interpretation mapping}\\
+\hline
+ &  \\
+Semantic constructs & Ontological concepts  \\
+ &  \\
+\hline
+
+Convention Set & Style Guide \\ \hline
+Conventions of Convention Set & Number of Conventions of Style Guide \\ \hline
+Convention Context & Ignored Constructs of a Context \\ \hline
+Convention & Convention \\ \hline
+Description property of Convention & Description of Convention \\ \hline
+Exceptions of Convention & Exception of Conventions \\ \hline
+Relaxing Conventions of Convention & Allowance of Conventions \\ \hline
+Pattern Descriptor, Node Descriptor, Node Relation & Context \\ \hline
+Node Descriptors of Pattern Descriptor & Number of Constructs of Pattern \\ \hline
+Expression, Logical Expression & Constraint \\ \hline
+Comparison Expression & Comparison Constraint \\ \hline
+Is Expression & Type Constraint \\ \hline
+Match Expression  & Textual Form Constraint \\ \hline
+Set Membership Expression & Set Membership Constraint \\ \hline
+Context Query Expression & Context Constraint \\ \hline
+API Call, Literal Expression, Variable Expression & Constraint Subject \\ \hline
+Node & Construct \\ \hline
+Search Categories of Node & Type of Construct \\ \hline
+String of Node & Textual Representation of Construct \\ \hline
+API of Node & CSS-specific knowledge of Construct \\ \hline
+Node, Node Relation & Pattern \\ \hline
+Tree & Stylesheet \\ \hline
+Violations Log & Violations Log \\ \hline
+Violations of Violations Log & Number of Violations \\ \hline
+Violation & Violation \\ \hline
+Description of Violation & Description of Violation \\ \hline
+Position of Violation & Position in Stylesheet of Violation \\ \hline
+\end{longtable}
+\end{center}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
