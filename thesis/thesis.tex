@@ -151,8 +151,6 @@ Properties & \multirow{7}{30em}{Things possess properties. A property is modeled
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Evaluating the Need for CSS Code Conventions}
 
-I will talk about answering the first research question.
-
 \section{Research Method}
 
 Despite the new features added in the second~\cite{CSS2} and third~\cite{CSS3} versions of CSS, the
@@ -174,21 +172,31 @@ objective of the search is to determine maintenance, only files that were modifi
 consideration. Files that were added are excluded from the results, since developers often add
 third-party CSS libraries to their repositories.
 
+
 \section{Results}
 
-A total of X repositories and X commits have been analyzed. The number of commits that maintain any form of CSS is X. Almost 60 percent of these commits still show plain CSS. 
-Despite of the popular belief that nowadays preprocessors are prevailing than CSS, results
-illustrate plain CSS is still used. Figure 1 summarizes the findings.
+A total of 1,589,713 commits to 1,311,654 public repositories have been analyzed. X of these were not processed due to errors. Typical errors contain repositories that have been turned private and... The number of commits that maintain any form of CSS is X. Figure 1 summarizes the findings.
 
-Having the above in mind I assume that CSS is still maintained in practice.
+\begin{figure}[h!]
+  \centering
+  \caption{Results}
+  \includegraphics[width=0.5\textwidth]{cssresults}
+\end{figure}
 
 \section{Analysis}
 
-What if the main users of preprocessors are private?
+There are a number of limitations that need to be considered before interpreting the results of the
+experiment. Firstly, the search is conducted on a single hosting platform - GitHub. That said, currently
+GitHub reports having over 10 million users and 24 million repositories~\cite{GitHub}, which makes
+it the largest code host in the world~\cite{gousios2014lean}. Secondly, the search is narrowed to
+the publicly available repositories. Thus, it lies on the premise that there is not a significant
+difference between the public and private repositories hosted on the platform. Thirdly, the
+experiment detects only the three most popular preprocessor extensions and omits other
+preprocessors. It is possible that a number of custom preprocessors are used in practice. However,
+it is assumed that the number of such commits would not increase the number of total CSS commits to
+the extend at which the percentage of plain CSS commits is significantly diminished.
 
-What if the time interval was too short?
-
-What if there are other preprocessor that are not counted?
+Having the above limitations in mind, the experiment provides evidence to conclude that despite the popularity of preprocessors, plain CSS is still handcrafted in the beginning of 2015.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -196,42 +204,37 @@ What if there are other preprocessor that are not counted?
 
 \section{Research Method}
 
-The CSS community has produced a pool of recommendations, best practices, and style guides, but how
-to choose the among them? Since the primary organization responsible for the specification of CSS
-has not recommended code conventions, any selection strategy based on the author of the conventions
-could be considered cherry picking.
+The primary organization responsible for the specification of CSS has not published an official CSS
+style guide. As a result, the CSS community has produced a pool of coding conventions, best
+practices, guidelines and recommendations.
 
-To determine the set of code conventions, two searches with the keywords “CSS code conventions” have
-been made using the search engines http://duckduckgo.com and http://google.com. The first 50 results
-of each search have been analyzed. From each result only conventions about pure CSS are taken into
-account and guidelines for CSS preprocessors are ignored. In case the result is an online magazine
-or a blog post that links to other resources, these references are considered as results and
+To discover existing CSS code conventions, searches using two search engines
+\url{http://duckduckgo.com} and \url{http://google.com} have been conducted and the first 100
+results of each search have been analyzed. From each result only conventions about plain CSS have
+been taken into account. Conventions that refer to CSS preprocessors have been ignored. In case the
+result contains links to other style guides, these references have been considered as results and
 analyzed separately.
 
-Discuss problem with conventions here: 
-\begin{description}
+During the process of discovering conventions, a number of issues have been observed. First, some of
+the conventions did not provide sufficient information to be applied in practice. Such an example is
+the convention ``don’t use CSS hacks — try a different approach first'' while the style guide does
+not define the notion of CSS hacks. Overgeneralized conventions have been omitted from the results.
 
-\item Overgeneralized conventions - The description of the convention is too general to be applied,
-e.g. ``don’t use CSS hacks — try a different approach first''.
+Another part of the discovered conventions introduced a discrepancy between their description in
+natural language and the provided code example. An instance of such contradiction is when the
+convention ``nothing but declarations should be indented'' is followed by a code snippet
+illustrating that rules in media queries should also be indented. In such cases the convention is
+interpreted as described by the code example.
 
-\item Incorrect conventions - There is a discrepancy between the description of the rule and the
-provided example. An instance of such contradiction is when the convention ‘nothing but declarations
-should be indented’ is followed by a code snippet illustrating that rules in media queries should
-also be indented.
+In some cases, when conventions are not supported with code examples, their description remains open
+for interpretation. For example, ``rules with more than 4 selectors are not allowed'' could be seen
+as forbidding multi-selectors with more than four selectors, or disallowing selectors with more than
+four simple-selectors. All possible interpretations of ambiguous conventions were registered as
+separate conventions.
 
-\item Ambiguous conventions - There is more than one interpretation of a convention. For example,
-‘rules with more than 4 selectors are not allowed’ could be seen as forbidding multi- selectors with
-more than four selectors, or disallowing selectors with more than four simple- selectors.
-
-\item Implicit conventions - There are rules that are not explicitly stated and could only be
-inferred by the other rules. For example, the convention ‘you can put values on multiple lines’ is
-not preceded by a convention that requires values to appear on one line.
-
-\item Inconsistencies between conventions in one ruleset - Google say that charsets should not be
-used in css, but later say that in charsets double quotes should be used. Surely, this opens the
-question - so when do I need to use charsets? 
-
-\end{description}
+There are conventions that are not explicitly stated, but could only be inferred by the other rules.
+For example, the convention ``you can put long values on multiple lines'' implies that values
+should appear on one line. Implicit conventions were registered as explicit conventions.
 
 \section{Results}
 
