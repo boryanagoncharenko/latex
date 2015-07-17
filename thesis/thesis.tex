@@ -76,69 +76,67 @@ conventions is illustrates in Chapter 4. The design and description of a DSL is 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Background}
 
-\section{Code conventions and style guides}
+\section{Bunge-Wand-Weber ontology}
 
-\section{BWW ontology}
+A \textbf{conceptualization} is an abstract, simplified view of the world that is represented for some purpose~\cite{gruber1995toward}. It consists of the concepts that are assumed to exist in some area of interest and their relationships~\cite{gruber1995toward}. An \textbf{ontology} is an explicit specification of a conceptualization~\cite{gruber1995toward}. It describes what is fundamental in the totality of what exists and it defines the most general categories to which we need to refer in constructing a description of reality~\cite{milton2004top}. 
 
-Table 1
-Selected ontological constructs in the BWW representation model [!]
+Milton further distinguishes between two kinds of ontologies: top-level and domain-specific~\cite{milton2004top}. Ontologies of the former type are highly general and provide the theoretical foundations for representation and modeling of systems. Ontologies of the latter type are restricted to define concepts and their relations that fall in a particular domain. Every domain-specific ontology needs to use categories that are captured in a top-level ontology. In this sense a domain-specific ontology is based on a specific top-level ontology~\cite{milton2004top}.
+
+The Bunge-Wand-Weber (BWW) ontology~\cite{wand1990ontological} is a high-level ontology used in the representation model developed by Wand and Weber~\cite{wand1995deep}. Table 2.1 presents a selected set of the ontological constructs in the BWW ontology.
+
 \begin{center}
 \begin{longtable}{ | p{11em} | p{30em} | } 
+\caption{Selected ontological constructs in the BWW representation model}\\
 \hline
  &  \\
 \textbf{Ontological construct} & \textbf{Explanation} \\
  &  \\
 \hline
-Thing & A thing is the elementary unit in the BWW ontological model. The real world is made up of things. Two or more things (composite or simple) can be associated into a composite thing. \\ 
+Thing & The elementary unit in the BWW ontological model. The real world is made up of things. A composite thing may be made up of other things (composite or primitive) \\ 
 \hline
-Property & \multirow{9}{30em}{Things possess properties. A property is modeled via a function that maps the thing into some value. For example, the attribute ``weight'' represents a property that all humans possess. In this regard, weight is an attribute standing for a property in general. If we focus on the weight of a specific individual, however, we would be concerned with a property in particular. Other properties are properties of pairs or many things. Such properties are called mutual. Non-binding mutual properties are those properties shared by two or more things that do not ``make a difference'' to the things involved; for example, order relations or equivalence relations. By contrast, binding mutual properties are those properties shared by two or more things that do ``make a difference'' to the things involved. A property of a composite thing that belongs to a component thing is called an hereditary property. Otherwise it is called an emergent property. Some properties are inherent properties of individual things. Such properties are called intrinsic. Attributes are the names that we use to represent certain properties of things (normally abstract properties).} \\ 
--In general &  \\
--In particular &  \\
--Intrinsic &  \\
--Non-binding mutual &  \\
--Binding mutual &  \\
--Hereditary &  \\
--Emergent &  \\
--Attributes &  \\
+Properties & \multirow{7}{30em}{Things possess properties. A property is modeled via a function that maps the thing into some value. A property of a composite thing that belongs to a component thing is called an hereditary property. Otherwise it is called an emergent property. A property that is inherently a property of an individual thing is called an intrinsic property. A property that is meaningful only in the context of two or mode things is called a mutual or relational property.} \\ 
  &  \\ 
  &  \\
  &  \\
  &  \\
  &  \\
- &  \\ 
  &  \\
- &  \\
- &  \\ 
  \hline
- Class&  A class is a set of things that can be defined via their possessing a characteristic property. \\ 
+ State & A vector of values for all property functions of a thing \\
  \hline
- Kind&  A kind is a set of things that can be defined only via their possessing two or more properties. \\ 
+ Event & A change of state of a thing. It is effected via a transformation. \\
+ \hline
+ Transformation & A mapping from a domain comprising states to a codomain comprising states \\
+ \hline
+ History & The chronologically ordered states that a thing traverses \\
+ \hline
+ Coupling & A thing acts on another thing if its existence affects the history of the other thing. The two things are said to be coupled or interact. \\
+ \hline
+ Class & A class is a set of things that can be defined via their possessing a characteristic property. \\ 
+ \hline
+ Kind & A kind is a set of things that can be defined only via their possessing two or more properties. \\ 
 \hline
-Coupling & \multirow{4}{30em}{Two things are said to be coupled (or interact) if one thing acts on the other and vice versa. Furthermore, those two things are said to share a binding mutual property (or relation); that is, they participate in a relation that ``makes a difference'' to the things.} \\
--Binding &  \\
--Mutual Property &  \\
- &  \\
- \hline 
- System& A set of things is a system if, for any bi-partitioning of the set, couplings exist among things in the two subsets. \\
+ System & A set of things is a system if, for any bi-partitioning of the set, couplings exist among things in the two subsets. \\
  \hline
- System Composition& The things in the system are its composition. \\
+ System Composition & The things in the system are its composition. \\
  \hline
- System Environment&  Things that are not in the system but interact with things in the system are called the environment of the system. \\
+ System Environment &  Things that are not in the system but interact with things in the system are called the environment of the system. \\
  \hline
 \end{longtable}
 \end{center}
 
+
 \section{Ontological analysis}
 
-Ontology: ``explicit specification of a conceptualization'' ``[Gruber http://tomgruber.org/writing
-/onto-design.pdf]''
+\textbf{Ontological analysis} is an established approach for evaluating the quality of software engineering notations~\cite{moody2009physics}. It consists of a two way comparison between a set of modeling grammar constructs and a set of ontological constructs. The \textbf{interpretation mapping} compares the notation with the ontology and the \textbf{representation mapping} compares the ontology with the notation~\cite{gehlert2007toward}. The underpinning of ontological analysis is that modeling grammars are incomplete if they are not able to represent what exists in reality~\cite{green2000integrated}. Furthermore, the analysis requires one-to-one mapping between the modeling grammar and the ontological constructs. Any deviation from such correspondence leads to an anomaly (Figure 2.1).
 
-Top-level ontology: ``the general (domain-independent) core of an information systems ontology''
-``
-[Milton http://ontology.buffalo.edu/medo/Bunge-Chisholm.pdf]''
+\begin{figure}[h!]
+  \centering
+  \caption{Ontological Analysis~\cite{gehlert2007toward}}
+  \includegraphics[width=0.65\textwidth]{ontoanalysis}
+\end{figure}
 
-Domain-specific ontology: ``the extension or specification of a top-level ontology with axioms and
-definitions pertaining to the objects in some given domain. ''
+\textbf{Construct deficit} occurs when an ontological construct does not have a corresponding construct in the modeling grammar. \textbf{Construct redundancy} is observed when a single ontological construct maps to more than one modeling grammar construct. \textbf{Construct overload} appears when a modeling grammar construct corresponds to more than one ontological construct. \textbf{Construct excess} occurs when a modeling grammar construct does not map to any ontological construct.~\cite{moody2009physics}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Evaluating the Need for CSS Code Conventions}
