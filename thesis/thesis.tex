@@ -22,15 +22,18 @@
 
 \abstract{    
 
-This section summarises the content of the thesis for potential readers who do
-not have time to read it whole, or for those undecided whether to read it at
-all. Sum up the following aspects:
+Code conventions are used to preserve code base consistency and express preference of a particular
+programming style. Often, code conventions are expressed in natural language and it is a
+responsibility of the developers to read, understand and apply them. Typically, developers need to
+ensure that their code complies to a given style guide manually. There are a number of tools that
+can automatically detect violations of conventions, however, current solutions remain rigid,
+laborious or with limited scope.
 
-  \begin{itemize}
-    \item relevance and motivation for the research
-    \item research question(s) and a brief description of the research method
-    \item results, contributions and conclusions
-  \end{itemize}
+This thesis aims at answering three research questions. First, it evaluates the need for CSS
+conventions based on whether CSS is still handcrafted. Second, it discovers existing code
+conventions. Third, it designs a domain-specific language that is capable of expressing existing CSS
+code conventions. The thesis presents a specification of the designed domain-specific language and an implementation of its interpreter that detects violations automatically.
+
 }
 
 
@@ -66,17 +69,17 @@ determining the need for CSS code conventions in organizations, collecting and a
 style guides, and providing a way to express conventions. Specifically, the project attempts to
 answer the following set of questions:
 
-  \begin{itemize}
+  \begin{description}
     \item \textbf{Research Question 1:} Do developers still maintain plain CSS?
     \item \textbf{Research Question 2:} What code conventions for CSS exist?
     \item \textbf{Research Question 3:} How to express existing CSS code conventions?
-  \end{itemize}
+  \end{description}
 
-The thesis is organized as follows. Chapter 2 contains background notions and terms used throughout
-the thesis. The method and results for RQ1 are presented in Chapter 3. Discovering the existing code
-conventions is illustrates in Chapter 4. The design and description of a DSL is presented in Chapter
-5. Chapter 6 concludes the thesis.
-
+The thesis is organized as follows. Chapter 2 provides information about previous studies and
+defines terms used throughout the thesis. Chapter 3 presents the research approach used to determine
+whether CSS is handcrafted. The process and results of discovering the existing code conventions is
+described in Chapter 4. The design and description of a DSL is presented in Chapter 5. Chapter 6
+concludes the thesis.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -292,59 +295,76 @@ The full list of all discovered conventions along with their sources and explana
 
 \section{Analysis of conventions corpus}
 
-Code conventions is an umbrella term that comprises a vast set of rules. To check what the CSS
-conventions are all about, I analyzed the conventions and it turned out there are three broad groups
-of conventions. In general, CSS conventions refer to whitespacing and indentation, to syntax
-preference or to programming style.
+Analysis of the discovered conventions have been conducted in three steps. First, conventions have
+been separated in groups depending on the type of constraints they enforce. Second, the meaning and
+possible violations of each convention have been analyzed. Third, a list of general requirements
+have been extracted.
 
-Further, the analysis consists of analyzing each individual convention.
-
-The approach used to explore the domain consists of analyzing how the current system works. In other
-words, the analysis aims at revealing how developers detect violations manually, what is knowledge
-developers need and what are the particular steps they make. The domain analysis phase consists of
-two steps:
-
-  \begin{itemize}
-    \item Determine possible violations. In this step the meaning of the convention is discussed and violations are made explicit.
-    \item List the specific actions that need to be taken to detect violations manually. Developers check their code for compliance manually. To perform such checks, developers need to understand different concepts, e.g. the concept of a rule, html element, ids, etc and perform certain actions, such as find a structure, evaluate a constraint etc.
-  \end{itemize}
-
-The following analysis of three conventions illustrates the process described above. Analysis of all
-conventions in the corpus are available at GitHub.
+Code conventions is an umbrella term that refers to constraints on whitespacing, indentation, naming, syntax, code patterns, programming style, file organization etc. To gain an overview of the type of constraints imposed in CSS, all conventions in corpus have been analyzed and organized in the following set of categories:
 
 \begin{description}
-\item \textbf{Convention:} Disallow empty rules.
-\item \textbf{Author:} CSS lint
-\item \textbf{Violations:} Presence of rulesets that do not contain declarations. In case at least one declaration is present, the ruleset does not violate the convention. Examples include:
+  \item[Layout] category contains rules that constrain the overall layout of the code. It includes conventions related to whitespace, indentation and comments. Examples include:
+  \begin{itemize}
+  \item Use four tabs for indentation.
+  \item Put one blank line between rulesets.
+  \item Disallow spaces at the end of the line.
+  \end{itemize}
+  \item[Syntax Preference] category comprises conventions that express preference of a particular syntax. Note that rules in this category do not aim at ensuring CSS validity, but choose between syntactic alternatives. For example, both single and double quote strings are valid in CSS and a convention may narrow down the choice of the developer to single quotes. Examples include:
+  \begin{itemize}
+  \item Use lowercase for id and class names.
+  \item Require a semicolon at the end of the last declaration.
+  \item Use strings with single quotes.
+  \end{itemize}
+  \item[Programming Style] category consists of conventions that put constraints on how CSS constructs are used to achieve a certain goal. They express good and bad practices in the CSS domain and are used to improve maintenance and performance, or to avoid a bug in a particular implementation. Examples are:
+  \begin{itemize}
+  \item Do not use the universal selector.
+  \item Avoid using !important.
+  \item A vendor-prefixed property must be followed by a standard property.
+  \end{itemize}
+\end{description}
+
+The second part of domain analysis consists of discussing the meaning of each convention and
+determining the possible violations. While.. Further, the analysis determines how these violations
+can be detected. Currently the detection of violations is performed by developers manually or
+with the partial help of tools. To perform such checks, developers need to understand different concepts, e.g. the concept of a rule, HTML element, IDs, etc and perform certain actions, such as find a structure, evaluate a constraint etc. The analysis tries to grasp the specific concepts and actions used to find violations. 
+
+The process of analysis is illustrate in the following example. Analysis of all conventions in the
+corpus is available at \href{https://github.com/boryanagoncharenko/CssCoco/blob/master/analysis.md}{CssCoco GitHub repository}.
+
+\textbf{Convention:} Disallow empty rules.
+\textbf{Author:} CSS lint
+\textbf{Violations:} Presence of rulesets that do not contain declarations. In case at least one declaration is present, the ruleset does not violate the convention. Examples include:
 \begin{sourcecode}
 \begin{lstlisting}[style=mono,language=Java]
-.myclass { }  /* violation */
-.myclass { /* Comment */ } /* violation */
-.myclass { color: green; } /* not violation */
+.myclass { }                 /* violation */
+.myclass { /* Comment */ }   /* violation */
+.myclass { color: green; }   /* not violation */
 \end{lstlisting}
 \end{sourcecode}
 
-\item \textbf{Actions:} Recognize rulesets and declarations. Determine whether a ruleset does not contain any declarations.
+\textbf{Actions:} Recognize rulesets and declarations. Determine whether a ruleset does not contain any declarations.
 
+\textbf{Discussion:} the convention aims at getting rid of one type of refactoring leftovers -
+rulesets without declarations [CSS lint]. Removing empty rulesets reduces the total size of CSS that
+needs to be processed by the browser. One possible approach for discovering violations of the
+convention at hand is to search the stylesheet for rulesets and then check whether each ruleset
+contains a declaration. To perform this search successfully, developers need to understand the
+concept of a ruleset and a declaration, i.e. they need to be able to recognize these two CSS
+structures. Further, developers need to determine relations between structures, particularly,
+whether a ruleset contains a declaration.
+
+After all conventions have been analyzed, the specific actions and concepts were used to extract requirements. The following set of general requirements have been detected:
+
+\begin{description}
+  \item Every convention can be represented as a combination of constraints. There are two major constructs used to express conventions in natural language: forbid and require. Conventions that that forbid describe directly their violations. For example, the convention ``disallow @import'' specifies that import statements are violations. Conventions that use the latter construct describe a pattern and once the pattern is found the constraint is evaluated. If case the constraint is not met, a violation is discovered. For example, the convention ``class names should be lowercase'' requires finding class nodes and then evaluating whether they are lowercase. 
+
+  \item As a direct consequence of the introduced categories of conventions Conventions can refer to nodes in abstract syntax tree, concrete syntax tree and parse tree of
+CSS.
 \end{description}
-
-This convention aims at getting rid of one type of refactoring leftovers - rulesets without
-declarations [CSS lint]. Removing empty rulesets reduces the total size of CSS that needs to be
-processed by the browser. One possible approach for discovering violations of the convention at hand
-is to search the stylesheet for rulesets and then check whether each ruleset contains a declaration.
-To perform this search successfully, developers need to understand the concept of a ruleset and a
-declaration, i.e. they need to be able to recognize these two CSS structures. Further, developers
-need to determine relations between structures, particularly, whether a ruleset contains a
-declaration.
-
-In this way, all conventions have been analyzed and as a result, the following set of conclusions
-have been made:
-
 1) Every convention imposes a set of constraints over the program. Violations occur when these
 constraints are not met.
 
-2) Conventions can refer to nodes in abstract syntax tree, concrete syntax tree and parse tree of
-CSS.
+2) 
 
 3) Conventions can refer to nodes based on their type or function in the program (hex, color)
 
@@ -354,15 +374,9 @@ CSS.
 node in isolation but a number of related nodes that form a pattern. The nodes do not have to be
 immediately related, they could be scattered across the tree.
 
-5) Conventions could be related. For example, it is often the case that two conventions are related
-within the boundaries of a style guide. Often a given convention serves as an exception for another
-convention, or relaxes the constraints of another convention.
-
-
 \section{Abstract syntax}
 
-TODO: shall I add context and convention diagrams
-Types are still missing
+TODO: Types are still missing
 
 This section describes the abstract syntax of CssCoco. An overview of the abstract syntax is shows in Figure x. A detailed view of each of the .. is presented afterwards.
 
@@ -902,7 +916,7 @@ Allowance of Conventions & Relaxing Conventions of Convention \\ \hline
 Context & Pattern descriptor, Node descriptor, Node Relation \\ \hline
 Ignored Constructs & Convention Context \\ \hline
 Constraint & Expression \\ \hline
-Subject of Constraint & API Call, Literal Expression, Variable Expression \\ \hline
+Subject of Constraint & API Call, Literal Expression, Variable Expression, Unary? \\ \hline
 Comparison Constraint & Comparison Expression \\ \hline
 Type Constraint & Is Expression \\ \hline
 Textual Form Constraint & Match Expression \\ \hline
@@ -952,22 +966,29 @@ however, some of them need more explanation. The property Subject of Constraint 
 of constructs in the system. In fact, a Subject corresponds to API Call, Literal Expression or
 Variable Expression.
 
-The property Ignored Constructs of Context denotes certain constructs that need to be ignored while
-searching for the Context. The property is a consequence of the different level of abstraction of
-the expressed conventions. As the Domain Analysis section illustrates, conventions can refer to the
-concepts in the abstract syntax tree, concrete syntax tree and parse tree of CSS. Thus, the Ignored
-Constructs denote the specific level of abstraction the convention uses. In the system the notion of
-Ignored Constructs is represented by a group of conventions that share a the same called Contexts. In the system a Context is a common 
+The property Ignored Constructs of class Context denotes certain constructs that need to be ignored
+while searching for the Context. The property is a consequence of the different level of abstraction
+of the expressed conventions. As the Domain Analysis section illustrates, conventions can refer to
+the concepts in the abstract syntax tree, concrete syntax tree and parse tree of CSS. Thus, the
+Ignored Constructs denote the specific level of abstraction the convention uses. In the system the
+notion of Ignored Constructs is represented by a group of conventions called Contexts. In the system
+a Context contains conventions that refer to the same level of abstraction and, thus, have the same
+Ignored Constructs.
 
-Type of Construct 
-
-CSS-specific knowledge
+The property Type of class Construct corresponds to the Search Categories of Node, which allow a
+single node to be referred using a number of different categories. The property CSS-specific
+knowledge of class Construct is mapped to the API of Node. Each Node in the system comprises a
+number of properties that are meaningful for its function in the CSS program.
 
 \textbf{Events}
 
-\subsubsection{Interpretation Mapping}
-test
+Violations Finder
 
+
+\subsubsection{Interpretation Mapping}
+
+In this section the constructs of the designed system are mapped to the constructs of the
+domain-specific ontology. Table 5.2. presents the correspondence between the two sets of constructs.
 
 \begin{center}
 \begin{longtable}{ | p{23em} | p{17em} | } 
@@ -1007,6 +1028,68 @@ Description of Violation & Description of Violation \\ \hline
 Position of Violation & Position in Stylesheet of Violation \\ \hline
 \end{longtable}
 \end{center}
+
+
+\textbf{Abstract Syntax Package}
+
+The majority of modeling constructs that belong the abstract syntax of the language map to a single ontological construct. For example, Convention Set corresponds to the concept of a Style Guide, Convention maps to the concept of Convention, and Expression matches a Constraint.
+
+The WhitespaceVariation is a special type combination of whitespace nodes that can only appear on
+as operands of Before, After and Between Expressions. A WhitespaceVariation is semantically a constraint.
+
+Or And and Not Expr do not have a direct ontological concept. However, they are used to glue the
+constraints imposed by a single convention. In this sense, they fall in the expression -> Context
+mapping.
+
+\textbf{Analysis Package}
+
+Violation and Violations
+
+Violation finder + Expression evaluation and values belong to
+
+Type checker 
+
+\textbf{CSS Package}
+
+Node 
+
+Stylesheet
+
+\subsection{Ontological Evaluation of the System}
+
+The representation and interpretation mappings between the ontology and the system allow discovery
+of one of the four discrepancies: construct redundancy, construct overload, construct excess and
+construct deficit.
+
+\subsubsection{Redundant Constructs} 
+
+Construct redundancy is a type of anomaly in which more than one modeling constructs can represent a
+single ontological construct. Candidate redundant constructs are the CallExpression,
+LiteralExpression, VariableExpression and UnaryExpression, since they all appear to map to the same
+ontological construct - Constraint. However, none of these constructs, taken individually, is
+capable of representing the concept of Constraint. It is their combination that expresses the
+concept. For this reason, the candidate constructs are not considered redundant. In fact, a number
+of researchers have compared a construct to a combination of constructs~\cite{gehlert2007toward}.
+
+\subsubsection{Construct Overload}
+
+Construct overload emerges when a single modeling construct can represent a number of ontological
+constructs. No candidates for construct overload have been found.
+
+\subsubsection{Construct Excess}
+
+Construct excess is a discrepancy in which a modeling construct does not have a mapping ontological construct. The system contains a number of classes and packages that do not have a corresponding ontological concepts, e.g. Type Checker. However, the class is used to ensure the correctness of the Style Guide. In this sense, it has a supporting function that contributes to an ontological concept.
+
+\subsubsection{Construct Deficit}
+
+Construct deficit appears when an ontological construct does not have a corresponding modeling
+structure. A candidate for such discrepancy is the property Checked of class Stylesheet as it
+appears without a matching construct in the system. However, maintaining the status of a Stylesheet
+is considered outside the scope of the system. Such functionality can be added based on whether the
+IDE or text editor expose such knowledge. That said, the structure remains in the environment of the
+system and thus, the candidate is not considered a deficit.
+
+Having the above consideration in mind, we believe the ontological analysis provides sufficient evidence to consider the designed system both ontologically clear and complete.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
