@@ -21,6 +21,7 @@
 
 \usepackage{graphicx}
 \usepackage{longtable}
+\usepackage{titlesec}
 \usepackage{wrapfig}
 \usepackage{array}
 \usepackage{multirow}

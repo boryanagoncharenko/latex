@@ -1,5 +1,11 @@
 \documentclass[parskip=full]{uvamscse}
 
+\setcounter{secnumdepth}{4}
+
+\titleformat{\paragraph}
+{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titlespacing*{\paragraph}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
 
 \input{program-listings}
 \newcommand{\cmd}[1]{\texttt{$\backslash$#1}}
@@ -208,17 +214,17 @@ The primary organization responsible for the specification of CSS has not publis
 style guide. As a result, the CSS community has produced a pool of coding conventions, best
 practices, guidelines and recommendations.
 
-To discover existing CSS code conventions, searches using two search engines
-\url{http://duckduckgo.com} and \url{http://google.com} have been conducted and the first 100
-results of each search have been analyzed. From each result only conventions about plain CSS have
-been taken into account. Conventions that refer to CSS preprocessors have been ignored. In case the
-result contains links to other style guides, these references have been considered as results and
-analyzed separately.
+To discover existing CSS code conventions, two searches with the keywords ``CSS code conventions''
+have been made using the search engines \url{http://duckduckgo.com} and \url{http://google.com}. The
+first 100 results of each search have been analyzed. From each result only conventions that refer to
+plain CSS have been taken into account and conventions related to preprocessors have been ignored.
+In case the result contains links to other style guides, these references have been considered as
+results and analyzed separately.
 
 During the process of discovering conventions, a number of issues have been observed. First, some of
 the conventions did not provide sufficient information to be applied in practice. Such an example is
-the convention ``don’t use CSS hacks — try a different approach first'' while the style guide does
-not define the notion of CSS hacks. Overgeneralized conventions have been omitted from the results.
+the convention ``don’t use CSS hacks — try a different approach first'' when the style guide does
+not define the meaning of CSS hacks. Overgeneralized conventions have been omitted from the results.
 
 Another part of the discovered conventions introduced a discrepancy between their description in
 natural language and the provided code example. An instance of such contradiction is when the
@@ -238,17 +244,47 @@ should appear on one line. Implicit conventions were registered as explicit conv
 
 \section{Results}
 
-Results of the two searches include the CSS coding guidelines of CSS professionals as well as
-leading companies, e.g. Google, Mozilla, GitHub, Wordpress. The accumulated corpus consists of 165
-unique coding conventions. . Here is an example:
+As a result of the searches, a set of 165 unique CSS code conventions has been accumulated. Sources
+of these conventions include CSS professionals, open-source communities and companies, such as \href{https://google-styleguide.googlecode.com/svn/trunk/htmlcssguide.xml#Protocol}{Google}, \href{http://primercss.io/guidelines/#css}{GitHub}, \href{https://make.wordpress.org/core/handbook/best-practices/coding-standards/css/}{Wordpress}, \href{https://www.drupal.org/node/1887862}{Drupal}. Following is a listing that contains a selected set of the discovered conventions:
 
-A full list is available at this GitHub page.
+\begin{itemize} 
+\item Avoid qualifying ID and class names with type selectors. 
+\item Use RGBA only when opacity is needed.
+\item Use short hexadecimal values. 
+\item CSS files must not include any @charset statements.
+\item Disallow @import. 
+\item When possible, use em instead of pix. 
+\item Avoid using z-indexes when possible. 
+\item Require compatible vendor prefixes. 
+\item Do not use !important. 
+\item Do not use id selectors. 
+\item Id and class names should be lowercase.
+\item All values except the contents of strings should be lowercase.  
+\item HTML tags should be lowercase.
+\item Put a ; at the end of declarations. 
+\item Do not put quotes in URL declarations.
+\item Use short hex values.
+\item Use the shorthand margin property.
+\item Do not use units after 0 values.
+\item Use a leading zero for decimal values.
+\item Use single quotes in charsets.
+\item Use single quotes in attribute selectors.
+\item Put one space between the colon and the value of a declaration.
+\item Put one space between the last selector and the block.
+\item One selector per line.
+\item A rule must not contain height and border, border-top, border-bottom, padding, padding-top, or padding-bottom.
+\item A rule must not contain width and border, border-left, border-right, padding, padding-left, or padding-right.
+\item Warning if a property is included in a rule twice and contains the same value.
+\item Forbid empty rules.
+\item A vendor-prefixed property must be followed by a standard property.
+\item Require fallback color. A color property with a RGBA(), HSL(), or HSLA() color without a preceding color property that has an older color format.
+\item A rule that has display: inline-block should not use float.
+\item A rule that has display: block should not use vertical-align.
+\item Use 4 spaces for indentation, no tabs.
+\item No trailing spaces.
+\end{itemize}
 
-\section{Analysis}
-
-There are conventions that cannot be detected at all?
-
-What if not everyone have published their style guides? Well, some respectful companies did.
+The full list of all discovered conventions along with their sources and explanation of their meaning is available in the \href{https://github.com/boryanagoncharenko/CssCoco/blob/master/analysis.md}{CssCoco GitHub repository}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -635,15 +671,31 @@ node_type : '(' node_type ')'
 
 \section{Validation}
 
-The method chosen for validating the designed domain-specific language is ontological analysis, since it is a widely-accepted way for evaluating software notations~\cite{opdahl2002ontological, green2000integrated, moody2009physics, parsons1997using, weber1996analytical}. The particular approach used for conducting ontological analysis consists of several steps. First, a domain-specific ontology is designed. Second, the ontology is used as a reference point for the interpretation and representation mappings. Third, emerged anomalies are analyzed and conclusion about the quality of the notation is made.
+The method chosen for validating the designed domain-specific language is ontological analysis,
+since it is a widely-accepted way for evaluating software notations~\cite{opdahl2002ontological,
+green2000integrated, moody2009physics, parsons1997using, weber1996analytical}. The particular
+approach used for conducting ontological analysis consists of several steps. First, a domain-
+specific ontology is designed. Second, the ontology is used as a reference point for the
+interpretation and representation mappings. Third, emerged anomalies are analyzed and conclusion
+about the quality of the notation is made.
 
 \subsection{Ontology design}
 
-The first stage of validation requires designing a domain-specific ontology. The specific domain of the developed ontology is limited to detecting violations of CSS code conventions. In other words, the designed ontology tries to capture only the concepts and their relations, that exist when an agent searches a CSS program for violations of given set of code conventions.
+The first stage of validation requires designing a domain-specific ontology. The specific domain of
+the developed ontology is limited to detecting violations of CSS code conventions. In other words,
+the designed ontology tries to capture only the concepts and their relations, that exist when an
+agent searches a CSS program for violations of given set of code conventions.
 
-The designed domain-specific ontology is based on the BWW top-level ontology~\cite{wand1990ontological}, i.e. it uses the high-level categories of the BWW ontology to describe the objects, concepts and entities in the specific domain. The rationale behind the decision to use BWW ontology is that it has been the leading ontology used for ontological analysis~\cite{moody2009physics}. The main ontological constructs used in the BWW ontology are listed in section 2.1. 
+The designed domain-specific ontology is based on the BWW top-level
+ontology~\cite{wand1990ontological}, i.e. it uses the high-level categories of the BWW ontology to
+describe the objects, concepts and entities in the specific domain. The rationale behind the
+decision to use BWW ontology is that it has been the leading ontology used for ontological
+analysis~\cite{moody2009physics}. The main ontological constructs used in the BWW ontology are
+listed in section 2.1.
 
-Following is a list with the main concepts discovered in the domain along with their descriptions. The used BWW concepts are written in \textit{italics} and the domain-specific concepts are written in \textbf{bold}.
+Following is a list with the main concepts discovered in the domain along with their descriptions.
+The used BWW concepts are written in \textit{italics} and the domain-specific concepts are written
+in \textbf{bold}.
 
 \begin{description}
 
@@ -749,14 +801,16 @@ Following is a list with the main concepts discovered in the domain along with t
 \end{description}
 
 TODO: include property and event of the Stylesheet!
-TODO: include couplings diagram with explanation!
 
-The descriptions provided in the listing above often state that an instance of a class is a composite thing that consists of other things. To provide a better understanding of the relations between the entities defined in the ontology, the concepts are also expressed using the Backus-Naur Form (BNF) notation.
+The descriptions provided in the listing above often state that an instance of a class is a
+composite thing that consists of other things. To provide a better understanding of the way
+composite things are constructed, the same concepts are also expressed using the Backus-Naur Form
+(BNF) notation:
 
 \begin{snippet}
 \begin{verbatim}
 STYLE_GUIDE     ::= CONVENTIONS
-CONVENTIONS     ::= CONVENTIONS CONVENTION | CONVENTION | EPSILON
+CONVENTIONS     ::= CONVENTIONS CONVENTION | CONVENTION 
 CONVETION       ::= CONTEXT
 CONTEXT         ::= CONSTRAINTS
 CONSTRAINTS     ::= CONSTRAINTS CONSTRAINT | CONSTRAINT
@@ -765,12 +819,22 @@ CONSTRAINT      ::= COMPARISON_CONSTRAINT | TYPE_CONSTRAINT | TEXT_CONSTRAINT
 VIOLATION_LOG   ::= VIOLATIONS
 VIOLATIONS      ::= VIOLATIONS VIOLATION | VIOLATION | EPSILON
 STYLESHEET      ::= CONSTRUCTS
-CONSTRUCTS      ::= CONSTRUCTS CONSTRUCT | CONSTRUCT | EPSILON
-PATTERN         ::= CONSTRUCTS CONSTRUCT_RELATIONS
+CONSTRUCTS      ::= CONSTRUCTS CONSTRUCT | CONSTRUCT
+PATTERN         ::= CONSTRUCTS
 \end{verbatim}
 \end{snippet}
 
-While the above listing presents the composition of things, it does not illustrate how things interact with each other. To provide a better understanding of the dynamics between things defined in the ontology, a diagram of the system is presented in Figure 5.1.
+The grammar above illustrates that a Style Guide needs to contain 1 or more Conventions. Similarly,
+a Context requires 1 or more Constraints in order to exist. A Violation Log, however, could exist
+without any Violations in the cases when a Stylesheet is checked for conformance to a Style Guide
+and no violations are discovered. Both Stylesheet and Pattern are defined through 1 or more
+Constructs. Note that the concept of Stylesheet does not map to a CSS file, but to the whole CSS
+code that needs to be processed, regardless of type of CSS (internal or external). This is why a
+Stylesheet requires at least one Construct in order to exist.
+
+While the above grammar presents the composition of things, it does not illustrate how things
+interact with each other. To provide a better understanding of the dynamics between things defined
+in the ontology, a graph of the system is presented in Figure 5.1.
 
 \begin{figure}[h!]
   \centering
@@ -778,24 +842,55 @@ While the above listing presents the composition of things, it does not illustra
   \includegraphics[width=0.8\textwidth]{ontology}
 \end{figure}
 
-According to the theory, a coupling occurs when the existence of a given thing affects the history of another thing and, in turn, history is defined as the chronological ordered states that a thing traverses~\cite{wand1990ontological}. Thus, in the domain-specific ontology a coupling exist between the Style Guide and the Convention things, because the existence of a Convention alters the state of the Style Guide. Similarly, a Context changes the state of a Convention and a Constraint affects the state of a Context. 
+According to the theory, a coupling occurs when the existence of a given thing affects the history
+of another thing and, in turn, history is defined as the chronological ordered states that a thing
+traverses~\cite{wand1990ontological}. Thus, in the domain-specific ontology a coupling exists
+between the Style Guide and the Convention things, because the existence of a Convention alters the
+state of the Style Guide. Similarly, a Context changes the state of a Convention and a Constraint
+affects the state of a Context.
 
-There are also couplings between Construct, Pattern and Stylesheet things. Both Stylesheet and Pattern are composed of Constructs, and thus affected by their existence. Since a Pattern is a specific occurrence of a combination of Constructs, it is also coupled to Stylesheet.
+There are also couplings between Construct, Pattern and Stylesheet things. Both Stylesheet and
+Pattern are composed of Constructs, and thus affected by their existence. Since a Pattern is a
+specific occurrence of a combination of Constructs, it is also coupled to Stylesheet.
 
-A Violation is coupled to a Violation Log, since the presence of a new a Violation alters the state of the log. Further, a Violation Log contains information about the violations of a particular Style Guide that occur in a specific Stylesheet. In this sense, a Violation Log is a function of a Style Guide and a Stylesheet and it is coupled to both things.
+A Violation is coupled to a Violation Log, since the presence of a new a Violation alters the state
+of the log. Further, a Violation Log contains information about the violations of a particular Style
+Guide that occur in a specific Stylesheet. In this sense, a Violation Log is a function of a Style
+Guide and a Stylesheet and it is coupled to both things.
 
-There are two external events that an Actor can initiate: searching for violations and discovering violations. Both of these events express couplings, because they change the state of the Violation Log and the Violation, respectively. Note that an Actor can create any of the things that appear in Figure 5.1. In practice, the Actor can introduce additional Conventions, change the Style Guide, alter the existing Constructs and rewrite the Stylesheet. However, these events are considered outside the domain of the designed ontology. 
+There are two external events that an Actor can initiate: searching for violations and discovering
+violations. Both of these events express couplings, because they change the state of the Violation
+Log and the Violation, respectively. Note that an Actor can create any of the things that appear in
+Figure 5.1. In practice, the Actor can introduce additional Conventions, change the Style Guide,
+alter the existing Constructs and rewrite the Stylesheet. However, these events are considered
+outside the domain of the designed ontology.
 
 \subsection{Ontological analysis}
 
-\textbf{Representation Mapping}
+The ontological analysis uses the designed domain-specific ontology. It consists of two mappings -
+representation and interpretation. As suggested by other authors, the two mappings are expressed in
+the form of two tables. 
+
+Typically ontological analysis is used to compare the abstract syntax of the language constructs to
+the concepts of an ontology. In the particular case, the language aims at expressing the existing
+code conventions. This means that only the part of ontology that describes a Style Guide should be
+included. Since the domain of the ontology refers to detecting violations of code conventions, it
+does not map to the language constructs only, but to the whole solution that comprises the language
+and its interpreter. Thus, the particular approach used to conduct the ontological analysis is
+comparing the designed domain-specific ontology to the whole designed system. We believe that such
+comparison provides a thorough analysis of the whole solution.
+
+\subsubsection{Representation Mapping} 
+
+In this section the constructs of the domain-specific ontology are mapped to the constructs of the
+designed system. Table 5.1. presents the correspondence between the two sets of constructs.
 
 \begin{center}
 \begin{longtable}{ | p{17em} | p{23em} | } 
 \caption{Representation mapping}\\
 \hline
  &  \\
-Ontological concepts & Semantic constructs \\
+Ontological constructs & Modeling constructs \\
  &  \\
 \hline
 Style Guide & Convention Set \\ \hline
@@ -829,13 +924,57 @@ Number of Constructs of Pattern & Node Descriptors of Pattern Descriptor \\ \hli
 \end{longtable}
 \end{center}
 
+\textbf{Classes}
+
+The majority of the ontological classes have a direct mapping to a construct in the solution. For
+example, a Style Guide is mapped to a Convention Set, a Convention is mapped to Convention etc.
+However, some of the defined correspondences require further explanation. For example, the ontological concept of a Context is represented by a combination of modeling constructs: Pattern Descriptor, Node Descriptor and Node Relation. In the ontology a Context represents a description of a Pattern. For example, a Context could be ``all color values'' which describes all CSS nodes that express colors, i.e. hexadecimal values, text colors, rgb, rgba, hsl and hsla nodes. That said, a Context could also refer to a particular type of color value - ``hex color values''. In this sense, the Context corresponds to a Pattern Descriptor ...
+
+The notion of Constraint is a particular limitation used in a Context and typically, it is applied
+to a single node. The corresponding construct in the system is Expression. Similarly, the specific
+kinds of Constraints are mapped to subclasses of the Expression. Specifically, a Comparison
+Constraint matches the notion of Comparison Expression. The Type Constraint is expressed through the
+Is Expression, which allows verifying the type of a node. The Textual Form Constraint maps to the
+Match Expression, which allows using regular expressions on strings. The Set Membership Expression
+corresponds to the In Expression that checks whether the subject belongs in a given list of values.
+The Context Constraint matches the Node Query Expression, which retrieves node that have a given
+relation to the current node.
+
+The concept of Construct corresponds to a Node in the system and a Stylesheet maps to a special kind
+of Node that contains the code that needs to be processed. A Pattern is a combination of Nodes. Note
+that a Pattern does not correspond to a Node Relation. While relations are used to describe a
+Pattern in the concept of a Context, they are not required in a Pattern.
+
+\textbf{Properties}
+
+Similarly to classes, most of the ontological properties map directly to the modeling constructs,
+however, some of them need more explanation. The property Subject of Constraint can map to a number
+of constructs in the system. In fact, a Subject corresponds to API Call, Literal Expression or
+Variable Expression.
+
+The property Ignored Constructs of Context denotes certain constructs that need to be ignored while
+searching for the Context. The property is a consequence of the different level of abstraction of
+the expressed conventions. As the Domain Analysis section illustrates, conventions can refer to the
+concepts in the abstract syntax tree, concrete syntax tree and parse tree of CSS. Thus, the Ignored
+Constructs denote the specific level of abstraction the convention uses. In the system the notion of
+Ignored Constructs is represented by a group of conventions that share a the same called Contexts. In the system a Context is a common 
+
+Type of Construct 
+
+CSS-specific knowledge
+
+\textbf{Events}
+
+\subsubsection{Interpretation Mapping}
+test
+
 
 \begin{center}
 \begin{longtable}{ | p{23em} | p{17em} | } 
 \caption{Interpretation mapping}\\
 \hline
  &  \\
-Semantic constructs & Ontological concepts  \\
+Modeling constructs & Ontological constructs  \\
  &  \\
 \hline
 
