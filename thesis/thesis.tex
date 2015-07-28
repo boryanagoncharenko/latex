@@ -47,20 +47,23 @@ Code conventions put constraints on how code should be written in the context of
 organization or programming language. Style guides can comprise conventions that refer to
 whitespacing, indentation, code layout, preference of syntactic structures, code patterns and anti-
 patterns. They are mainly used to achieve code consistency, which in turn improves the readability,
-understandability and maintainability of the code~\cite{Buse2010}.
+understandability and maintainability of the code~\cite{Buse2010} ~\cite{buse2010learning}
+~\cite{tenny1988program}.
 
 Style guides are often designed in an ad hoc manner. Coding conventions typically live in documents
 that contain a description of each rule in natural language accompanied by code examples. This is
-the case with the style guidelines of Mozilla~\cite{Mozilla}, Google~\cite{Google}, GitHub~\cite{GitHub}, WordPress~\cite{Wordpress} and
-Drupal~\cite{Drupal}. To apply the conventions, developers first need to read, understand and apply them
-manually. Such an approach introduces a number of issues. Using natural language can make guidelines
-incorrect, ambiguous, implicit or too general. Another problem is that developers apply conventions
-manually, which increases the chances of introducing violations involuntarily. There are tools that
-check for compliance with guidelines, however, they are often hard to customize or limited to one
-type of violations, e.g. only whitespacing.
+the case with the style guidelines of Mozilla~\cite{Mozilla}, Google~\cite{Google},
+GitHub~\cite{GitHub}, WordPress~\cite{Wordpress} and Drupal~\cite{Drupal}. It is the reponsibility
+of the developers to ensure that their code complies to a given style guide. Typically, they need to
+read, understand the conventions and then apply them manually. Such an approach introduces a number
+of issues. First, using natural language can make guidelines incorrect, ambiguous, implicit or too
+general. Second, the fact that developers apply conventions manually increases the chances of
+introducing violations involuntarily. There are a number of tools that can automatically detect
+violations of conventions, however, current solutions are often hard to customize or are limited to
+one type of violations, e.g. only whitespacing.
 
 The core idea behind the project is to provide a solution that lets developers express an arbitrary
-set of coding conventions and detect their violations automatically in an IDE. Writing conventions
+set of coding conventions and detect their violations automatically. Writing conventions
 in an executable form could assist authors in detecting incorrect, ambiguous or inconsistent
 guidelines. Automatic detection of violations could minimize the effort required by developers to
 write code that complies to the guidelines. To meet the constraints of a Master’s project, the
@@ -76,11 +79,11 @@ answer the following set of questions:
   \end{description}
 
 The thesis is organized as follows. Chapter \ref{sec:background} provides information about previous
-studies and defines terms used throughout the thesis. Chapter \ref{sec:evaluating} presents the
-research approach used to determine whether CSS is handcrafted. The process and results of
-discovering the existing code conventions is described in Chapter \ref{sec:discovering}. The design
-and description of a DSL is presented in Chapter \ref{sec:expressing}. Chapter \ref{sec:conclusion}
-concludes the thesis.
+studies and defines concepts and terms used throughout the thesis. Chapter \ref{sec:evaluating}
+presents the research approach used to determine whether CSS is handcrafted and analysis of the
+gathered results. Chapter \ref{sec:discovering} contains the research method  used to discover
+existing code conventions and the results of the research. The design and validation of the DSL are
+presented in Chapter \ref{sec:expressing}. Chapter \ref{sec:conclusion} concludes the thesis.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -96,16 +99,20 @@ explicit specification of a conceptualization~\cite{gruber1995toward}. It descri
 fundamental in the totality of what exists and it defines the most general categories to which we
 need to refer in constructing a description of reality~\cite{milton2004top}.
 
-Researches distinguish between two kinds of ontologies: top-level and domain-
+Researchers distinguish between two kinds of ontologies: top-level and domain-
 specific~\cite{milton2004top}. Ontologies of the former type are highly general and provide the
 theoretical foundations for representation and modeling of systems. Ontologies of the latter type
-are restricted to define concepts and their relations that fall in a particular domain. A domain-specific ontology is based on a specific top-level ontology if it uses the categories defined by the high level ontology~\cite{milton2004top}.
+are restricted to define concepts and their relations that fall in a particular domain. A domain-
+specific ontology is based on a specific top-level ontology if it uses the categories defined by the
+high level ontology~\cite{milton2004top}.
 
-The Bunge-Wand-Weber (BWW) ontology~\cite{wand1990ontological} is a high-level ontology used in the representation model developed by Wand and Weber~\cite{wand1995deep}. Table \ref{tab:bwwmodel} presents a selected set of the ontological constructs in the BWW ontology.
+The Bunge-Wand-Weber (BWW) ontology~\cite{wand1990ontological} is a high-level ontology used in the
+representation model developed by Wand and Weber~\cite{wand1995deep}. Table \ref{tab:bwwmodel}
+presents a selected set of the ontological constructs in the BWW ontology.
 
 \begin{center}
 \begin{longtable}{ | p{11em} | p{30em} | } 
-\caption{Selected ontological constructs in the BWW representation model}
+\caption{Selected ontological constructs in the BWW representation model presented in ~\cite{wand1995deep}}
 \label{tab:bwwmodel}\\
 \hline
  &  \\
@@ -179,14 +186,17 @@ preprocessor code, the extensions of all files in the commits were inspected. In
 contains a file with extension \texttt{.scss}, \texttt{.sass}, \texttt{.less} or \texttt{.styl}, it
 is considered preprocessor maintenance. In case the commit contains files with the \texttt{.css}
 extension and no preprocessor extensions, it is considered maintenance of plain CSS. Since the main
-objective of the search is to determine maintenance, only files that were modified are taken into
-consideration. Files that were added are excluded from the results, since developers often add
-third-party CSS libraries to their repositories.
+objective of the search is finding maintained files, only files that have been modified are taken
+into consideration. Files that have been added are excluded from the results, since developers often
+add third-party CSS libraries to their repositories.
 
 
 \section{Results}
 
-A total of 1,589,713 commits to 1,311,654 public repositories have been analyzed. X of these were not processed due to errors. Typical errors contain repositories that have been turned private and... The number of commits that maintain any form of CSS is X. Figure \ref{cssresults} summarizes the findings.
+A total of 1,589,713 commits to 1,311,654 public repositories have been analyzed. X of these were
+not processed due to errors. Typical errors contain repositories that have been turned private
+and... The number of commits that maintain any form of CSS is X. Figure \ref{cssresults} summarizes
+the findings.
 
 \begin{figure}[h!]
   \centering
@@ -203,13 +213,14 @@ said, currently GitHub reports having over 10 million users and 24 million
 repositories~\cite{GitHub}, which makes it the largest code host in the
 world~\cite{gousios2014lean}. Secondly, the search is narrowed to the publicly available
 repositories. Thus, it lies on the premise that there is not a significant difference between the
-public and private repositories hosted on the platform. Thirdly, the search detects only the
-three most popular preprocessor extensions and omits other preprocessors. It is possible that a
-number of custom preprocessors are used in practice. However, it is assumed that the number of such
-commits would not increase the number of total CSS commits to the extend at which the percentage of
-plain CSS commits is significantly diminished.
+public and private repositories hosted on the platform. Thirdly, the search detects only the four
+most popular preprocessor extensions and omits other preprocessors. It is possible that a number of
+custom preprocessors are used in practice. However, it is assumed that the number of such commits
+would not increase the number of total CSS commits to the extend at which the percentage of plain
+CSS commits is significantly diminished.
 
-Having the above limitations in mind, the search provides evidence to conclude that despite the popularity of preprocessors, plain CSS is still handcrafted on GitHub in the beginning of 2015.
+Having the above limitations in mind, the search provides evidence to conclude that despite the
+popularity of preprocessors, plain CSS is still handcrafted on GitHub in the beginning of 2015.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -301,7 +312,11 @@ The full list of all discovered conventions along with their sources and explana
 
 \section{Analysis of conventions corpus}
 
-Code conventions is an umbrella term that comprises rules for whitespacing, indentation, naming, syntax, code patterns, programming style, file organization etc. To gain an overview of the type of conventions used in the CSS domain, all conventions in the corpus are organized in groups depending on the type of constraints they impose. The following three categories were defined (sublists provide examples of conventions that fall in each category):
+Code conventions is an umbrella term that comprises rules for whitespacing, comments, indentation,
+naming, syntax, code patterns, programming style, file organization etc. To gain an overview of the
+type of conventions used in the CSS domain, all conventions in the corpus are organized in groups
+depending on the type of constraints they impose. The following three categories were defined
+(sublists provide examples of conventions that fall in each category):
 
 \begin{description}
   \item[Layout] category contains rules that constrain the overall layout of the code. It includes conventions related to whitespace, indentation and comments. Examples include:
@@ -331,7 +346,7 @@ their violations - id selectors. That said, the convention \textit{Use single qu
 two violations: URLs with single quotes and URL without quotes.
 
 After the violations of each convention were made explicit, the specific actions needed to detect
-these violations were determined. Currently the detection of violations is performed by developers
+these violations were determined. Currently, the detection of violations is performed by developers
 manually or with the partial help of tools. To perform such checks, developers need to understand
 different concepts, e.g. the concept of a rule, HTML element, IDs, etc and perform certain actions,
 such as find a structure, evaluate a constraint etc. The analysis tries to grasp the specific
@@ -371,7 +386,7 @@ represented as a combination of constraints, regardless of the way it is express
 major constructs used to convey conventions in natural language: forbid and require. Conventions
 that forbid describe directly their violations. For example, the convention \textit{Disallow
 @import} specifies that import statements are violations. Conventions that use the latter construct
-describe a pattern and once the pattern is found the constraint is evaluated. If case the constraint
+describe a pattern and once the pattern is found the constraint is evaluated. In case the constraint
 is not met, a violation is discovered. For example, the convention \textit{class names should be
 lowercase} requires finding class nodes and then checking whether they are lowercase.
 
@@ -393,19 +408,23 @@ properties; vendor-prefixed properties are exception} requires differentiating b
 vendor-specific properties. While in this case the two types of properties can be easily
 distinguished, some conventions require information that cannot be obtained using the CSS code.
 Consider the convention \textit{Order vendor-prefixed values by their version; newer versions of
-vendor values should appear after old ones}. To detect violations for this convention the release dates of the properties need to be available for comparison.
+vendor values should appear after old ones}. To detect violations for this convention the release
+dates of the properties need to be available for comparison.
 
 Conventions rarely target a single node. Typically, they refer to a number of nodes organized in a
 pattern. For example, the convention \textit{A ruleset must not contain display and float
 declarations} requires searching for two specific declaration that appear under the same parent
 node. The nodes in the pattern do not have to be immediate relatives. In fact, they can be scattered
-across the tree. For example, the rule \textit{Do not use more than 5 @font-face declarations} requires searching for specific nodes that appear anywhere in the tree.
+across the tree. For example, the rule \textit{Do not use more than 5 @font-face declarations}
+requires searching for specific nodes that appear anywhere in the tree.
 
 \section{Abstract syntax}
 
 This section describes the abstract syntax of the designed domain-specific language. The name of the
-language is CssCoco which is an short version of CSS Code Conventions. A prototype of the language is available at \url{https://github.com/boryanagoncharenko/CssCoco}. An overview of the abstract
-syntax is presented in Figure \ref{fig:astgeneral}, followed by detailed views of each of the subclasses. 
+language is CssCoco which is an short version of CSS Code Conventions. A prototype of the language
+is available at \url{https://github.com/boryanagoncharenko/CssCoco}. An overview of the abstract
+syntax is presented in Figure \ref{fig:astgeneral}, followed by detailed views of each of the
+subclasses.
 
 \begin{figure}[h!]
   \centering
@@ -772,69 +791,72 @@ decision to use BWW ontology is that it has been the leading ontology used for o
 analysis~\cite{moody2009physics}. The main ontological constructs used in the BWW ontology are
 listed in section 2.1.
 
+The designed ontology is presented using several approaches. As recommended by Wand and Weber, the
+ontology is presented using a dictionary comprising definitions of entities in natural text and,
+second, using BNF notation~\cite{wand1995deep}~\cite{rosemann2002developing}. Additionally, a system
+diagram is included to provide a better view of the couplings between the different entities. The
+ontology is intentionally not presented using Unified Modeling Language or Entity-Relationship
+diagrams. These modeling languages are themselves subjects of ontological analysis and therefore are
+not suitable for expressing an ontology.
+
 Following is a list with the main concepts discovered in the domain along with their descriptions.
 The used BWW concepts are written in \textit{italics} and the domain-specific concepts are written
 in \textbf{bold}.
 
 \begin{description}
 
-\item\textit{Class} \textbf{Style Guide} describes the coding practices adopted in the context of a single project, organization, community or language. An individual Style Guide is a composite thing built of Conventions and their relations. Conventions in a Style Guide are interpreted together to form a coherent set of guidelines.
+\item\textit{Class} \textbf{Style Guide} describes the coding practices adopted in the context of a single project, organization, community or language. An individual Style Guide is a \textit{composite thing} built of Conventions and their relations. Conventions in a Style Guide are interpreted together to form a coherent set of guidelines.
 
 \textit{Property} \textbf{Number of Conventions} indicates the size of the Style Guide.
 
 
-\item\textit{Class} \textbf{Convention} is a rule that imposes constraints on the CSS program. It is the building block of Style Guides. An individual Convention is a composite thing that consists of a Context.
+\item\textit{Class} \textbf{Convention} is a specific rule that imposes constraints on the CSS program. It is the building block of Style Guides. An individual Convention is a \textit{composite thing} that contains a Context.
 
 \textit{Intrinsic Property} \textbf{Description} explains the meaning of the Convention in natural text.
 
-\textit{Mutual Property} \textbf{Exception} is a relation between Conventions in which a given convention serves as an exception of another Convention.
 
-\textit{Mutual Property} \textbf{Allowance} is a relation between Conventions in which a given convention relaxes the constraints of another Convention. 
+\item\textit{Class} \textbf{Context} is a description of a Pattern that the Convention forbids. An individual Context is a \textit{composite thing} that comprises a number of logically related Constraints. When a Pattern in the current Stylesheet fulfills all Constraints in the Context, a Violation is discovered.
 
-
-\item\textit{Class} \textbf{Context} is a description of a Pattern that the Convention forbids. An individual Context is a composite thing that comprises a number of logically related Constraints.
-
-\textit{Property} \textbf{Ignored Constructs} specifies constructs that are disregarded while searching for a Context.
+\textit{Property} \textbf{Ignored Constructs} are descriptions of Patterns that need to be disregarded while searching for the current Context. In fact, the property denotes a collection of Contexts.
 
 
-\item\textit{Class} \textbf{Constraint} is a restriction that needs to be fulfilled. Different types of Constraints are represented as kinds.
+\item\textit{Class} \textbf{Constraint} is a specific restriction that needs to be fulfilled. Constraints are individual requirements that are used in a \textbf{Context} to form a description of a \textbf{Pattern}. There are different types of Constraints represented below as \textit{kinds}.
 
-\textit{Property} \textbf{Subject} indicates the operand on which the Constraint operates. Things that can be a subject are the Type, Textual Representation or CSS-specific knowledge of a Construct.
+\textit{Property} \textbf{Subject} indicates the operand on which the Constraint operates. Different kinds of Constraints have different type of Subjects.  Things that can be a subject are the Type, Textual
+Representation or CSS-specific knowledge of a Construct.
+
+
+\item\textit{Kind} \textbf{Existence Constraint} is a type of Constraint that requires existence of a Construct. 
+
+\textit{Property} \textbf{Subject} indicates the operand on which the Constraint operates. Specifically, Subjects of the Existence Constraint are Constructs.
 
 
 \item\textit{Kind} \textbf{Comparison Constraint} is a type of Constraint that compares the subject to another value.
 
-\textit{Property} \textbf{Subject} 
+\textit{Property} \textbf{Subject} indicates the operand on which the Constraint operates. Specifically, the Subjects of Comparison Constraints can be any other Constraint.
 
-\textit{Property} \textbf{Value}
+\textit{Property} \textbf{Value} denotes the value that is used for the comparison.
 
 
 \item\textit{Kind} \textbf{Type Constraint} is a type of Constraint that checks whether the subject is of a given type.
 
-\textit{Property} \textbf{Subject} 
+\textit{Property} \textbf{Subject} indicates the operand on which the Constraint operates. Specifically, the Subjects of Type Constraints are Constructs.
 
-\textit{Property} \textbf{Type}
+\textit{Property} \textbf{Type} denotes the type that should be met for the Constraint to be satisfied.
 
 
 \item\textit{Kind} \textbf{Textual Form Constraint} is a type of Constraint that imposes restrictions on the textual representation of the subject.
 
-\textit{Property} \textbf{Subject} 
+\textit{Property} \textbf{Subject} indicates the operand on which the Constraint operates. Specifically, the Subjects of Textual Form Constraints are Constructs. 
 
-\textit{Property} \textbf{Form}
+\textit{Property} \textbf{Form} denotes the textual form that the Subject should meet for the constraint to be satisfied.
 
 
 \item\textit{Kind} \textbf{Set Membership Constraint} is a type of Constraint that requires the subject to be a member of a set.
 
-\textit{Property} \textbf{Subject} 
+\textit{Property} \textbf{Subject} indicates the operand on which the Constraint operates. Subjects of Set Membership Constraints are other Constraints.
 
-\textit{Property} \textbf{Set}
-
-
-\item\textit{Kind} \textbf{Context Constraint} is a type of Constraint that requires the subject to be in a particular context.
-
-\textit{Property} \textbf{Subject} 
-
-\textit{Property} \textbf{Context Description}
+\textit{Property} \textbf{Set} denotes the set that the Subject should be present at for the constraint to be satisfied.
 
 
 \item\textit{Class} \textbf{Violation Log} is the final product of a violations search. An individual Violation Log is a composite thing that contains Violations.
@@ -861,8 +883,6 @@ in \textbf{bold}.
 \textit{Property} \textbf{Textual Representation} is the string of a Construct that appears in the CSS program. Examples are tabs, ``;'', and ``.myclass''
 
 \textit{Property} \textbf{CSS-specific knowledge} encapsulates properties of nodes specific to the CSS domain. For example, a CSS declaration node can possess knowledge whether it is vendor specific or not.
-
-\textit{Mutual Property} \textbf{Relation} is a relation between two Constructs. For example, two Constructs may be adjacent or nested.
 
 
 \item\textit{Class} \textbf{Pattern} is a particular part of the CSS program that matches the description of a Context. An instance of a Pattern is a composite thing built from one or many Constructs and Relations between them.
@@ -971,7 +991,8 @@ comparison provides a thorough analysis of the whole solution.
 \subsubsection{Representation Mapping} 
 
 In this section the constructs of the domain-specific ontology are mapped to the constructs of the
-designed system. Table \ref{tab:representation}. presents the correspondence between the two sets of constructs.
+modeling grammar. Table \ref{tab:representation}. presents the correspondence between the two sets
+of constructs.
 
 \begin{center}
 \begin{longtable}{ | p{17em} | p{23em} | } 
@@ -979,42 +1000,72 @@ designed system. Table \ref{tab:representation}. presents the correspondence bet
 \label{tab:representation}\\
 \hline
  &  \\
-Ontological constructs & Modeling constructs \\
+Ontological constructs & Grammar constructs \\
  &  \\
 \hline
 Style Guide & Convention Set \\ \hline
-Number of Conventions of Style Guide & Conventions of all Contexts in a Convention Set \\ \hline
+Number of Conventions (Style Guide) & Contexts (Convention Set), Conventions (Context) \\ \hline
 Convention & Convention \\ \hline
-Description of Convention & Description of Convention \\ \hline
-Exception of Conventions & Exceptions of Convention \\ \hline
-Context & Pattern Descriptor, Node Descriptor \\ \hline
-Ignored Constructs & Context \\ \hline
-Constraint & Expression \\ \hline
-Subject of Constraint & Call, Literal and Variable Expressions \\ \hline
+Description (Convention) & Description (Convention) \\ \hline
+Context & Pattern Descriptor \\ \hline
+Ignored Constructs (Context) &  Context \\ \hline
+
+Constraint & Comparison, Is, In, Match, Node Query, Not, And, Or Expressions \\ \hline
+Subject (Constraint) & Variable Expression, Call Expression \\ \hline
+???Value (Constraint Kinds) & Operand of Binary Expression \\ \hline
+Existence Constraint & Node Descriptor, Node Relation, Node Query Expression \\ \hline
 Comparison Constraint & Comparison Expression \\ \hline
 Type Constraint & Is Expression \\ \hline
 Textual Form Constraint & Match Expression \\ \hline
 Set Membership Constraint & In Expression \\ \hline
-Context Constraint & Node Query Expression \\ \hline
+Basic Value & Literal Expression \\ \hline
+
 Violation Log & Violation Log \\ \hline
-Number of Violations & Violations of Violation Log \\ \hline
+Number of Violations (Violation Log) & Violations (Violation Log) \\ \hline
 Violation & Violation \\ \hline
-Description of Violation & Description of Violation \\ \hline
-Position in Stylesheet of Violation & Position of Violation \\ \hline
-Stylesheet & StylesheetNode \\ \hline
-Checked of Stylesheet & - \\ \hline
-Construct & CssNode \\ \hline
-Type of Construct & Search Categories of CssNode \\ \hline
-Textual Representation of Construct & String of CssNode \\ \hline
-CSS-specific knowledge & API of CssNode \\ \hline
-Relation between Constructs & Node Relation \\ \hline
-Pattern & CssPattern \\ \hline
-Number of Constructs of Pattern & Node Descriptors of Pattern Descriptor \\ \hline
+Description (Violation) & Description (Violation) \\ \hline
+Position in Stylesheet (Violation) & Position (Violation) \\ \hline
+
+Stylesheet & Stylesheet Node \\ \hline
+Checked (Stylesheet) & - \\ \hline
+Construct & Css Node \\ \hline
+Type (Construct) & Search Categories (Css Node) \\ \hline
+Textual Representation (Construct) & String (Css Node) \\ \hline
+CSS-specific Knowledge (Construct) & API (Css Node) \\ \hline
+Pattern & Css Pattern \\ \hline
+Number of Constructs (Pattern) & Nodes (Css Pattern) \\ \hline
 
 \end{longtable}
 \end{center}
 
-\textbf{Classes and Kinds}
+\textbf{Ontological Classes and Kinds}
+
+The ontological concept of Style Guide is represented in the modeling grammar as a Convention Set.
+Similarly, the notion of Convention maps to the Convention class and the concept of Context maps to
+the Pattern Descriptor class.
+
+REWAMP!
+The ontological concept of Constraint appears in the modeling grammar as an Expression (not Literal,
+Variable, Call expression?). Most of the kinds of Constraints are represented by a single subclass
+of Expression. For example, the Comparison Constraint maps to the Comparison Expression and the Type
+Constraint maps to the Is Expression. Similarly, the Textual Form Constraint is represented by the
+Match Expression and the Set Membership Constraint maps to the In Expression. However, the Existence
+Constraint maps to multiple constructs in the modeling grammar. The Existence Constraint appears in
+two forms in the solution: first, it appears when a Pattern Descriptor is defined. The structure of
+the pattern is expressed using a Node Descriptors that specifies the expected type of node and the
+any additional requirements the node needs to fulfill. In this sense, a Node Descriptor is a
+combination of a Constraints. However, the presence of a Node Descriptor denotes an Existence
+Constraint. It declares that a node must exist. To describe a more complex pattern, Node Relations
+are used to glue different Node Descriptors. For example, when two nodes have to be siblings, this
+is expressed through a sibling node relation. However, in certain cases the relations between Node
+Descriptors cannot be described. For example, when a convention imposes a constraint that a
+stylesheet must not contain more than 10 occurrences of a given property, it is not important
+whether the stylesheet is a parent of an ancestor of the properties. In such cases, the Node Query
+Expression is used.
+
+The ontological constructs of Violation Log and Violation are mapped to the Violation Log and
+Violation classes, respectively. The notion Stylesheet is represented by the Stylesheet Node in the
+solution. Similarly, the Construct is mapped to Css Node and Pattern is mapped to Css Pattern.
 
 The majority of the ontological classes have a direct mapping to a construct in the solution. For
 example, a Style Guide is mapped to a Convention Set, a Convention is mapped to Convention etc. The
@@ -1030,33 +1081,49 @@ relation to the current node.
 
 The concept of a Construct corresponds to a CssNode in the system and a Stylesheet maps to a
 StylesheetNode that refers to the root of the CSS tree. A Pattern is represented in the language by
-CssPattern. Note that Node Relation does not contribute to the ontological concept of a Pattern.
-A Node Relation is used to describe the relationship between nodes and it a part of the PatternDescriptor.
+CssPattern. Note that Node Relation does not contribute to the ontological concept of a Pattern. A
+Node Relation is used to describe the relationship between nodes and it a part of the
+PatternDescriptor.
 
-\textbf{Properties}
+\textbf{Ontological Properties}
 
-Similarly to classes, most of the ontological properties map directly to the modeling constructs.
-The property Subject of Constraint can map to a number of constructs in the system. A Subject is an
-Expression limited to the set of Call, Literal and Variable Expressions.
+The majority of the ontological properties are mapped to a single construct in the solution. For
+example, the Description property of Convention class in the ontology is directly mapped to the
+Description property of the Convention class in the modeling grammar. However, some of the property
+mappings are not that obvious. For example, the ontological property Number of Conventions of class
+Style Guide is represented by a combination of properties in the solution: Contexts of Convention
+Set and Conventions of Context. Also, the notion of Ignored Constructs maps to the Context class in
+the solution. The reason for these mappings come from the fact that the solution groups together
+conventions with identical ignored constructs. As stated in the ontology description each convention
+specifies a set of constructs that need to be ignored while searching for its violations. For
+example, while evaluating the constraints of conventions related to newlines, the indentation
+constructs are typically ignored. Because the ignored constructs are similar for most of the
+conventions, the modeling grammar groups conventions that use the same ignored constructs into
+contexts. Thus, the Convention Set contains Contexts and a Context specifies the ignored constructs
+of all convention that it contains.
 
-The property Ignored Constructs of class Context denotes certain constructs that need to be ignored
-while searching for the Context. The property is a consequence of the different level of abstraction
-of the expressed conventions. As the Domain Analysis section explains, conventions can refer to the
-concepts in the abstract syntax tree, concrete syntax tree and parse tree of CSS. Thus, the Ignored
-Constructs denote the specific level of abstraction the convention uses. In the system the notion of
-Ignored Constructs is represented by a group of conventions called Contexts. A Context contains
-conventions that refer to the same level of abstraction and possess the same Ignored Constructs.
+!REVAMP
+The property Subject of class Constraint maps to Expression, just like the Constraint class itself.
+This mapping is explained by the fact that in the solution Expressions are recursively defined.
 
-The property Type of class Construct corresponds to the Search Categories of Node, which allow a
-single node to be referred using a number of different categories. The property CSS-specific
-knowledge of class Construct is mapped to the API of CssNode. Each Node in the system comprises a
-number of properties that are meaningful for its function in the CSS program.
+The ontological property Number of Violations of the Violation Log construct appears in the modeling
+grammar as property Violations of the Violation Log class. Similarly, the Violation class exposes
+Description and Position properties that map to the ontological properties Description and Position in Stylesheet.
+
+The Checked property of Stylesheet does not have a representation in the system. The property Type
+of class Construct corresponds to the Search Categories of Css Node, which allows a single node to
+be referred using a number of different categories. The Textual Representation property appears as a
+String property in Css node. The property CSS-specific knowledge of class Construct is mapped to the
+API of Css Node. Each Css Node in the system comprises a number of properties that are meaningful
+for its function in the CSS tree. The Number of Constructs property of Pattern is mapped to the
+Nodes property in Css Pattern class.
 
 
 \subsubsection{Interpretation Mapping}
 
-In this section the constructs of the designed system are mapped to the constructs of the
-domain-specific ontology. Table \ref{tab:interpretation}. presents the correspondence between the two sets of constructs.
+In this section the constructs of the designed system are mapped to the constructs of the domain-
+specific ontology. Table \ref{tab:interpretation}. presents the correspondence between the two sets
+of constructs.
 
 \begin{center}
 \begin{longtable}{ | p{20em} | p{20em} | } 
@@ -1064,44 +1131,69 @@ domain-specific ontology. Table \ref{tab:interpretation}. presents the correspon
 \label{tab:interpretation}\\
 \hline
  &  \\
-Modeling constructs & Ontological constructs  \\
+Grammar constructs & Ontological constructs  \\
  &  \\
 \hline
 
 Convention Set & Style Guide \\ \hline
-Contexts of Convention Set & partly Number of Conventions of Style Guide \\ \hline
-Context & Ignored Constructs of a Context \\ \hline
-Conventions of Context & partly Number of Conventions of Style Guide \\ \hline
+Contexts (Convention Set) & partly Number of Conventions (Style Guide) \\ \hline
+Context & Ignored Constructs (Context) \\ \hline
+Conventions (Context) & partly Number of Conventions (Style Guide) \\ \hline
 Convention & Convention \\ \hline
-Description property of Convention & Description of Convention \\ \hline
-Exceptions of Convention & Exception of Conventions \\ \hline
-Pattern Descriptor & partly Context \\ \hline
-Node Descriptor & partly Context \\ \hline
-Node Descriptors of Pattern Descriptor & Number of Constructs of Pattern \\ \hline
-Node Relation & Relation between Constructs \\ \hline
-Expression & Constraint \\ \hline
-Logical Expression & partly Constraint \\ \hline
+Description property (Convention) & Description (Convention) \\ \hline
+Pattern Descriptor & Context \\ \hline
+Node Descriptor & partly Existence Constraint \\ \hline
+Node Relation & partly Existence Constraint \\ \hline
+
+Literal Expression & Basic Value \\ \hline
+Variable Expression & partly Subject (Constraint) \\ \hline
+Not Expression & partly Constraint \\ \hline
+And Expression & partly Constraint \\ \hline
+Or Expression & partly Constraint \\ \hline
 Comparison Expression & Comparison Constraint \\ \hline
-Is Expression & Type Constraint \\ \hline
 Match Expression & Textual Form Constraint \\ \hline
 In Expression & Set Membership Constraint \\ \hline
-Node Query Expression & Context Constraint \\ \hline
-Call Expression & partly Constraint Subject \\ \hline
-Literal Expression & partly Constraint Subject \\ \hline
-Variable Expression & partly Constraint Subject \\ \hline
-CssNode & Construct \\ \hline
-Search Categories of CssNode & Type of Construct \\ \hline
-String of CssNode & Textual Representation of Construct \\ \hline
-API of CssNode & CSS-specific knowledge of Construct \\ \hline
-CssPattern & Pattern \\ \hline
+Is Expression & Type Constraint \\ \hline
+Call Expression & partly Subject (Constraint) \\ \hline
+Node Query Expression & partly Existence Constraint \\ \hline
+
+Css Node & Construct \\ \hline
+Search Categories (Css Node) & Type (Construct) \\ \hline
+String (CssNode) & Textual Representation (Construct) \\ \hline
+API (CssNode) & CSS-specific knowledge (Construct) \\ \hline
+Css Pattern & Pattern \\ \hline
+Nodes (Css Pattern) & Number of Constructs (Pattern) \\ \hline
 StylesheetNode & Stylesheet \\ \hline
 Violations Log & Violations Log \\ \hline
-Violations of Violations Log & Number of Violations \\ \hline
+Violations (Violations Log) & Number of Violations (Violation Log) \\ \hline
 Violation & Violation \\ \hline
-Description of Violation & Description of Violation \\ \hline
-Position of Violation & Position in Stylesheet of Violation \\ \hline
+Description (Violation) & Description (Violation) \\ \hline
+Position (Violation) & Position in Stylesheet (Violation) \\ \hline
 \end{longtable}
 \end{center}
+
+
+\textbf{Abstract Syntax}
+
+Most of the classes in the Abstract Syntax are mapped to a single ontological construct. For
+example, the Convention Set denotes the concept of Style Guide and the Convention class is mapped to
+the Convention ontological construct. The properties Contexts of Convention Set and Conventions of
+Context both represent the ontological property Number of Conventions of Style Guide. This mapping
+occurs because the abstract syntax puts together Conventions with identical ignored constructs. As a
+result, the Convention Set comprises Contexts, which, in turn, contain Conventions that share the
+same ignored constructs. This also, explains why the Context class maps to the ontological property
+of Ignored Constructs of Context. The classes Node Descriptor and Node Relation represent an
+Existence Constraint.
+
+The Expression class maps to both Constraint and Subject of Constraint. By definition, the Subject
+is a property of Constraint which denotes the thing that the Constraint acts upon. Since Expressions
+are recursively constructed, the Expression class maps to the two ontological constructs. However,
+not every subclass of Expression can be represented as a Constraint. In fact, the Literal, Variable
+and Call Expressions can appear only as Subjects. For example, the Literal Expression with value 4 cannot be a Constraint. Rather it is used by a Constraint
+
+\textbf{Css Tree}
+
+\textbf{Analysis}
 
 
 The majority of modeling constructs that belong the abstract syntax of the language map to a single
@@ -1123,7 +1215,19 @@ anomalies are considered in the following subsections.
 \subsubsection{Redundant Constructs} 
 
 Construct redundancy is a type of anomaly in which more than one modeling constructs can represent a
-single ontological construct. Candidate redundant constructs are the CallExpression,
+single ontological construct. 
+
+- Contexts and Conventions together represent Number of Conventions (Style Guide)
+
+- Constraint is presented by a number of Expressions. However, these are the union of all types of Constraints. Additionally, the Not, And and Or expressions are used to form more complex Constraints.
+
+- Subject of Constraint is mapped to Variable and Call Expression
+
+- Existence Constraint is mapped to Node Descriptor, Node Relation and Node Query Expression Expressions.
+
+
+
+Candidate redundant constructs are the CallExpression,
 LiteralExpression, VariableExpression and UnaryExpression, since they all appear to map to the same
 ontological construct - Constraint. However, none of these constructs, taken individually, is
 capable of representing the concept of Constraint. It is their combination that expresses the
@@ -1159,10 +1263,10 @@ evidence to consider the designed system both ontologically clear and complete.
 \chapter{Conclusion}
 \label{sec:conclusion}
 
-The variability of CSS conventions used in practice cannot be handled by existing tools. Thus, developers often need to make sure their code complies to a given style guide manually. The contribution of this thesis are threefold. First, the need for CSS conventions is evaluated and
+The variability of CSS conventions used in practice cannot be handled by existing tools. Thus, developers often need to make sure their code complies to a given style guide manually. The contribution of this thesis is threefold. First, the need for CSS conventions is evaluated and
 evidence that CSS is still handcrafted is provided. Second, a list of the existing code conventions
 and their analysis is presented. Third, a domain-specific language that is capable of expressing the
-gathered conventions is proposed. An prototype of language and its interpreter are implemented to
+gathered conventions is proposed. A prototype of language and its interpreter are implemented to
 enable automatic detection of violations.
 
 {%\tiny
