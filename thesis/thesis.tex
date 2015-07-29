@@ -53,11 +53,11 @@ understandability and maintainability of the code~\cite{Buse2010} ~\cite{buse201
 Style guides are often designed in an ad hoc manner. Coding conventions typically live in documents
 that contain a description of each rule in natural language accompanied by code examples. This is
 the case with the style guidelines of Mozilla~\cite{Mozilla}, Google~\cite{Google},
-GitHub~\cite{GitHub}, WordPress~\cite{Wordpress} and Drupal~\cite{Drupal}. It is the reponsibility
+GitHub~\cite{GitHub}, WordPress~\cite{Wordpress} and Drupal~\cite{Drupal}. It is the responsibility
 of the developers to ensure that their code complies to a given style guide. Typically, they need to
-read, understand the conventions and then apply them manually. Such an approach introduces a number
-of issues. First, using natural language can make guidelines incorrect, ambiguous, implicit or too
-general. Second, the fact that developers apply conventions manually increases the chances of
+read and understand the conventions and then apply them manually. Such an approach introduces a
+number of issues. First, using natural language can make guidelines incorrect, ambiguous, implicit
+or too general. Second, the fact that developers apply conventions manually increases the chances of
 introducing violations involuntarily. There are a number of tools that can automatically detect
 violations of conventions, however, current solutions are often hard to customize or are limited to
 one type of violations, e.g. only whitespacing.
@@ -102,9 +102,9 @@ need to refer in constructing a description of reality~\cite{milton2004top}.
 Researchers distinguish between two kinds of ontologies: top-level and domain-
 specific~\cite{milton2004top}. Ontologies of the former type are highly general and provide the
 theoretical foundations for representation and modeling of systems. Ontologies of the latter type
-are restricted to define concepts and their relations that fall in a particular domain. A domain-
-specific ontology is based on a specific top-level ontology if it uses the categories defined by the
-high level ontology~\cite{milton2004top}.
+define concepts and their relations only for a particular domain. A domain- specific ontology is
+based on a specific top-level ontology if it uses the categories defined by the high level
+ontology~\cite{milton2004top}.
 
 The Bunge-Wand-Weber (BWW) ontology~\cite{wand1990ontological} is a high-level ontology used in the
 representation model developed by Wand and Weber~\cite{wand1995deep}. Table \ref{tab:bwwmodel}
@@ -112,16 +112,16 @@ presents a selected set of the ontological constructs in the BWW ontology.
 
 \begin{center}
 \begin{longtable}{ | p{11em} | p{30em} | } 
-\caption{Selected ontological constructs in the BWW representation model presented in ~\cite{wand1995deep}}
+\caption{Selected ontological constructs in the BWW representation model}
 \label{tab:bwwmodel}\\
 \hline
  &  \\
 \textbf{Ontological construct} & \textbf{Explanation} \\
  &  \\
 \hline
-Thing & The elementary unit in the BWW ontological model. The real world is made up of things. A composite thing may be made up of other things (composite or primitive). \\ 
+Thing & The elementary unit in the BWW ontological model. The real world is made up of things. A composite thing may be made up of other things (composite or primitive).~\cite{wand1995deep} \\ 
 \hline
-Properties & \multirow{7}{30em}{Things possess properties. A property is modeled via a function that maps the thing into some value. A property of a composite thing that belongs to a component thing is called an hereditary property. Otherwise it is called an emergent property. A property that is inherently a property of an individual thing is called an intrinsic property. A property that is meaningful only in the context of two or mode things is called a mutual or relational property.} \\ 
+Properties & \multirow{7}{30em}{Things possess properties. A property is modeled via a function that maps the thing into some value. A property of a composite thing that belongs to a component thing is called an hereditary property. Otherwise it is called an emergent property. A property that is inherently a property of an individual thing is called an intrinsic property. A property that is meaningful only in the context of two or mode things is called a mutual or relational property.~\cite{wand1995deep}} \\ 
  &  \\ 
  &  \\
  &  \\
@@ -129,25 +129,26 @@ Properties & \multirow{7}{30em}{Things possess properties. A property is modeled
  &  \\
  &  \\
  \hline
- State & A vector of values for all property functions of a thing. \\
+ State & A vector of values for all property functions of a thing.~\cite{wand1995deep} \\
  \hline
- Event & A change of state of a thing. It is effected via a transformation. \\
+ Event & A change of state of a thing. It is effected via a transformation.~\cite{wand1995deep} \\
  \hline
- Transformation & A mapping from a domain comprising states to a codomain comprising states. \\
+ Transformation & A mapping from a domain comprising states to a codomain comprising states.~\cite{wand1995deep} \\
  \hline
- History & The chronologically ordered states that a thing traverses. \\
+ History & The chronologically ordered states that a thing traverses.~\cite{weber1996analytical} \\
  \hline
- Coupling & A thing acts on another thing if its existence affects the history of the other thing. The two things are said to be coupled or interact. \\
+ Coupling & A thing acts on another thing if its existence affects the history of the other thing. The two things are said to be coupled or interact.~\cite{wand1995deep} \\
  \hline
- Class & A class is a set of things that can be defined via their possessing a characteristic property. \\ 
+ Class & A class is a set of things that can be defined via their possessing a characteristic property.~\cite{weber1996analytical} \\ 
  \hline
- Kind & A kind is a set of things that can be defined only via their possessing two or more properties. \\ 
+ Subclass & A set of things that can be defined via their possessing the set of properties in
+a class plus an additional set of properties.~\cite{weber1996analytical} \\ 
 \hline
- System & A set of things is a system if, for any bi-partitioning of the set, couplings exist among things in the two subsets. \\
+ System & A set of things is a system if, for any bi-partitioning of the set, couplings exist among things in the two subsets.~\cite{wand1995deep} \\
  \hline
- System Composition & The things in the system are its composition. \\
+ System Composition & The things in the system are its composition.~\cite{wand1995deep} \\
  \hline
- System Environment &  Things that are not in the system but interact with things in the system are called the environment of the system. \\
+ System Environment &  Things that are not in the system but interact with things in the system are called the environment of the system.~\cite{wand1995deep} \\
  \hline
 \end{longtable}
 \end{center}
@@ -242,7 +243,7 @@ references are considered as results and analyzed separately.
 
 While searching for conventions, a number of issues were discovered. First, some of the
 conventions do not provide sufficient information to be applied in practice. Such an example is the
-convention \textit{Don’t use CSS hacks — try a different approach first} when the style guide does
+convention \textit{Do not use CSS hacks - try a different approach first} when the style guide does
 not define the meaning of CSS hacks. Such overgeneralized conventions were omitted from the results.
 
 Another part of the discovered conventions introduce a discrepancy between their description in
@@ -258,8 +259,11 @@ four simple-selectors. All possible interpretations of ambiguous conventions wer
 separate conventions.
 
 There are conventions that are not explicitly stated, but could only be inferred by the other rules.
-For example, the convention \textit{You can put long values on multiple lines} implies that values
-should appear on one line. Such implicit conventions were registered as explicit conventions.
+For example, the convention \textit{You can put long values on multiple lines} states that a long
+value is allowed to appear on several lines. However, this rule implies the presence of another
+convention, that is not explicitly stated. It implies that short values should appear on one line
+and only lengthy values are allowed to appear on multiple. Such implicit conventions were registered
+as explicit conventions.
 
 \section{Results}
 
@@ -399,7 +403,7 @@ All whitespacing and indentation conventions target nodes that are relevant only
 of CSS.
 
 Conventions refer to nodes using their type or function in the CSS program. For example, in the
-snippet \texttt{[class=\"test\"]} the node test can be selected 1) because it is of type string and
+snippet \texttt{[class=``test'']} the node test can be selected 1) because it is of type string and
 2) because it is an attribute value. Similarly, a node with value \texttt{\#ffffff} may be selected
 because it is a hexadecimal value or because it represents a color.
 
@@ -770,10 +774,10 @@ node_type : '(' node_type ')'
 \section{Validation}
 
 The method chosen for validating the designed domain-specific language is ontological analysis,
-since it is a widely-accepted way for evaluating software notations~\cite{opdahl2002ontological,
-green2000integrated, moody2009physics, parsons1997using, weber1996analytical}. The particular
-approach used for conducting ontological analysis consists of several steps. First, a domain-
-specific ontology is designed. Second, the ontology is used as a reference point for the
+since it is a widely accepted way for evaluating software notations~\cite{opdahl2002ontological}
+~\cite{green2000integrated}~\cite{moody2009physics}~\cite{parsons1997using}~\cite{weber1996analytical}.
+The particular approach used for conducting ontological analysis consists of several steps. First, a
+domain-specific ontology is designed. Second, the ontology is used as a reference point for the
 interpretation and representation mappings. Third, emerged anomalies are analyzed and conclusion
 about the quality of the notation is made.
 
@@ -793,11 +797,11 @@ listed in section 2.1.
 
 The designed ontology is presented using several approaches. As recommended by Wand and Weber, the
 ontology is presented using a dictionary comprising definitions of entities in natural text and,
-second, using BNF notation~\cite{wand1995deep}~\cite{rosemann2002developing}. Additionally, a system
-diagram is included to provide a better view of the couplings between the different entities. The
-ontology is intentionally not presented using Unified Modeling Language or Entity-Relationship
-diagrams. These modeling languages are themselves subjects of ontological analysis and therefore are
-not suitable for expressing an ontology.
+second, using Backus-Naur Form (BNF) notation~\cite{wand1995deep}~\cite{rosemann2002developing}.
+Additionally, a system diagram is included to provide a better view of the couplings between the
+different entities. The ontology is intentionally not presented using Unified Modeling Language or
+Entity-Relationship diagrams. These modeling languages are subjects of ontological analysis
+themselves and therefore are not suitable for expressing an ontology.
 
 Following is a list with the main concepts discovered in the domain along with their descriptions.
 The used BWW concepts are written in \textit{italics} and the domain-specific concepts are written
@@ -807,12 +811,14 @@ in \textbf{bold}.
 
 \item\textit{Class} \textbf{Style Guide} describes the coding practices adopted in the context of a single project, organization, community or language. An individual Style Guide is a \textit{composite thing} built of Conventions and their relations. Conventions in a Style Guide are interpreted together to form a coherent set of guidelines.
 
-\textit{Property} \textbf{Number of Conventions} indicates the size of the Style Guide.
+\textit{Property} \textbf{Conventions} refers to the conventions contained in the Style Guide.
 
 
 \item\textit{Class} \textbf{Convention} is a specific rule that imposes constraints on the CSS program. It is the building block of Style Guides. An individual Convention is a \textit{composite thing} that contains a Context.
 
-\textit{Intrinsic Property} \textbf{Description} explains the meaning of the Convention in natural text.
+\textit{Intrinsic Property} \textbf{Description} contains the reasoning behind the Convention.
+
+\textit{Hereditary Property} \textbf{Ignored Constructs} denotes the description of constructs that should be ignored while searching for the Convention's Context. It is inherited by the Context thing that builds a Convention.
 
 
 \item\textit{Class} \textbf{Context} is a description of a Pattern that the Convention forbids. An individual Context is a \textit{composite thing} that comprises a number of logically related Constraints. When a Pattern in the current Stylesheet fulfills all Constraints in the Context, a Violation is discovered.
@@ -820,43 +826,62 @@ in \textbf{bold}.
 \textit{Property} \textbf{Ignored Constructs} are descriptions of Patterns that need to be disregarded while searching for the current Context. In fact, the property denotes a collection of Contexts.
 
 
-\item\textit{Class} \textbf{Constraint} is a specific restriction that needs to be fulfilled. Constraints are individual requirements that are used in a \textbf{Context} to form a description of a \textbf{Pattern}. There are different types of Constraints represented below as \textit{kinds}.
+\item\textit{Class} \textbf{Constraint} is a specific restriction that needs to be fulfilled. They
+are used in a \textbf{Context} to build a description of a \textbf{Pattern}. Constraints are
+individual requirements that are imposed on subjects. Based on the value of the requirement, there
+are different types of Constraints represented below as \textit{subclasses}.
 
-\textit{Property} \textbf{Subject} indicates the operand on which the Constraint operates. Different kinds of Constraints have different type of Subjects.  Things that can be a subject are the Type, Textual
-Representation or CSS-specific knowledge of a Construct.
+\textit{Property} \textbf{Subject} indicates the thing is being constrained.
+
+\textit{Property} \textbf{Requirement} denotes the particular limitation applied to the Subject.
 
 
-\item\textit{Kind} \textbf{Existence Constraint} is a type of Constraint that requires existence of a Construct. 
+\item\textit{Subclass} \textbf{Existence Constraint} is a type of Constraint that requires existence of the subject. 
 
-\textit{Property} \textbf{Subject} indicates the operand on which the Constraint operates. Specifically, Subjects of the Existence Constraint are Constructs.
+\textit{Property} \textbf{Subject} indicates the thing is being constrained.
+
+\textit{Property} \textbf{Requirement} denotes the particular limitation applied to the Subject. Specifically, that the Subject must exist.
 
 
-\item\textit{Kind} \textbf{Comparison Constraint} is a type of Constraint that compares the subject to another value.
+\item\textit{Subclass} \textbf{Comparison Constraint} is a type of Constraint that compares the subject to another value.
 
-\textit{Property} \textbf{Subject} indicates the operand on which the Constraint operates. Specifically, the Subjects of Comparison Constraints can be any other Constraint.
+\textit{Property} \textbf{Subject} indicates the thing is being constrained.
+
+\textit{Property} \textbf{Requirement} denotes the particular limitation applied to the Subject. Specifically, that the Subject must be related to the Value in a given way.
 
 \textit{Property} \textbf{Value} denotes the value that is used for the comparison.
 
 
-\item\textit{Kind} \textbf{Type Constraint} is a type of Constraint that checks whether the subject is of a given type.
+\item\textit{Subclass} \textbf{Type Constraint} is a type of Constraint that checks whether the subject is of a given type.
 
-\textit{Property} \textbf{Subject} indicates the operand on which the Constraint operates. Specifically, the Subjects of Type Constraints are Constructs.
+\textit{Property} \textbf{Subject} indicates the thing is being constrained.
 
-\textit{Property} \textbf{Type} denotes the type that should be met for the Constraint to be satisfied.
+\textit{Property} \textbf{Requirement} denotes the particular limitation applied to the Subject. Specifically, that the Subject must be of the given type.
 
-
-\item\textit{Kind} \textbf{Textual Form Constraint} is a type of Constraint that imposes restrictions on the textual representation of the subject.
-
-\textit{Property} \textbf{Subject} indicates the operand on which the Constraint operates. Specifically, the Subjects of Textual Form Constraints are Constructs. 
-
-\textit{Property} \textbf{Form} denotes the textual form that the Subject should meet for the constraint to be satisfied.
+\textit{Property} \textbf{Value} denotes the type that the subject should meet to satisfy the constraint.
 
 
-\item\textit{Kind} \textbf{Set Membership Constraint} is a type of Constraint that requires the subject to be a member of a set.
+\item\textit{Subclass} \textbf{Textual Form Constraint} is a type of Constraint that imposes restrictions on the textual representation of the subject.
 
-\textit{Property} \textbf{Subject} indicates the operand on which the Constraint operates. Subjects of Set Membership Constraints are other Constraints.
+\textit{Property} \textbf{Subject} indicates the thing is being constrained.
 
-\textit{Property} \textbf{Set} denotes the set that the Subject should be present at for the constraint to be satisfied.
+\textit{Property} \textbf{Requirement} denotes the particular limitation applied to the Subject. Specifically, that the Subject must be equal to the given Value.
+
+\textit{Property} \textbf{Value} denotes the textual form that the Subject should meet for the constraint to be satisfied.
+
+
+\item\textit{Subclass} \textbf{Set Membership Constraint} is a type of Constraint that requires the subject to be a member of a set.
+
+\textit{Property} \textbf{Subject} indicates the thing is being constrained.
+
+\textit{Property} \textbf{Requirement} denotes the particular limitation applied to the Subject. Specifically, that the Subject must be a member of the Value.
+
+\textit{Property} \textbf{Value} denotes the set that the subject should be present at for the constraint to be satisfied.
+
+
+\item\textit{Class} \textbf{Literal Value} is a thing that represents a constant value. It includes numbers, strings, boolean values etc.
+
+\textit{Property} \textbf{Value} denotes the specific value possessed by the literal.
 
 
 \item\textit{Class} \textbf{Violation Log} is the final product of a violations search. An individual Violation Log is a composite thing that contains Violations.
@@ -878,16 +903,12 @@ Representation or CSS-specific knowledge of a Construct.
 
 \item\textit{Class} \textbf{Construct} is a part of the Stylesheet. It can refer to nodes in the CSS abstract syntax tree, concrete syntax tree and parse tree. Examples include whitespacing, indentation, comments, colons, delimiters, rulesets, declarations, etc.
 
-\textit{Property} \textbf{Type} identifies the function of a Construct in the program. Examples are strings, attribute values etc.
-
-\textit{Property} \textbf{Textual Representation} is the string of a Construct that appears in the CSS program. Examples are tabs, ``;'', and ``.myclass''
-
-\textit{Property} \textbf{CSS-specific knowledge} encapsulates properties of nodes specific to the CSS domain. For example, a CSS declaration node can possess knowledge whether it is vendor specific or not.
+\textit{Property} \textbf{Property} encapsulates properties of nodes specific to the CSS domain. For example, the type and the string representation of the node are its properties. Similarly, specific CSS Nodes can expose properties that are tightly coupled to the CSS domain, such as release date or vendor name of a CSS property.
 
 
 \item\textit{Class} \textbf{Pattern} is a particular part of the CSS program that matches the description of a Context. An instance of a Pattern is a composite thing built from one or many Constructs and Relations between them.
 
-\textit{Property} \textbf{Number of Constructs} denotes the size of the Pattern.
+\textit{Property} \textbf{Constructs} denotes the constructs that are contained in the Pattern.
 
 
 \item\textit{Event} \textbf{Search for Violations in Stylesheet} occurs when the developer completes the search for violations in a Stylesheet, a Violation Log is created and the state. When the search is completed, the Stylesheet is considered checked for compliance to the Style Guide.
@@ -897,7 +918,7 @@ Representation or CSS-specific knowledge of a Construct.
 \textit{New State} \textbf{Stylesheet} \{ Checked = True \}
 
 
-\item\textit{Event} \textbf{Context (of Convention) Discovered} occurs when the Context of a convention is discovered, a Violation is recorded in the Violation Log. The state of the Violation contain its description and position in Stylesheet.
+\item\textit{Event} \textbf{Context (Convention) Discovered} occurs when the Context of a convention is discovered, a Violation is recorded in the Violation Log. The state of the Violation contain its description and position in Stylesheet.
 
 \textit{New State} \textbf{Violation} \{ Description = value, Position in Stylesheet = value \}
 
@@ -913,12 +934,55 @@ Representation or CSS-specific knowledge of a Construct.
 
 \end{description}
 
-TODO: include property and event of the Stylesheet!
 
-The descriptions provided in the listing above often state that an instance of a class is a
-composite thing that consists of other things. To provide a better understanding of the way
-composite things are constructed, the same concepts are also expressed using the Backus-Naur Form
-(BNF) notation:
+Most of the definitions in the ontology refer to simple concepts that appear in the code conventions
+domain. For example the concept of a Style Guide refers to a collection of coherent conventions. A
+Style Guide on its own does not have any emergent or intrinsic properties and, thus, it is defined
+through the conventions it comprises. Note that in reality a Style Guide may contain a number of
+intrinsic properties, for example a Style Guide may have an author and contributors. Such
+properties, however, are not considered part of the specific domain, and thus lie outside the scope
+of the ontology.
+
+A Convention is defined as the building block of a Style Guide. However, the ontological concept of
+a Convention is slightly different than what is used as a convention in the domain analysis section.
+For example, domain analysis indicates that there are two types of conventions: forbid and require.
+The former type of conventions describes directly their violations. The latter type describes a
+pattern that, when found, additional requirements must be met and in case they are not met, a
+violation is discovered. For example, the violation \textit{Do not use id selectors} tells that id
+selectors are violations. The convention \textit{Strings should be with single quotes} states that
+strings must have single quotes, and a violation is discovered if the found string does not.
+Convention types are not related to the meaning of conventions but to the way they are expressed. A
+convention with the same meaning could be expressed using both structures: \textit{Strings should be
+with single quotes} and \textit{Forbid strings with double quotes}. Since ontological concepts are
+concerned with the meaning of things and have to be independent of the language used to express
+them, the ontology does not possess subclasses of Convention.
+
+A Context is a description of things that are disallowed by a Convention, i.e. it states explicitly
+what Patterns violate a Convention. In this sense, the meaning of a Convention is always expressed
+through the possible violations of that Convention. A Context is built from a number of Constraints.
+While a Context aims at describing a whole violation pattern, a Constraint refers to a single
+specific requirement. A Constraint always has a subject and a requirement. The subject is the object
+that is being constraint and the requirement refers to the specific limitation that is applied to
+the subject. Based on the value of the requirement property, there are different types of
+Constraints. For example, a Comparison Constraint requires the subject to be equal or greater than a
+given value and the Type Constraint require the subject to be of a particular type. The Existence
+Constraint requires the subject to exist.
+
+Since Conventions are used to constraint CSS code, subjects are typically Constructs or their
+properties. A Construct denotes a concrete part of the Stylesheet, e.g. newline, semicolon,
+declaration, ruleset etc. Each Construct exposes a number of properties that are tightly coupled to
+the function of the Construct in the stylesheet. For example, a property construct has properties
+that indicate whether it is vendor-specific and its release date.
+
+Patterns are composed of Constructs. The Constructs in the Pattern do not need to form a coherent
+valid Stylesheet and they do not have to be adjacent or directly related. In fact, they could be
+scattered across the whole Stylesheet. Patterns denote the concrete Constructs that match the
+description provided by the Context of a Convention. In this sense, they are the specific instances
+of Violations.
+
+Definitions of the ontological concepts in the listing above often state that an instance of a
+class is a composite thing that consists of other things. To provide a better understanding of the
+way composite things are constructed, the same concepts are also expressed using BNF notation:
 
 \begin{snippet}
 \begin{verbatim}
@@ -927,8 +991,8 @@ CONVENTIONS     ::= CONVENTIONS CONVENTION | CONVENTION
 CONVETION       ::= CONTEXT
 CONTEXT         ::= CONSTRAINTS
 CONSTRAINTS     ::= CONSTRAINTS CONSTRAINT | CONSTRAINT
-CONSTRAINT      ::= COMPARISON_CONSTRAINT | TYPE_CONSTRAINT | TEXT_CONSTRAINT 
-                  | SET_CONSTRAINT | CONTEXT_CONSTRAINT 
+CONSTRAINT      ::= EXISTENCE_CONSTRAINT | COMPARISON_CONSTRAINT | TYPE_CONSTRAINT  
+                  | TEXT_CONSTRAINT | SET_CONSTRAINT
 VIOLATION_LOG   ::= VIOLATIONS
 VIOLATIONS      ::= VIOLATIONS VIOLATION | VIOLATION | EPSILON
 STYLESHEET      ::= CONSTRUCTS
@@ -937,13 +1001,13 @@ PATTERN         ::= CONSTRUCTS
 \end{verbatim}
 \end{snippet}
 
-The grammar above illustrates that a Style Guide needs to contain one or more Conventions. Similarly,
-a Context requires at least one Constraint in order to exist. A Violation Log, however, could exist
-without any Violations in the cases when a Stylesheet is checked for conformance to a Style Guide
-and no violations are discovered. Both Stylesheet and Pattern are defined through 1 or more
-Constructs. Note that the concept of Stylesheet does not map to a CSS file, but to the whole CSS
-code that needs to be processed, regardless of type of CSS (internal or external). This is why a
-Stylesheet requires at least one Construct in order to exist.
+The grammar above illustrates that a Style Guide needs to contain one or more Conventions.
+Similarly, a Context requires at least one Constraint in order to exist. A Violation Log, however,
+could exist without any Violations in the cases when a Stylesheet is checked for conformance to a
+Style Guide and no violations are discovered. Both Stylesheet and Pattern are defined through 1 or
+more Constructs. Note that the concept of Stylesheet does not map to a CSS file, but to the whole
+CSS code that needs to be processed, regardless of type of CSS. This is why a Stylesheet requires at
+least one Construct in order to exist.
 
 While the above grammar presents the composition of things, it does not illustrate how things
 interact with each other. To provide a better understanding of the dynamics between things defined
@@ -953,7 +1017,7 @@ in the ontology, a graph of the system is presented in Figure \ref{fig:couplings
   \centering
   \caption{Graph of the system}
   \label{fig:couplings}
-  \includegraphics[width=0.8\textwidth]{ontology}
+  \includegraphics[width=0.8\textwidth]{couplings}
 \end{figure}
 
 According to the theory, a coupling occurs when the existence of a given thing affects the history
@@ -972,7 +1036,11 @@ of the log. Further, a Violation Log contains information about the violations o
 Guide that occur in a specific Stylesheet. In this sense, a Violation Log is a function of a Style
 Guide and a Stylesheet and it is coupled to both things.
 
-There are a number of external events that can change the state of the system. An actor can initiate search for violations, which affects the state of the Violation Log and the Stylesheet. Also, an external for the system author can modify the Constructs and change the state of Stylesheet. Thus, couplings exist between the Actor and the Stylesheet, Violation Log and Style Guide.
+There are a number of external events that can change the state of the system. An actor can initiate
+search for violations, which affects the state of the Violation Log and the Stylesheet. If during
+the search an actor discovers a violation, the state of the Violation is altered. Also, an actor can
+modify the Stylesheet and the Style Guide. Thus, couplings exist between the Actor and the
+Stylesheet, Violation, Violation Log and Style Guide.
 
 \subsection{Ontological analysis}
 
@@ -995,7 +1063,7 @@ modeling grammar. Table \ref{tab:representation}. presents the correspondence be
 of constructs.
 
 \begin{center}
-\begin{longtable}{ | p{17em} | p{23em} | } 
+\begin{longtable}{ | p{14em} | p{26em} | } 
 \caption{Representation mapping}
 \label{tab:representation}\\
 \hline
@@ -1004,47 +1072,47 @@ Ontological constructs & Grammar constructs \\
  &  \\
 \hline
 Style Guide & Convention Set \\ \hline
-Number of Conventions (Style Guide) & Contexts (Convention Set), Conventions (Context) \\ \hline
+Conventions (Style Guide) & Contexts (Convention Set), Conventions (Context) \\ \hline
 Convention & Convention \\ \hline
 Description (Convention) & Description (Convention) \\ \hline
 Context & Pattern Descriptor \\ \hline
 Ignored Constructs (Context) &  Context \\ \hline
 
 Constraint & Comparison, Is, In, Match, Node Query, Not, And, Or Expressions \\ \hline
-Subject (Constraint) & Variable Expression, Call Expression \\ \hline
-???Value (Constraint Kinds) & Operand of Binary Expression \\ \hline
+Subject (Constraint) & Operand of Expression \\ \hline
+Requirement (Constraint) & Subclasses of Expression \\ \hline
+Value (Constraint Subclasses) & Second Operand of Binary Expression \\ \hline
 Existence Constraint & Node Descriptor, Node Relation, Node Query Expression \\ \hline
 Comparison Constraint & Comparison Expression \\ \hline
 Type Constraint & Is Expression \\ \hline
 Textual Form Constraint & Match Expression \\ \hline
 Set Membership Constraint & In Expression \\ \hline
-Basic Value & Literal Expression \\ \hline
+Literal Value & Literal Expression \\ \hline
+Value (Literal Value) & Value (Literal Expression) \\ \hline
 
 Violation Log & Violation Log \\ \hline
-Number of Violations (Violation Log) & Violations (Violation Log) \\ \hline
+Violations (Violation Log) & Violations (Violation Log) \\ \hline
 Violation & Violation \\ \hline
 Description (Violation) & Description (Violation) \\ \hline
 Position in Stylesheet (Violation) & Position (Violation) \\ \hline
 
 Stylesheet & Stylesheet Node \\ \hline
 Checked (Stylesheet) & - \\ \hline
-Construct & Css Node \\ \hline
-Type (Construct) & Search Categories (Css Node) \\ \hline
-Textual Representation (Construct) & String (Css Node) \\ \hline
-CSS-specific Knowledge (Construct) & API (Css Node) \\ \hline
+Construct & Variable Expression \\ \hline
+Property (Construct) & Call Expression \\ \hline
 Pattern & Css Pattern \\ \hline
-Number of Constructs (Pattern) & Nodes (Css Pattern) \\ \hline
+Constructs (Pattern) & Nodes (Css Pattern) \\ \hline
 
 \end{longtable}
 \end{center}
 
-\textbf{Ontological Classes and Kinds}
+\textbf{Ontological Classes and Subclasses}
 
 The ontological concept of Style Guide is represented in the modeling grammar as a Convention Set.
 Similarly, the notion of Convention maps to the Convention class and the concept of Context maps to
 the Pattern Descriptor class.
 
-REWAMP!
+REVAMP!
 The ontological concept of Constraint appears in the modeling grammar as an Expression (not Literal,
 Variable, Call expression?). Most of the kinds of Constraints are represented by a single subclass
 of Expression. For example, the Comparison Constraint maps to the Comparison Expression and the Type
@@ -1070,7 +1138,7 @@ solution. Similarly, the Construct is mapped to Css Node and Pattern is mapped t
 The majority of the ontological classes have a direct mapping to a construct in the solution. For
 example, a Style Guide is mapped to a Convention Set, a Convention is mapped to Convention etc. The
 notion of Constraint is a particular limitation used in a Context and typically, it is applied to a
-single node. The corresponding construct in the system is Expression. Similarly, the specific kinds
+single node. The corresponding construct in the system is Expression. Similarly, the specific subclasses
 of Constraints are mapped to subclasses of the Expression. Specifically, a Comparison Constraint
 matches the notion of Comparison Expression. The Type Constraint is expressed through the Is
 Expression that verifies the type of a node. The Textual Form Constraint maps to the Match
@@ -1136,17 +1204,17 @@ Grammar constructs & Ontological constructs  \\
 \hline
 
 Convention Set & Style Guide \\ \hline
-Contexts (Convention Set) & partly Number of Conventions (Style Guide) \\ \hline
+Contexts (Convention Set) & partly Conventions (Style Guide) \\ \hline
 Context & Ignored Constructs (Context) \\ \hline
-Conventions (Context) & partly Number of Conventions (Style Guide) \\ \hline
+Conventions (Context) & partly Conventions (Style Guide) \\ \hline
 Convention & Convention \\ \hline
 Description property (Convention) & Description (Convention) \\ \hline
 Pattern Descriptor & Context \\ \hline
 Node Descriptor & partly Existence Constraint \\ \hline
 Node Relation & partly Existence Constraint \\ \hline
 
-Literal Expression & Basic Value \\ \hline
-Variable Expression & partly Subject (Constraint) \\ \hline
+Literal Expression & Literal Value \\ \hline
+Variable Expression & Construct \\ \hline
 Not Expression & partly Constraint \\ \hline
 And Expression & partly Constraint \\ \hline
 Or Expression & partly Constraint \\ \hline
@@ -1154,18 +1222,14 @@ Comparison Expression & Comparison Constraint \\ \hline
 Match Expression & Textual Form Constraint \\ \hline
 In Expression & Set Membership Constraint \\ \hline
 Is Expression & Type Constraint \\ \hline
-Call Expression & partly Subject (Constraint) \\ \hline
+Call Expression & Property (Construct) \\ \hline
 Node Query Expression & partly Existence Constraint \\ \hline
 
-Css Node & Construct \\ \hline
-Search Categories (Css Node) & Type (Construct) \\ \hline
-String (CssNode) & Textual Representation (Construct) \\ \hline
-API (CssNode) & CSS-specific knowledge (Construct) \\ \hline
 Css Pattern & Pattern \\ \hline
-Nodes (Css Pattern) & Number of Constructs (Pattern) \\ \hline
+Nodes (Css Pattern) & Constructs (Pattern) \\ \hline
 StylesheetNode & Stylesheet \\ \hline
 Violations Log & Violations Log \\ \hline
-Violations (Violations Log) & Number of Violations (Violation Log) \\ \hline
+Violations (Violations Log) & Violations (Violation Log) \\ \hline
 Violation & Violation \\ \hline
 Description (Violation) & Description (Violation) \\ \hline
 Position (Violation) & Position in Stylesheet (Violation) \\ \hline
@@ -1209,22 +1273,68 @@ single ontological Context.
 \subsection{Ontological Evaluation of the System}
 
 The primary purpose of the representation and interpretation mappings between the ontology and the
-system is discovering discrepancies between the two entities. The four types of ontological
-anomalies are considered in the following subsections.
+modeling grammar is discovering discrepancies between the two entities. The four types of
+ontological anomalies are considered in the following subsections.
 
 \subsubsection{Redundant Constructs} 
 
-Construct redundancy is a type of anomaly in which more than one modeling constructs can represent a
-single ontological construct. 
+Construct redundancy is a type of anomaly in which more than one modeling construct can represent a
+single ontological construct. The representation mapping illustrates that there are three candidates
+for this discrepancy. 
+
+First, the Conventions property of Style Guide is matched to Contexts property of Convention Set and
+the Conventions property of Context. Such mapping is required since the modeling grammar groups
+Conventions that share the same Ignored Constructs in a Context. Thus, a Style Guide in the modeling
+grammar does not possess conventions but a number of Contexts that, in turn, contain conventions. In
+this sense, the properties Contexts and Conventions together represent the concept of Conventions.
+
+Note that redundancy occurs when the two grammar constructs can independently represent the same
+ontological concept. In the specific case, however, none of the constructs taken individually can
+express the property. It is their combination that represents the concept. Mapping a single
+ontological concept to a combination of modeling grammar constructs is an accepted approach and has
+been done in multiple studies~\cite{gehlert2007toward}. Thus, the two constructs are not
+considered redundant.
+
+Second, the Comparison, Is, In, Match, Node Query, And, Or and Not Expressions map to the concept of
+Constraint. As defined in the ontology, a Constraint is a class that has multiple subclasses
+depending on the specific requirement they enforce. In this sense, Expressions that map to any
+subclasses of Constraint, also map the Constraint class. These are the Comparison, Is, In, Match and
+Node Query Expressions. The remaining part of Expressions are And, Or and Not. These Expressions are
+used to combine Constraints into complex Constraints. For example, a Context may contain a number of
+Constraints that need to be put together using the And Expression. However, the And Expression
+itself cannot be a Constraint - it is used to build Constraints. In this sense, none of the three
+Expressions can independently represent a Constraint. Their combination with the Expressions mapped
+to the subclasses of Constraint expresses the concept of Constraint. Thus, the expressions are not
+considered redundant.
+
+Third, the Existence Constraint is mapped to the Node Descriptor, Node Relation and Node Query
+Expressions. Existence Constraint is a type of Constraint that requires the Subject to exist. For
+example, the convention \textit{Use a fallback property for RGBA and HSLA values} requires the
+fallback declaration to have the same property as the matched declaration and the value of the
+fallback declaration to be different than RGBA or HSLA. However, before these, the convention
+requires the fallback declaration to exist.
+
+In the modeling grammar, when a Pattern Descriptor refers to multiple nodes, the presence of Node
+Descriptor denotes the existence of CSS Node and the Node Relation specifies how the Nodes are
+connected in the Pattern Descriptor. The Node Descriptor can also impose constraints on the type or
+the properties of the matched node, however, its presence requires the existence of a node.
+
+As described in the domain analysis section, each Pattern Descriptor has one of more anchors. These
+are the specific nodes that need to be iterated. The Node Query Expression is used to describe
+parts of the pattern that follow the anchors. a bit more than simply checking for existence. It is
+used to ensure that context of the node, however, unlike the Node Descriptor, For example, it is
+used to for finding the number of occurrences, whether a list of nodes exist in a specific context.
+
+
+
+For this reason, the candidate constructs
+are not considered redundant.
 
 - Contexts and Conventions together represent Number of Conventions (Style Guide)
 
 - Constraint is presented by a number of Expressions. However, these are the union of all types of Constraints. Additionally, the Not, And and Or expressions are used to form more complex Constraints.
 
-- Subject of Constraint is mapped to Variable and Call Expression
-
 - Existence Constraint is mapped to Node Descriptor, Node Relation and Node Query Expression Expressions.
-
 
 
 Candidate redundant constructs are the CallExpression,
@@ -1242,9 +1352,15 @@ constructs. No candidates for construct overload have been found.
 \subsubsection{Construct Excess}
 
 Construct excess is a discrepancy in which a modeling construct does not have a mapping ontological
-construct. The system contains a number of classes and packages that do not have a corresponding
-ontological concepts, e.g. Type Checker. However, the class is used to ensure the correctness of the
-Style Guide. In this sense, it has a supporting function that contributes to an ontological concept.
+construct. Typically, ontological analysis is performed through comparing the modeling grammar to
+the ontology. In the conducted analysis, every structure in the abstract syntax is mapped to an
+ontological construct. 
+
+However, the particular way this analysis is performed is comparing the whole system to the designed
+ontology. Because of this approach, there are a number of classes and even modules that do not map
+to any ontological construct. For example, the presence of a Type Checker does not have an
+ontological counterpart. In fact, the Type Checker is used to ensure the correctness of the Style
+Guide. However, the ontology does not consider its correctness.
 
 \subsubsection{Construct Deficit}
 
@@ -1255,15 +1371,20 @@ is considered outside the scope of the system. Such functionality can be added b
 IDE or text editor expose such knowledge. That said, the structure remains in the environment of the
 system and thus, the candidate is not considered a deficit.
 
-Having the above consideration in mind, we believe the ontological analysis provides sufficient
-evidence to consider the designed system both ontologically clear and complete.
+\subsubsection{Results}
+
+In this section are presented the interpretation and representation mappings between the modeling
+grammar and the designed domain-specific ontology. Further, all types of discrepancies are analyzed
+and supported with argumentation why they should not be considered anomalies. Having the analysis in
+mind, it can be concluded that the ontological analysis provides sufficient evidence to consider the
+designed system both ontologically clear and complete.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \chapter{Conclusion}
 \label{sec:conclusion}
 
-The variability of CSS conventions used in practice cannot be handled by existing tools. Thus, developers often need to make sure their code complies to a given style guide manually. The contribution of this thesis is threefold. First, the need for CSS conventions is evaluated and
+The variability of CSS conventions used in practice cannot be handled by existing tools. Thus, developers often need to make sure their code complies to a given style guide manually. The thesis offers a solution to this problem. The contribution of this thesis is threefold. First, the need for CSS conventions is evaluated and
 evidence that CSS is still handcrafted is provided. Second, a list of the existing code conventions
 and their analysis is presented. Third, a domain-specific language that is capable of expressing the
 gathered conventions is proposed. A prototype of language and its interpreter are implemented to
