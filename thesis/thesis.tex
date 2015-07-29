@@ -602,29 +602,30 @@ stylesheet : context* ;
 \end{verbatim}
 \end{snippet}
 
-\item\textbf{context} represents a group of logically related conventions. A single style guide can comprise a number of conventions that enforce various constraints, e.g. whitespacing, syntax preference, program style. Such categories refer to different types of nodes and require ignoring certain patterns.  
+\item\textbf{context} represents a group of logically related conventions. A single style guide can comprise a number of conventions that enforce various constraints, e.g. whitespacing, syntax preference, program style. Contexts group conventions that ignore the same nodes while searching for their violations.  
 
 Abstract Syntax Mapping: ast.Context.
 
 \begin{snippet}
 \begin{verbatim}
-context : Identifier '{' convention* '}' ;
+context : Identifier ignore_clause? '{' convention* '}' ;
+ignore_clause : 'ignore' (node_descriptor)+ (',' (node_descriptor)+)* ;
 \end{verbatim}
 \end{snippet}
 
-\item\textbf{convention} represents a single rule in the style guide. Conventions are typically expressed by directly stating what is disallowed or describing a condition that if met, requires additional constraints. The former way of expressing conventions are represented by the \texttt{forbid} conventions. The latter approach uses the structure \texttt{find ... require ...}. To break down complex disallowing conventions, the structure \texttt{find ... forbid ...} has been introduced. It aims at improving readability of conventions. 
+\item\textbf{convention} represents a single rule in the style guide. Conventions are typically expressed by directly stating what is disallowed or describing a condition that if met, requires additional constraints. The former way of expressing conventions are represented by the \texttt{forbid} conventions. The latter approach uses the structure \texttt{find ... require ...}. To break down complex disallowing conventions, the structure \texttt{find ... forbid ...} has been introduced. This aims at improving readability of conventions. Additionally, the find conventions have a where clause which applies constraints for matching nodes. It is used to expression matching constraints that span over multiple nodes and therefore cannot be present in any of the node descriptors.
 
 Abstract Syntax Mapping: ast.Convention.
 
 \begin{snippet}
 \begin{verbatim}
 convention : 'forbid' pattern 'message' String
-           | 'find' pattern ('require'|'forbid') logic_expr 'message' String
+           | 'find' pattern ('where' logic_expr)? ('require'|'forbid') logic_expr 'message' String
            ;
 \end{verbatim}
 \end{snippet}
 
-\item\textbf{pattern} represents a pattern of nodes and their relations. It can describe a horizontal sequence of sibling nodes and or a vertical pattern of nested nodes. Also, it can describe pairs of elements. 
+\item\textbf{pattern} represents a pattern of nodes and their relations. For example, it can describe a horizontal sequence of sibling nodes, a vertical pattern of nested nodes, or pairs of elements with a common parent. 
 
 Abstract Syntax Mapping: ast.PatternDescriptor.
 
@@ -638,27 +639,17 @@ node_declaration : (Identifier '=')? semantic_node ;
 \end{verbatim}
 \end{snippet}
 
-\item\textbf{semantic\_node} represents a non-whitespace node. It describes the type of the node and its additional constraints. 
+\item\textbf{node\_descriptor} represents a description of a node. It describes the type of the node and its additional constraints. 
 
-Abstract Syntax Mapping: ast.Node.
-
-\begin{snippet}
-\begin{verbatim}
-semantic_node : node_type ('{' logic_expr '}')? ;
-\end{verbatim}
-\end{snippet}
-
-\item\textbf{whitespace\_variation} represents a sequence of whitespace nodes. They differ from the rest of the nodes types because the user can specify how many times they need to be consecutively repeated. 
-
-Abstract Syntax Mapping: ast.WhitespaceVariation, ast.WhitespaceNode, ast.Repeater.
+Abstract Syntax Mapping: ast.NodeDescriptor.
 
 \begin{snippet}
 \begin{verbatim}
-whitespace_variation : whitespace_node ('or' whitespace_node)* ;
-whitespace_node : Identifier ('{' repeater '}')? ;
+node_descriptor : node_type ('{' (logic_expr|repeater) '}')? ;
 repeater : Integer ',' Integer? | (',')? Integer ;
 \end{verbatim}
 \end{snippet}
+
 
 \item\textbf{logic\_expr} represents expressions that perform logic operations and glue arithmetic and type expressions. 
 
@@ -676,15 +667,15 @@ logic_expr : '(' logic_expr ')'
 \end{verbatim}
 \end{snippet}
 
-\item\textbf{type\_expr} represents expressions that ensure node type and perform node queries of whitespace nodes. They are located in a separate parser rule because they interpret Identifiers as node type expressions instead of a API calls. 
+\item\textbf{type\_expr} represents expressions that ensure node type and perform node queries on nodes. They are located in a separate parser rule because they interpret Identifiers as node type expressions instead of a API calls. 
 
 Abstract Syntax Mapping: ast.IsExpr, ast.BeforeExpr, ast.AfterExpr, ast.BetweenExpr.
 
 \begin{snippet}
 \begin{verbatim}
-type_expr : arithmetic_expr operator='is' type_=Identifier
-          | whitespace_variation ('before' | 'after') type_operand
-          | whitespace_variation 'between' type_operand 'and' type_operand
+type_expr : arithmetic_expr operator='is' Identifier
+          | node_descriptor+ ('before' | 'after') type_operand
+          | node_descriptor+ 'between' type_operand 'and' type_operand
           ;
 type_operand : Identifier | semantic_node ;
 \end{verbatim}
@@ -702,19 +693,19 @@ arithmetic_expr : ('-'|'+') arithmetic_expr
                 | call_expression
                 | element
                 ;
-element : Boolean | Integer | String | list_ ;
+element : Boolean | Decimal | Integer | String | list_ ;
 \end{verbatim}
 \end{snippet}
 
-\item\textbf{call\_expr} represents an API call expression and also node query expression.
+\item\textbf{call\_expression} represents an API call expression and also node query expression.
 
 Abstract Syntax Mapping: ast.CallExpr and ast.NodeQueryExpr.
 
 \begin{snippet}
 \begin{verbatim}
-call_expr : call_expr '.' call_expr
-          | Identifier ('(' (element | semantic_node ) ')')? 
-          ;
+call_expression : call_expression '.' call_expression
+                | Identifier ('(' (element | semantic_node ) ')')? 
+                ;
 \end{verbatim}
 \end{snippet}
 
@@ -752,6 +743,19 @@ ZeroDigit : [0] ;
 \end{verbatim}
 \end{snippet}
 
+\item\textbf{Decimal:} represents Decimal literal expression. 
+
+Abstract Syntax Mapping: ast.DecimalExpr.
+
+\begin{snippet}
+\begin{verbatim}
+Decimal : ( NonZeroDigit Digit* | ZeroDigit? ) '.' Digit+ ;
+Digit : ZeroDigit | NonZeroDigit ;
+NonZeroDigit : [1-9] ;
+ZeroDigit : [0] ;
+\end{verbatim}
+\end{snippet}
+
 \item\textbf{list} and \textbf{list\_element} represent the List literal expression. 
 
 Abstract Syntax Mapping: ast.ListExpr.
@@ -759,7 +763,7 @@ Abstract Syntax Mapping: ast.ListExpr.
 \begin{snippet}
 \begin{verbatim}
 list_ : '[' list_element (',' list_element)* ']' ;
-list_element : Integer | String | semantic_node ;
+list_element : Integer | Decimal | String | semantic_node ;
 Letter : [a-zA-Z] ;
 Identifier : (Letter)(Letter|Digit|'_'|'-')* ;
 \end{verbatim}
@@ -784,8 +788,11 @@ node_type : '(' node_type ')'
 
 \subsection{Implementation}
 
-The name of the language is CssCoco which is an short version of CSS Code Conventions. A prototype
-of the language is available at \url{https://github.com/boryanagoncharenko/CssCoco}.
+This subsection provides examples about the language. The name of the language is CssCoco which is
+an short version of CSS Code Conventions. A prototype of the language is available at
+\url{https://github.com/boryanagoncharenko/CssCoco}.
+
+...
 
 \section{Validation}
 
