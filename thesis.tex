@@ -1,5 +1,9 @@
 \documentclass[parskip=full]{uvamscse}
 
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+\renewcommand{\chapterautorefname}{Chapter}
+
 \setcounter{secnumdepth}{4}
 
 \titleformat{\paragraph}
@@ -18,21 +22,24 @@
 
 \author{Boryana Goncharenko}
 \authemail{boryana.goncharenko@gmail.com}
-% \host{Grammarware, Inc., \url{http://grammarware.github.io}}
 
 \abstract{    
 
-Code conventions are used to preserve code base consistency and express preference of a particular
-programming style. Often, code conventions are expressed in natural language and it is a
-responsibility of the developers to read, understand and apply them. Typically, developers need to
-ensure that their code complies to a given style guide manually. There are a number of tools that
-can automatically detect violations of conventions, however, current solutions remain rigid,
-laborious or with limited scope.
+Code conventions are used to preserve code base consistency and express
+preference of a particular programming style. Often, code conventions are
+expressed in natural language and it is a responsibility of the developers to
+read, understand and apply them. Typically, developers need to ensure that
+their code complies to a given style guide manually. There are a number of
+tools that can automatically detect violations of conventions, however,
+current solutions remain rigid, laborious or with limited scope.
 
-This thesis aims at answering three research questions. First, it evaluates the need for CSS
-conventions based on whether CSS is still handcrafted. Second, it discovers existing code
-conventions. Third, it designs a domain-specific language that is capable of expressing existing CSS
-code conventions. The thesis presents a specification of the designed domain-specific language and an implementation of its interpreter that detects violations automatically.
+This thesis aims at answering three research questions. First, it evaluates
+the need for CSS conventions based on whether CSS is still handcrafted.
+Second, it discovers existing code conventions. Third, it designs a
+domain-specific language that is capable of expressing existing CSS code
+conventions. The thesis presents a specification of the designed
+domain-specific language and an implementation of its interpreter that detects
+violations automatically.
 
 }
 
@@ -47,18 +54,7 @@ code conventions. The thesis presents a specification of the designed domain-spe
 \input{ch-discover}
 \input{ch-express}
 \input{ch-conclusion}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 {%\tiny
 \bibliographystyle{ieeetr}
