@@ -1,0 +1,44 @@
+\chapter{Introduction}
+
+Code conventions put constraints on how code should be written in the context of a project,
+organization or programming language. Style guides can comprise conventions that refer to
+whitespacing, indentation, code layout, preference of syntactic structures, code patterns and anti-
+patterns. They are mainly used to achieve code consistency, which in turn improves the readability,
+understandability and maintainability of the code~\cite{Buse2010} ~\cite{buse2010learning}
+~\cite{tenny1988program}.
+
+Style guides are often designed in an ad hoc manner. Coding conventions typically live in documents
+that contain a description of each rule in natural language accompanied by code examples. This is
+the case with the style guidelines of Mozilla~\cite{Mozilla}, Google~\cite{Google},
+GitHub~\cite{GitHub}, WordPress~\cite{Wordpress} and Drupal~\cite{Drupal}. It is the responsibility
+of the developers to ensure that their code complies to a given style guide. Typically, they need to
+read and understand the conventions and then apply them manually. Such an approach introduces a
+number of issues. First, using natural language can make guidelines incorrect, ambiguous, implicit
+or too general. Second, the fact that developers apply conventions manually increases the chances of
+introducing violations involuntarily. There are a number of tools that can automatically detect
+violations of conventions, however, current solutions are often hard to customize or are limited to
+one type of violations, e.g. only whitespacing.
+
+The core idea behind the project is to provide a solution that lets developers express an arbitrary
+set of coding conventions and detect their violations automatically. Writing conventions
+in an executable form could assist authors in detecting incorrect, ambiguous or inconsistent
+guidelines. Automatic detection of violations could minimize the effort required by developers to
+write code that complies to the guidelines. To meet the constraints of a Master’s project, the
+implementation is limited to the domain of Cascading Style Sheets (CSS). The project requires
+determining the need for CSS code conventions in organizations, collecting and analyzing available
+style guides, and providing a way to express conventions. Specifically, the project attempts to
+answer the following set of questions:
+
+  \begin{description}
+    \item \textbf{Research Question 1} Do developers still maintain plain CSS?
+    \item \textbf{Research Question 2} What code conventions for CSS exist?
+    \item \textbf{Research Question 3} How to express existing CSS code conventions?
+  \end{description}
+
+The thesis is organized as follows. Chapter \ref{sec:background} provides information about previous
+studies and defines concepts and terms used throughout the thesis. Chapter \ref{sec:evaluating}
+presents the research approach used to determine whether CSS is handcrafted and analysis of the
+gathered results. Chapter \ref{sec:discovering} contains the research method  used to discover
+existing code conventions and the results of the research. The design and validation of the DSL are
+presented in Chapter \ref{sec:expressing}. Chapter \ref{sec:conclusion} concludes the thesis.
+

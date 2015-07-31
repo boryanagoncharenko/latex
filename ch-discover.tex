@@ -1,0 +1,85 @@
+
+\chapter{Discovering Existing CSS Code Conventions}
+\label{sec:discovering}
+
+\section{Research Method}
+
+The primary organization responsible for the specification of CSS has not published an official CSS
+style guide. As a result, the CSS community has produced a pool of coding conventions, best
+practices, guidelines and recommendations.
+
+To discover existing CSS code conventions, two searches with the keywords \texttt{CSS code
+conventions} were made using the search engines \url{http://duckduckgo.com} and
+\url{http://google.com}. The first 100 results of each search were analyzed. From each result
+only conventions that refer to plain CSS are taken into account and conventions related to
+preprocessors are ignored. In case the result contains links to other style guides, these
+references are considered as results and analyzed separately.
+
+While searching for conventions, a number of issues were discovered. First, some of the
+conventions do not provide sufficient information to be applied in practice. Such an example is the
+convention \textit{Do not use CSS hacks - try a different approach first} when the style guide does
+not define the meaning of CSS hacks. Such overgeneralized conventions were omitted from the results.
+
+Another part of the discovered conventions introduce a discrepancy between their description in
+natural language and the provided code example. An instance of such contradiction is when the
+convention \textit{Nothing but declarations should be indented} is followed by a code snippet
+illustrating that rules in media queries should also be indented. In such cases the convention is
+interpreted as described by the code example.
+
+When conventions are not supported with code examples, their description could remain open for
+interpretation. For example, \textit{Rules with more than 4 selectors are not allowed} could be seen
+as forbidding multi-selectors with more than four selectors, or disallowing selectors with more than
+four simple-selectors. All possible interpretations of ambiguous conventions were registered as
+separate conventions.
+
+There are conventions that are not explicitly stated, but could only be inferred by the other rules.
+For example, the convention \textit{You can put long values on multiple lines} states that a long
+value is allowed to appear on several lines. However, this rule implies the presence of another
+convention, that is not explicitly stated. It implies that short values should appear on one line
+and only lengthy values are allowed to appear on multiple. Such implicit conventions were registered
+as explicit conventions.
+
+\section{Results}
+
+As a result of the searches, a corpus of 165 unique CSS code conventions was accumulated. Sources
+of these conventions include CSS professionals, open-source communities and companies, such as \href{https://google-styleguide.googlecode.com/svn/trunk/htmlcssguide.xml#Protocol}{Google}, \href{http://primercss.io/guidelines/#css}{GitHub}, \href{https://make.wordpress.org/core/handbook/best-practices/coding-standards/css/}{Wordpress}, \href{https://www.drupal.org/node/1887862}{Drupal}. The following list presents a selected set of the discovered conventions:
+
+\begin{itemize} 
+\item Avoid qualifying ID and class names with type selectors. 
+\item Use RGBA only when opacity is needed.
+\item Use short hexadecimal values. 
+\item CSS files must not include any @charset statements.
+\item Disallow @import. 
+\item When possible, use em instead of pix. 
+\item Avoid using z-indexes when possible. 
+\item Require compatible vendor prefixes. 
+\item Do not use !important. 
+\item Do not use id selectors. 
+\item Id and class names should be lowercase.
+\item All values except the contents of strings should be lowercase.  
+\item HTML tags should be lowercase.
+\item Put a ; at the end of declarations. 
+\item Do not put quotes in URL declarations.
+\item Use short hex values.
+\item Use the shorthand margin property.
+\item Do not use units after 0 values.
+\item Use a leading zero for decimal values.
+\item Use single quotes in charsets.
+\item Use single quotes in attribute selectors.
+\item Put one space between the colon and the value of a declaration.
+\item Put one space between the last selector and the block.
+\item One selector per line.
+\item A rule must not contain height and border, border-top, border-bottom, padding, padding-top, or padding-bottom.
+\item A rule must not contain width and border, border-left, border-right, padding, padding-left, or padding-right.
+\item Warning if a property is included in a rule twice and contains the same value.
+\item Forbid empty rules.
+\item A vendor-prefixed property must be followed by a standard property.
+\item Require fallback color. A color property with a RGBA(), HSL(), or HSLA() color without a preceding color property that has an older color format.
+\item A rule that has display: inline-block should not use float.
+\item A rule that has display: block should not use vertical-align.
+\item Use 4 spaces for indentation, no tabs.
+\item No trailing spaces.
+\end{itemize}
+
+The full list of all discovered conventions along with their sources and explanation of their meaning is available in \href{https://github.com/boryanagoncharenko/CssCoco/blob/master/analysis.md}{CssCoco GitHub repository}.
+
