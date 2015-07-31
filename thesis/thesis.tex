@@ -422,7 +422,101 @@ node. The nodes in the pattern do not have to be immediate relatives. In fact, t
 across the tree. For example, the rule \textit{Do not use more than 5 @font-face declarations}
 requires searching for specific nodes that appear anywhere in the tree.
 
-\section{Abstract syntax}
+\section{CssCoco DSL}
+
+\subsection{Syntax overview}
+
+To express the conventions in the corpus, the domain-specific language CssCoco is proposed. It is a
+declarative language that has two main constructs: conventions and contexts. Conventions express the
+specific rules that has to be enforced on the code and contexts describe the CSS nodes that need to
+be ignored while searching for violations. 
+
+The language constructs that define conventions try to resemble the way conventions are expressed in
+natural text. There is a construct that describes directly what is disallowed. For example, the
+convention \textit{Do not use import statements} is expressed in the following way:
+
+\begin{sourcecode}
+\begin{lstlisting}[style=mono,language=Java]
+forbid import
+message 'Do not use import statements.'
+\end{lstlisting}
+\end{sourcecode}
+
+The keyword \textit{forbid} is followed by a description of the node that is disallowed. In the
+current convention, we only need to state its type - import. Each convention requires a message
+clause. The string after the \textit{message} keyword will be displayed to the user, when a
+violation is found.
+
+As domain analysis indicates, conventions are often expressed as a pattern that, if found, needs to
+meet given constraints. In CssCoco syntax such conventions are defined using the \texttt{find ...
+require ...} construct. For example, the convention \textit{All class names should be lowercase} is
+described as follows:
+
+\begin{sourcecode}
+\begin{lstlisting}[style=mono,language=Java]
+find c=class
+require c.name match lowercase
+message 'All id and class names should be lowercase'
+\end{lstlisting}
+\end{sourcecode}
+
+The find clause in the above rule specifies the pattern that needs to be found and the require
+clause states the constraint that should be applied to the discovered nodes. Note that to refer to a
+matched node in the require clause, the node should be assigned as identifier, \texttt{c} in the
+above example.
+
+Conventions can put more constraints on a node description in the pattern. For example, the
+convention \textit{Use a leading zero for decimal values} requires finding all nodes of type number
+that have a numeric value in the interval [-1, 1]. Such constraints are expressed as curly brackets
+immediately after the type of the node.
+
+\begin{sourcecode}
+\begin{lstlisting}[style=mono,language=Java]
+find n=number{num-value < 1 and num-value > -1}
+require n.string match '^0.*'
+message 'Use a leading zero for decimal values'
+\end{lstlisting}
+\end{sourcecode}
+
+Conventions can describe patterns that consist of more than one node. For example, the rule
+\textit{Use single quotes in charsets} can be expressed in the following way:
+
+\begin{sourcecode}
+\begin{lstlisting}[style=mono,language=Java]
+find s=string in charset
+require s.has-single-quotes
+message 'Use single quotes in charsets'
+\end{lstlisting}
+\end{sourcecode}
+
+The pattern contains the description of two nodes: first, a node that is of type string and a node
+of type charset. The \texttt{in} keyword description of the pattern indicates that the string node
+is nested in the charset node. In this way, the pattern will match only the strings that appear in a
+charset.
+
+In CssCoco conventions are grouped in contexts that specify what nodes should be ignored when
+searching for patterns. For example, often when rules refer to newlines they completely disregard
+indentation. The convention \textit{Every declaration must be on a new line} requires a newline to
+be present immediately before the declaration. However, when declarations are indented their
+immediate previous sibling is an indentation node. To handle such cases, the language uses contexts
+that explicitly describe the ignored nodes.
+
+\begin{sourcecode}
+\begin{lstlisting}[style=mono,language=Java]
+Whitespace
+ignore indent 
+{
+    find d=declaration
+    require newline before d
+    message 'Put every declaration on a new line'
+}
+\end{lstlisting}
+\end{sourcecode}
+
+Contexts have a user-defined name and an optional ignore clause, The \texttt{ignore} keyword is
+followed by a description of the nodes that need to disregarded.
+
+\subsection{Abstract syntax}
 
 This section describes the abstract syntax of the designed domain-specific language. An overview of
 the abstract syntax is presented in Figure \ref{fig:astgeneral}, followed by detailed views of each
@@ -585,7 +679,7 @@ Figure \ref{fig:nodequery} presents an overview of the Node Query Expressions. T
 
 \end{description}
 
-\section{Concrete syntax}
+\subsection{Concrete syntax}
 
 This section contains the concrete syntax of the designed DSL. Below are presented the grammar rules accompanied by the mapping to the abstract syntax of the language.
 
@@ -786,19 +880,17 @@ node_type : '(' node_type ')'
 
 \end{description}
 
-\subsection{Implementation}
+\subsection{Prototype}
 
-This subsection provides examples about the language. The name of the language is CssCoco which is
-an short version of CSS Code Conventions. A prototype of the language is available at
-\url{https://github.com/boryanagoncharenko/CssCoco}.
-
-...
+An prototype of CssCoco is implemented and publicly available. Currently, the prototype consists of
+two parts: a standalone python 3 package and a plug-in for Sublime Text editor. The source code of
+both parts is publicly available at \url{https://github.com/boryanagoncharenko/CssCoco} and at
+\url{https://github.com/boryanagoncharenko/Sublime-CssCoco}, respectively.
 
 \section{Validation}
 
 The method chosen for validating the designed domain-specific language is ontological analysis,
-since it is a widely accepted way for evaluating software notations~\cite{opdahl2002ontological}
-~\cite{green2000integrated}~\cite{moody2009physics}~\cite{parsons1997using}~\cite{weber1996analytical}.
+since it is a widely accepted way for evaluating software notations~\cite{opdahl2002ontological}~\cite{green2000integrated}~\cite{moody2009physics}~\cite{parsons1997using}~\cite{weber1996analytical}.
 The particular approach used for conducting ontological analysis consists of several steps. First, a
 domain-specific ontology is designed. Second, the ontology is used as a reference point for the
 interpretation and representation mappings. Third, emerged anomalies are analyzed and conclusion
