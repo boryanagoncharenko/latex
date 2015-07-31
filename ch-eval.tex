@@ -28,13 +28,14 @@ add third-party CSS libraries to their repositories.
 To find repositories that contain a commit in the time internal January -
 April 2015, GitHub's BigData API was used. As a result, a total of 2,331,864
 public repositories were found and analyzed. While in the majority of the
-cases the repositories were analyzed sucessfully, the designed approach failed
-to retrieve information from 15\% of these repositories. Specifically, 253,611
-repositories were made private, thus, excluding the possibility to access
-their commit information. Additionally, 91,114 repositories contain commits of
+repositories were analyzed sucessfully, the designed approach failed to
+retrieve information from 15\% of the cases. Specifically, 253,611
+repositories have been made private since April and their commit information
+cannot be accessed. Additionally, 91,114 repositories contain commits of
 extremely large size that cannot be handled due to memory constraints. As a
-result, 85.2\% of the repositories were analyzes successfully, 10.9\% are no
-longer in the public space, and 3.9\% have an extreme size (\autoref{repositories}).
+result, 85.2\% of the repositories were analyzed successfully, 10.9\% are no
+longer in the public space, and 3.9\% are extremely large
+(\autoref{repositories}).
 
 \begin{figure}[h!]
   \centering
@@ -44,11 +45,13 @@ longer in the public space, and 3.9\% have an extreme size (\autoref{repositorie
   \includegraphics[width=0.5\textwidth]{repositories}
 \end{figure}
 
-From all 1,987,139 repositories that were analyzed, 2,261,941 commits that
-maintain any form of CSS were discovered. 1,328,163 of these commits maintain
-plain CSS, while the rest of the commits contain at least one preprocessor
-file. In other words, 58.7\% of all CSS-related commits are still maintenance
-of plain CSS (\autoref{commits}).
+In the period January - April 2015, a total of 2,261,941 commits that maintain
+any form of CSS were made to the successfully analyzed repositories. The
+number includes commits that contain both preprocessors and plain CSS. More
+than half of them, specifically 1,328,163 of these commits maintain plain CSS,
+while the rest of the commits contain at least one preprocessor file. As a
+result, 58.7\% of all CSS- related commits are still maintenance of plain CSS
+(\autoref{commits}).
 
 \begin{figure}[h!]
   \centering
