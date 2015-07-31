@@ -25,32 +25,57 @@ add third-party CSS libraries to their repositories.
 
 \section{Results}
 
-A total of 1,589,713 commits to 1,311,654 public repositories have been analyzed. X of these were
-not processed due to errors. Typical errors contain repositories that have been turned private
-and... The number of commits that maintain any form of CSS is X. Figure \ref{cssresults} summarizes
-the findings.
+To find repositories that contain a commit in the time internal January -
+April 2015, GitHub's BigData API was used. As a result, a total of 2,331,864
+public repositories were found and analyzed. While in the majority of the
+cases the repositories were analyzed sucessfully, the designed approach failed
+to retrieve information from 15\% of these repositories. Specifically, 253,611
+repositories were made private, thus, excluding the possibility to access
+their commit information. Additionally, 91,114 repositories contain commits of
+extremely large size that cannot be handled due to memory constraints. As a
+result, 85.2\% of the repositories were analyzes successfully, 10.9\% are no
+longer in the public space, and 3.9\% have an extreme size (\autoref{repositories}).
 
 \begin{figure}[h!]
   \centering
-  \caption{Results}
-  \label{cssresults}
-  \includegraphics[width=0.5\textwidth]{cssresults}
+  \caption{
+  	\label{repositories}
+  	Number of analyzed repositories}
+  \includegraphics[width=0.5\textwidth]{repositories}
+\end{figure}
+
+From all 1,987,139 repositories that were analyzed, 2,261,941 commits that
+maintain any form of CSS were discovered. 1,328,163 of these commits maintain
+plain CSS, while the rest of the commits contain at least one preprocessor
+file. In other words, 58.7\% of all CSS-related commits are still maintenance
+of plain CSS (\autoref{commits}).
+
+\begin{figure}[h!]
+  \centering
+  \caption{
+  	\label{commits}
+  	Number of analyzed commits}
+  \includegraphics[width=0.5\textwidth]{commits}
 \end{figure}
 
 \section{Analysis}
 
-There are a number of limitations that need to be considered before interpreting the results of the
-conducted research. Firstly, the search is conducted on a single hosting platform - GitHub. That
-said, currently GitHub reports having over 10 million users and 24 million
+There are a number of limitations that need to be considered before
+interpreting the results of the conducted research. Firstly, the search is
+conducted on a single hosting platform - GitHub. That said, currently GitHub
+reports having over 10 million users and 24 million
 repositories~\cite{GitHub}, which makes it the largest code host in the
-world~\cite{gousios2014lean}. Secondly, the search is narrowed to the publicly available
-repositories. Thus, it lies on the premise that there is not a significant difference between the
-public and private repositories hosted on the platform. Thirdly, the search detects only the four
-most popular preprocessor extensions and omits other preprocessors. It is possible that a number of
-custom preprocessors are used in practice. However, it is assumed that the number of such commits
-would not increase the number of total CSS commits to the extend at which the percentage of plain
-CSS commits is significantly diminished.
+world~\cite{gousios2014lean}. Secondly, the search is narrowed to the publicly
+available repositories. Thus, it lies on the premise that there is not a
+significant difference between the public and private repositories hosted on
+the platform. Thirdly, the search detects only the four most popular
+preprocessor extensions and omits other preprocessors. It is possible that a
+number of custom preprocessors are used in practice. However, it is assumed
+that the number of such commits would not increase the number of total CSS
+commits to the extend at which the percentage of plain CSS commits is
+significantly diminished.
 
-Having the above limitations in mind, the search provides evidence to conclude that despite the
-popularity of preprocessors, plain CSS is still handcrafted on GitHub in the beginning of 2015.
+Having the above limitations in mind, the search provides evidence to conclude
+that despite the popularity of preprocessors, plain CSS is still handcrafted
+on GitHub in the beginning of 2015.
 

@@ -72,56 +72,75 @@ whether a ruleset contains a declaration.
 \end{description}
 
 
-After all conventions were analyzed, the specific actions and concepts were used to extract
-requirements and draw conclusions about the needed functionality. First, every convention can be
-represented as a combination of constraints, regardless of the way it is expressed. There are two
-major constructs used to convey conventions in natural language: forbid and require. Conventions
-that forbid describe directly their violations. For example, the convention \textit{Disallow
-@import} specifies that import statements are violations. Conventions that use the latter construct
-describe a pattern and once the pattern is found the constraint is evaluated. In case the constraint
-is not met, a violation is discovered. For example, the convention \textit{class names should be
-lowercase} requires finding class nodes and then checking whether they are lowercase.
+After all conventions were analyzed, the specific actions and concepts were
+used to extract requirements and draw conclusions about the needed
+functionality. First, every convention can be represented as a combination of
+constraints, regardless of the way it is expressed. There are two major
+constructs used to convey conventions in natural language: forbid and require.
+Conventions that forbid describe directly their violations. For example, the
+convention \textit{Disallow @import} specifies that import statements are
+violations. Conventions that use the latter construct describe a pattern and
+once the pattern is found the constraint is evaluated. In case the constraint
+is not met, a violation is discovered. For example, the convention
+\textit{class names should be lowercase} requires finding class nodes and then
+checking whether they are lowercase.
 
-As the three categories of conventions imply, conventions can reference nodes from the abstract
-syntax tree, concrete syntax tree and parse tree of CSS. For example, the convention \textit{A rule
-must not contain width and padding declarations} accesses concepts that are present in the abstract
-syntax tree. Similarly, the rule \textit{Put a semicolon at the end of the last declaration} refers
-to nodes that are omitted by the abstract syntax tree and are present in the concrete syntax tree.
-All whitespacing and indentation conventions target nodes that are relevant only in the parse tree
-of CSS.
+As the three categories of conventions imply, conventions can reference nodes
+from the abstract syntax tree, concrete syntax tree and parse tree of CSS. For
+example, the convention \textit{A rule must not contain width and padding
+declarations} accesses concepts that are present in the abstract syntax tree.
+Similarly, the rule \textit{Put a semicolon at the end of the last
+declaration} refers to nodes that are omitted by the abstract syntax tree and
+are present in the concrete syntax tree. All whitespacing and indentation
+conventions target nodes that are relevant only in the parse tree of CSS.
 
-Conventions refer to nodes using their type or function in the CSS program. For example, in the
-snippet \texttt{[class=``test'']} the node test can be selected 1) because it is of type string and
-2) because it is an attribute value. Similarly, a node with value \texttt{\#ffffff} may be selected
-because it is a hexadecimal value or because it represents a color.
+Usually, the patterns described in conventions target one of all described
+nodes. For example, when the pattern refers to rulesets in media queries, the
+target node is the ruleset and the media query is part of the context.
+Similarly, when a pattern describes a ruleset that contains a float
+declaration, the target node is the ruleset and the float declaration is only
+a constraint. Certain conventions can have more than one target nodes, e.g.
+when two declarations is a ruleset need to be compared.
 
-Conventions may use CSS-specific knowledge. For example, the rule \textit{Use lowercase for
-properties; vendor-prefixed properties are exception} requires differentiating between standard and
-vendor-specific properties. While in this case the two types of properties can be easily
-distinguished, some conventions require information that cannot be obtained using the CSS code.
-Consider the convention \textit{Order vendor-prefixed values by their version; newer versions of
-vendor values should appear after old ones}. To detect violations for this convention the release
-dates of the properties need to be available for comparison.
+Conventions refer to nodes using their type or function in the CSS program.
+For example, in the snippet \texttt{[class=``test'']} the node test can be
+selected 1) because it is of type string and 2) because it is an attribute
+value. Similarly, a node with value \texttt{\#ffffff} may be selected because
+it is a hexadecimal value or because it represents a color.
 
-Conventions rarely target a single node. Typically, they refer to a number of nodes organized in a
-pattern. For example, the convention \textit{A ruleset must not contain display and float
-declarations} requires searching for two specific declaration that appear under the same parent
-node. The nodes in the pattern do not have to be immediate relatives. In fact, they can be scattered
-across the tree. For example, the rule \textit{Do not use more than 5 @font-face declarations}
-requires searching for specific nodes that appear anywhere in the tree.
+Conventions may use CSS-specific knowledge. For example, the rule \textit{Use
+lowercase for properties; vendor-prefixed properties are exception} requires
+differentiating between standard and vendor-specific properties. While in this
+case the two types of properties can be easily distinguished, some conventions
+require information that cannot be obtained using the CSS code. Consider the
+convention \textit{Order vendor-prefixed values by their version; newer
+versions of vendor values should appear after old ones}. To detect violations
+for this convention the release dates of the properties need to be available
+for comparison.
+
+Conventions rarely target a single node. Typically, they refer to a number of
+nodes organized in a pattern. For example, the convention \textit{A ruleset
+must not contain display and float declarations} requires searching for two
+specific declaration that appear under the same parent node. The nodes in the
+pattern do not have to be immediate relatives. In fact, they can be scattered
+across the tree. For example, the rule \textit{Do not use more than 5 @font-
+face declarations} requires searching for specific nodes that appear anywhere
+in the tree.
 
 \section{CssCoco DSL}
 
 \subsection{Syntax overview}
 
-To express the conventions in the corpus, the domain-specific language CssCoco is proposed. It is a
-declarative language that has two main constructs: conventions and contexts. Conventions express the
-specific rules that has to be enforced on the code and contexts describe the CSS nodes that need to
-be ignored while searching for violations. 
+To express the conventions in the corpus, the domain-specific language CssCoco
+is proposed. It is a declarative language that has two main constructs:
+conventions and contexts. Conventions express the specific rules that has to
+be enforced on the code and contexts describe the CSS nodes that need to be
+ignored while searching for violations.
 
-The language constructs that define conventions try to resemble the way conventions are expressed in
-natural text. There is a construct that describes directly what is disallowed. For example, the
-convention \textit{Do not use import statements} is expressed in the following way:
+The language constructs that define conventions try to resemble the way
+conventions are expressed in natural text. There is a construct that describes
+directly what is disallowed. For example, the convention \textit{Do not use
+import statements} is expressed in the following way:
 
 \begin{sourcecode}
 \begin{lstlisting}[style=mono,language=Java]
@@ -130,10 +149,11 @@ message 'Do not use import statements.'
 \end{lstlisting}
 \end{sourcecode}
 
-The keyword \textit{forbid} is followed by a description of the node that is disallowed. In the
-current convention, we only need to state its type - import. Each convention requires a message
-clause. The string after the \textit{message} keyword will be displayed to the user, when a
-violation is found.
+The keyword \textit{forbid} is followed by a description of the node that is
+disallowed. In the current convention, we only need to state its type -
+import. Each convention requires a message clause. The string after the
+\textit{message} keyword will be displayed to the user, when a violation is
+found.
 
 As domain analysis indicates, conventions are often expressed as a pattern that, if found, needs to
 meet given constraints. In CssCoco syntax such conventions are defined using the \texttt{find ...
@@ -207,7 +227,7 @@ followed by a description of the nodes that need to disregarded.
 \subsection{Abstract syntax}
 
 This section describes the abstract syntax of the designed domain-specific language. An overview of
-the abstract syntax is presented in Figure \ref{fig:astgeneral}, followed by detailed views of each
+the abstract syntax is presented in \autoref{fig:astgeneral}, followed by detailed views of each
 of the subclasses.
 
 \begin{figure}[h!]
@@ -258,7 +278,7 @@ designates a description of the Node targeted by the relation.
   \includegraphics[width=\textwidth]{expr}
 \end{figure}
 
-A detailed view of the expressions in the abstract syntax of CssCoco is presented in Figure \ref{fig:expressions}. Following is a description of the subclasses of Expression:
+A detailed view of the expressions in the abstract syntax of CssCoco is presented in \autoref{fig:expressions}. Following is a description of the subclasses of Expression:
 
 \begin{description}
 
@@ -301,7 +321,7 @@ Attributes \texttt{left} and \texttt{right} represent the first and second opera
   \includegraphics[width=0.9\textwidth]{literal}
 \end{figure}
 
-Figure \ref{fig:literal} presents a detailed view of the literal expressions used in the abstract syntax of CssCoco. Following is a listing of the classes. 
+\autoref{fig:literal} presents a detailed view of the literal expressions used in the abstract syntax of CssCoco. Following is a listing of the classes. 
 
 \begin{description}
 
@@ -326,7 +346,7 @@ Figure \ref{fig:literal} presents a detailed view of the literal expressions use
   \includegraphics[width=0.2\textwidth]{call}
 \end{figure}
 
-Figure \ref{fig:call} presents a detailed view of the call expressions used in the abstract syntax of CssCoco. Following is a listing of the classes. 
+\autoref{fig:call} presents a detailed view of the call expressions used in the abstract syntax of CssCoco. Following is a listing of the classes. 
 
 \begin{description}
 
@@ -343,7 +363,7 @@ Figure \ref{fig:call} presents a detailed view of the call expressions used in t
   \includegraphics[width=0.9\textwidth]{nodequery}
 \end{figure}
 
-Figure \ref{fig:nodequery} presents an overview of the Node Query Expressions. The following listing describes the subclasses in details:
+\autoref{fig:nodequery} presents an overview of the Node Query Expressions. The following listing describes the subclasses in details:
 
 \begin{description}
 
@@ -427,7 +447,7 @@ Abstract Syntax Mapping: ast.NodeDescriptor.
 
 \begin{snippet}
 \begin{verbatim}
-node_descriptor : node_type ('{' (logic_expr|repeater) '}')? ;
+node_descriptor : 'unique'? node_type ('{' (logic_expr|repeater) '}')? ;
 repeater : Integer ',' Integer? | (',')? Integer ;
 \end{verbatim}
 \end{snippet}
@@ -568,51 +588,112 @@ node_type : '(' node_type ')'
 
 \end{description}
 
-\subsection{Prototype}
+\subsection{Proof of Concept}
 
-An prototype of CssCoco is implemented and publicly available. Currently, the prototype consists of
-two parts: a standalone python 3 package and a plug-in for Sublime Text editor. The source code of
-both parts is publicly available at \url{https://github.com/boryanagoncharenko/CssCoco} and at
-\url{https://github.com/boryanagoncharenko/Sublime-CssCoco}, respectively.
+To study the feasibility of the designed language, a proof of concept was
+developed. The implemented solution consists of two parts: a standalone
+Python package and a plug-in for Sublime Text editor.
+
+The first part of the designed proof of concept comprises the CssCoco
+interpreter. The implementation is done in Python and currently contains 13
+000 lines of code. The source code is available at
+\url{https://github.com/boryanagoncharenko/CssCoco}. The solution was also
+added to the Python Package Index (Pypi)
+\href{https://pypi.python.org/pypi?:action=display&name=csscoco}{repository}
+and for less than month it has accumulated over 3000 downloads. Once
+installed, the package offers a \texttt{csscoco} command that takes as
+parameters a css and a coco file and returns a list of the discovered
+violations.
+
+The current implementation of the CssCoco interpreter is available only for
+Python 3.4. Additionally, the proof of concept requires nodejs. This
+dependency is added because, the only CSS parser that produces CSS parse
+trees with the required level of details is implemented in nodejs.
+
+The second part of the proof of concept brings the functionality implemented
+in the Python package to Sublime Text editor. The plug-in uses the
+\texttt{csscoco} command to find violations in CSS files that are being edited
+in the text editor. Currently, the plug-in is implemented for Sublime Text 3.
+The source code of the solution is publicly available at
+\url{https://github.com/boryanagoncharenko/Sublime-CssCoco}.
+
+The plug-in offers a command that find and visualizes violations and also. Similarly to
+other linter tools, rows that contain violations are marked with a color
+border and a gist appears at the side bar. When the cursor is positioned on a
+line that contains a violation, the error message is displayed in the status
+bar. For example, on \autoref{sublime} the cursor is placed on line 26 and the
+status bar indicates that there should be one space between the colon and the
+value of the declaration.
+
+\begin{figure}[h!]
+  \centering
+  \caption{
+    \label{sublime}
+    CssCoco Sublime Text Plug-in}
+  \includegraphics[width=0.7\textwidth]{sublime}
+\end{figure}
+
+The proof of concept leaves some of the features of the language not implemented. Specifically, is does not include the following:
+
+\begin{itemize}
+
+\item Unique construct. A small portion of the conventions require the unique construct. The feature is not included in the current version and is left for future implementation.
+
+\item Ordering rules. To check for violations of conventions that specify ordering, requires efficient implementation especially for large CSS files. The feature is currently not supported because of time constraints. 
+
+\item Indentation rules. Conventions that refer to indentation specify relative indentation. For example, when a convention states that the contents of a ruleset should be indented, this implies that they should be indented once compared to the beginning of the ruleset. Detecting violations of such conventions is laborious and is left for future implementation.
+
+
+\end{itemize}
 
 \section{Validation}
 
-The method chosen for validating the designed domain-specific language is ontological analysis,
-since it is a widely accepted way for evaluating software notations~\cite{opdahl2002ontological}~\cite{green2000integrated}~\cite{moody2009physics}~\cite{parsons1997using}~\cite{weber1996analytical}.
-The particular approach used for conducting ontological analysis consists of several steps. First, a
-domain-specific ontology is designed. Second, the ontology is used as a reference point for the
-interpretation and representation mappings. Third, emerged anomalies are analyzed and conclusion
-about the quality of the notation is made.
+The method chosen for validating the designed domain-specific language is
+ontological analysis, since it is a widely accepted way for evaluating
+software notations ~\cite{opdahl2002ontological,green2000integrated,moody2009physics,parsons1997using,weber1996analytical}. The particular approach used for
+conducting ontological analysis consists of several steps. First, a domain-
+specific ontology is designed. Second, the ontology is used as a reference
+point for the interpretation and representation mappings. Third, emerged
+anomalies are analyzed and conclusion about the quality of the notation is
+made.
 
 \subsection{Ontology design}
 
-The first stage of validation requires designing a domain-specific ontology. The specific domain of
-the developed ontology is limited to detecting violations of CSS code conventions. In other words,
-the designed ontology tries to capture only the concepts and their relations, that exist when an
+The first stage of validation requires designing a domain-specific ontology.
+The specific domain of the developed ontology is limited to detecting
+violations of CSS code conventions. In other words, the designed ontology
+tries to capture only the concepts and their relations, that exist when an
 agent searches a CSS program for violations of given set of code conventions.
 
 The designed domain-specific ontology is based on the BWW top-level
-ontology~\cite{wand1990ontological}, i.e. it uses the high-level categories of the BWW ontology to
-describe the objects, concepts and entities in the specific domain. The rationale behind the
-decision to use BWW ontology is that it has been the leading ontology used for ontological
-analysis~\cite{moody2009physics}. The main ontological constructs used in the BWW ontology are
-listed in section 2.1.
+ontology~\cite{wand1990ontological}, i.e. it uses the high-level categories of
+the BWW ontology to describe the objects, concepts and entities in the
+specific domain. The rationale behind the decision to use BWW ontology is that
+it has been the leading ontology used for ontological
+analysis~\cite{moody2009physics}. The main ontological constructs used in the
+BWW ontology are listed in section 2.1.
 
-The designed ontology is presented using several approaches. As recommended by Wand and Weber, the
-ontology is presented using a dictionary comprising definitions of entities in natural text and,
-second, using Backus-Naur Form (BNF) notation~\cite{wand1995deep}~\cite{rosemann2002developing}.
-Additionally, a system diagram is included to provide a better view of the couplings between the
-different entities. The ontology is intentionally not presented using Unified Modeling Language or
-Entity-Relationship diagrams. These modeling languages are subjects of ontological analysis
-themselves and therefore are not suitable for expressing an ontology.
+The designed ontology is presented using several approaches. As recommended by
+Wand and Weber, the ontology is presented using a dictionary comprising
+definitions of entities in natural text and, second, using Backus-Naur Form
+(BNF) notation~\cite{wand1995deep,rosemann2002developing}. Additionally, a
+system diagram is included to provide a better view of the couplings between
+the different entities. The ontology is intentionally not presented using
+Unified Modeling Language or Entity-Relationship diagrams. These modeling
+languages are subjects of ontological analysis themselves and therefore are
+not suitable for expressing an ontology.
 
-Following is a list with the main concepts discovered in the domain along with their descriptions.
-The used BWW concepts are written in \textit{italics} and the domain-specific concepts are written
-in \textbf{bold}.
+Following is a list with the main concepts discovered in the domain along with
+their descriptions. The used BWW concepts are written in \textit{italics} and
+the domain-specific concepts are written in \textbf{bold}.
 
 \begin{description}
 
-\item\textit{Class} \textbf{Style Guide} describes the coding practices adopted in the context of a single project, organization, community or language. An individual Style Guide is a \textit{composite thing} built of Conventions and their relations. Conventions in a Style Guide are interpreted together to form a coherent set of guidelines.
+\item\textit{Class} \textbf{Style Guide} describes the coding practices
+adopted  in the context of a single project, organization, community or
+language. An individual Style Guide is a \textit{composite thing} built of
+Conventions and their relations. Conventions in a Style Guide are interpreted
+together to form a coherent set of guidelines.
 
 \textit{Property} \textbf{Conventions} refers to the conventions contained in the Style Guide.
 
@@ -789,18 +870,14 @@ way composite things are constructed, the same concepts are also expressed using
 
 \begin{snippet}
 \begin{verbatim}
-STYLE_GUIDE     ::= CONVENTIONS
-CONVENTIONS     ::= CONVENTIONS CONVENTION | CONVENTION 
-CONVETION       ::= CONTEXT
-CONTEXT         ::= CONSTRAINTS
-CONSTRAINTS     ::= CONSTRAINTS CONSTRAINT | CONSTRAINT
-CONSTRAINT      ::= EXISTENCE_CONSTRAINT | COMPARISON_CONSTRAINT | TYPE_CONSTRAINT  
-                  | TEXT_CONSTRAINT | SET_CONSTRAINT
-VIOLATION_LOG   ::= VIOLATIONS
-VIOLATIONS      ::= VIOLATIONS VIOLATION | VIOLATION | EPSILON
-STYLESHEET      ::= CONSTRUCTS
-CONSTRUCTS      ::= CONSTRUCTS CONSTRUCT | CONSTRUCT
-PATTERN         ::= CONSTRUCTS
+STYLE_GUIDE    ::= CONVENTION+
+CONVETION      ::= CONTEXT
+CONTEXT        ::= CONSTRAINT+
+CONSTRAINT     ::= EXISTENCE_CONSTRAINT | COMPARISON_CONSTRAINT | TYPE_CONSTRAINT  
+                 | TEXT_CONSTRAINT | SET_CONSTRAINT
+VIOLATION_LOG  ::= VIOLATIONS*
+STYLESHEET     ::= CONSTRUCT+
+PATTERN        ::= CONSTRUCT+
 \end{verbatim}
 \end{snippet}
 
@@ -814,7 +891,7 @@ least one Construct in order to exist.
 
 While the above grammar presents the composition of things, it does not illustrate how things
 interact with each other. To provide a better understanding of the dynamics between things defined
-in the ontology, a graph of the system is presented in Figure \ref{fig:couplings}.
+in the ontology, a graph of the system is presented in \autoref{fig:couplings}.
 
 \begin{figure}[h!]
   \centering
@@ -862,7 +939,7 @@ Violation Log is matched with the Violation Log class in the analysis module.
 \subsubsection{Representation and Interpretation Mappings} 
 
 This subsection contains the two mappings between the modeling grammar and domain-specific ontology.
-Table \ref{tab:representation} presents the representation mapping. The left-hand side of the table
+\autoref{tab:representation} presents the representation mapping. The left-hand side of the table
 contains the ontological constructs in the order of definition and the right-hand side comprises the
 corresponding modeling grammar construct. \autoref{tab:interpretation} presents the interpretation
 mapping. The left-hand side contains classes from the abstract syntax, followed by classes that have
@@ -875,147 +952,177 @@ construct.
 
 \textbf{Ontological Classes and Subclasses}
 
-The ontological concept of Style Guide is represented in the modeling grammar as a Convention Set.
-Similarly, the notion of Convention maps to the Convention class and the concept of Context maps to
-the Pattern Descriptor class.
+The ontological concept of Style Guide is represented in the modeling grammar
+as a Convention Set. Similarly, the notion of Convention maps to the
+Convention class and the concept of Context maps to the Pattern Descriptor
+class.
 
-The ontological concept of Constraint appears in the modeling grammar as a number of Expressions.
-These include Expressions used in mappings for the subclasses of Constraint: Comparison Expression,
-Is Expression, Match Expression, In Expression and Node Query Expression. Additionally, the
-Constraint is mapped to And, Not and Or Expressions. These constructs cannot serve as Constraints
-themselves but are used to form more complex Constraints.
+The ontological concept of Constraint appears in the modeling grammar as a
+number of Expressions. These include Expressions used in mappings for the
+subclasses of Constraint: Comparison Expression, Is Expression, Match
+Expression, In Expression and Node Query Expression. Additionally, the
+Constraint is mapped to And, Not and Or Expressions. These constructs cannot
+serve as Constraints themselves but are used to form more complex Constraints.
 
-The mappings for most of the Constraint subclasses are straight forward. For example, the Comparison
-Constraint is represented as a Comparison Expression and the Type Constraint appears as an Is
-Expression. Similarly, the Textual Form Constraint is a Match Expression and the Set Membership
-Constraint maps to the In Expression. That said, the Existence Constraint require further attention.
-As defined in the ontology, the Existence Constraint requires the subject to exist. In the modeling
-grammar this concept is indirectly presented using multiple structures. Nodes in a pattern are
-specified using two ways: either through using Node Descriptor and Node Relations, or through Node
-Query Expression. The modeling grammar describes the anchor nodes from the pattern and their parent
-nodes using the former approach and nodes that are nested in the anchor nodes using the latter. For
-example, when a the pattern that needs to be matched is a ruleset that contains a z-index property
-and appears in a media query, the existence of the media query and the ruleset (and their
-relationship) is described using Node Descriptors and a Node Relation. The existence of the property
-contained in the ruleset is denoted using a Node Query Expression.
+The mappings for most of the Constraint subclasses are straight forward. For
+example, the Comparison Constraint is represented as a Comparison Expression
+and the Type Constraint appears as an Is Expression. Similarly, the Textual
+Form Constraint is a Match Expression and the Set Membership Constraint maps
+to the In Expression. That said, the Existence Constraint require further
+attention. As defined in the ontology, the Existence Constraint requires the
+subject to exist. In the modeling grammar this concept is indirectly presented
+using multiple structures. Nodes in a pattern are specified using two ways:
+either through using Node Descriptor and Node Relations, or through Node Query
+Expression. The modeling grammar describes the target nodes from the pattern
+and their parent nodes using the former approach, and nodes that are nested in
+the target nodes - using the latter. For example, when a the pattern that
+needs to be matched is a ruleset that contains a z-index property and appears
+in a media query, the existence of the media query and the ruleset (and their
+relationship) is described using Node Descriptors and a Node Relation. The
+existence of the property contained in the ruleset is denoted using a Node
+Query Expression.
 
-The ontological constructs of Violation Log and Violation are mapped to the Violation Log and
-Violation classes, respectively. The notion of a Stylesheet is represented by the Stylesheet Node in
-the solution and a Pattern is mapped to Css Pattern. The concept of a Construct is represented in
-the abstract syntax tree as a Variable Expression. The reason behind this mapping is that in the
-modeling grammar Variable Expression denote only Constructs.
+The ontological constructs of Violation Log and Violation are mapped to the
+Violation Log and Violation classes, respectively. The notion of a Stylesheet
+is represented by the Stylesheet Node in the solution and a Pattern is mapped
+to Css Pattern. The concept of a Construct is represented in the abstract
+syntax tree as a Variable Expression. The reason behind this mapping is that
+in the modeling grammar Variable Expression denote only Constructs.
 
 \textbf{Ontological Properties}
 
-The majority of the ontological properties are mapped to a single construct in the solution. For
-example, the Description property of Convention class in the ontology is directly mapped to the
-Description property of the Convention class in the modeling grammar. However, some of the property
-mappings are not that obvious. For example, the ontological property Conventions of class Style
-Guide is represented by a combination of properties in the solution: Contexts of Convention Set and
-Conventions of Context. Also, the notion of Ignored Constructs maps to the Context class in the
-solution. The reason for these mappings comes from the fact that the solution groups together
-conventions with identical ignored constructs. As stated in the ontology description, each
-convention specifies a set of constructs that need to be ignored while searching for its violations.
-For example, while evaluating the constraints of conventions related to newlines, the indentation
-constructs are typically ignored. Because the ignored constructs are similar for most of the
-conventions, the modeling grammar groups conventions that use the same ignored constructs into
-contexts. Thus, the Convention Set contains Contexts and a Context specifies the ignored constructs
-of all convention that it contains.
+The majority of the ontological properties are mapped to a single construct in
+the solution. For example, the Description property of Convention class in the
+ontology is directly mapped to the Description property of the Convention
+class in the modeling grammar. However, some of the property mappings are not
+that obvious. For example, the ontological property Conventions of class Style
+Guide is represented by a combination of properties in the solution: Contexts
+of Convention Set and Conventions of Context. Also, the notion of Ignored
+Constructs maps to the Context class in the solution. The reason for these
+mappings comes from the fact that the solution groups together conventions
+with identical ignored constructs. As stated in the ontology description, each
+convention specifies a set of constructs that need to be ignored while
+searching for its violations. For example, while evaluating the constraints of
+conventions related to newlines, the indentation constructs are typically
+ignored. Because the ignored constructs are similar for most of the
+conventions, the modeling grammar groups conventions that use the same ignored
+constructs into contexts. Thus, the Convention Set contains Contexts and a
+Context specifies the ignored constructs of all convention that it contains.
 
-The Subject and the Value of a Constraint are mapped to the operands of Expression. The subclasses
-of Constraint are based on the different values of the Requirement property. Similarly, the
-Requirement of Constraint is expressed through child classes of Expression.
+The Subject and the Value of a Constraint are mapped to the operands of
+Expression. The subclasses of Constraint are based on the different values of
+the Requirement property. Similarly, the Requirement of Constraint is
+expressed through child classes of Expression.
 
-The ontological property Violations of the Violation Log construct appears in the modeling grammar
-as property Violations of the Violation Log class. The Violation class exposes Description and
-Position properties that map to the ontological properties Description and Position in Stylesheet.
-The Checked property of Stylesheet does not have a representation in the system. The property
-Property of Construct is denoted in the abstract syntax using a Call Expression.
+The ontological property Violations of the Violation Log construct appears in
+the modeling grammar as property Violations of the Violation Log class. The
+Violation class exposes Description and Position properties that map to the
+ontological properties Description and Position in Stylesheet. The Checked
+property of Stylesheet does not have a representation in the system. The
+property Property of Construct is denoted in the abstract syntax using a Call
+Expression.
 
 \subsection{Ontological Evaluation of the System}
 
-The primary purpose of the representation and interpretation mappings between the ontology and the
-modeling grammar is discovering discrepancies between the two entities. The four types of
-ontological anomalies are considered in the following subsections.
+The primary purpose of the representation and interpretation mappings between
+the ontology and the modeling grammar is discovering discrepancies between the
+two entities. The four types of ontological anomalies are considered in the
+following subsections.
 
 \subsubsection{Redundant Constructs} 
 
-Construct redundancy is a type of anomaly in which more than one modeling construct can represent a
-single ontological construct. The representation mapping illustrates that there are three candidates
-for this discrepancy. 
+Construct redundancy is a type of anomaly in which more than one modeling
+construct can represent a single ontological construct. The representation
+mapping illustrates that there are three candidates for this discrepancy.
 
-First, the Conventions property of Style Guide is matched to Contexts property of Convention Set and
-the Conventions property of Context. Such mapping is required since the modeling grammar groups
-Conventions that share the same Ignored Constructs in a Context. Thus, a Style Guide in the modeling
-grammar does not possess conventions but a number of Contexts that, in turn, contain conventions. In
-this sense, the properties Contexts and Conventions together represent the concept of Conventions.
+First, the Conventions property of Style Guide is matched to Contexts property
+of Convention Set and the Conventions property of Context. Such mapping is
+required since the modeling grammar groups Conventions that share the same
+Ignored Constructs in a Context. Thus, a Style Guide in the modeling grammar
+does not possess conventions but a number of Contexts that, in turn, contain
+conventions. In this sense, the properties Contexts and Conventions together
+represent the concept of Conventions.
 
-Note that redundancy occurs when the two grammar constructs can independently represent the same
-ontological concept. In the specific case, however, none of the constructs taken individually can
-express the property. It is their combination that represents the concept. Mapping a single
-ontological concept to a combination of modeling grammar constructs is an accepted approach and has
-been done in multiple studies~\cite{gehlert2007toward}. Thus, the two constructs are not
-considered redundant.
+Note that redundancy occurs when the two grammar constructs can independently
+represent the same ontological concept. In the specific case, however, none of
+the constructs taken individually can express the property. It is their
+combination that represents the concept. Mapping a single ontological concept
+to a combination of modeling grammar constructs is an accepted approach and
+has been done in multiple studies~\cite{gehlert2007toward}. Thus, the two
+constructs are not considered redundant.
 
-Second, the Comparison, Is, In, Match, Node Query, And, Or and Not Expressions map to the concept of
-Constraint. As defined in the ontology, a Constraint is a class that has multiple subclasses
-depending on the specific requirement they enforce. In this sense, Expressions that map to any
-subclasses of Constraint, also map the Constraint class. These are the Comparison, Is, In, Match and
-Node Query Expressions. The remaining part of Expressions are And, Or and Not. These Expressions are
-used to combine Constraints into complex Constraints. For example, a Context may contain a number of
-Constraints that need to be put together using the And Expression. However, the And Expression
-itself cannot be a Constraint - it is used to build Constraints. In this sense, none of the three
-Expressions can independently represent a Constraint. Their combination with the Expressions mapped
-to the subclasses of Constraint expresses the concept of Constraint. Thus, the expressions are not
-considered redundant.
+Second, the Comparison, Is, In, Match, Node Query, And, Or and Not Expressions
+map to the concept of Constraint. As defined in the ontology, a Constraint is
+a class that has multiple subclasses depending on the specific requirement
+they enforce. In this sense, Expressions that map to any subclasses of
+Constraint, also map the Constraint class. These are the Comparison, Is, In,
+Match and Node Query Expressions. The remaining part of Expressions are And,
+Or and Not. These Expressions are used to combine Constraints into complex
+Constraints. For example, a Context may contain a number of Constraints that
+need to be put together using the And Expression. However, the And Expression
+itself cannot be a Constraint - it is used to build Constraints. In this
+sense, none of the three Expressions can independently represent a Constraint.
+Their combination with the Expressions mapped to the subclasses of Constraint
+expresses the concept of Constraint. Thus, the expressions are not considered
+redundant.
 
-Third, the Existence Constraint is mapped to the Node Descriptor, Node Relation and Node Query
-Expressions. Existence Constraint is a type of Constraint that requires the Subject to exist. For
-example, the convention \textit{Use a fallback property for RGBA and HSLA values} requires the
-fallback declaration to have the same property as the matched declaration and the value of the
-fallback declaration to be different than RGBA or HSLA. However, before these, the convention
-requires the fallback declaration to exist.
+Third, the Existence Constraint is mapped to the Node Descriptor, Node
+Relation and Node Query Expressions. Existence Constraint is a type of
+Constraint that requires the Subject to exist. For example, the convention
+\textit{Use a fallback property for RGBA and HSLA values} requires the
+fallback declaration to have the same property as the matched declaration and
+the value of the fallback declaration to be different than RGBA or HSLA.
+However, before these, the convention requires the fallback declaration to
+exist.
 
-In the modeling grammar, when a Pattern Descriptor refers to multiple nodes, the presence of a Node
-Descriptor denotes the existence of CSS Node and the Node Relation specifies how the Nodes are
-connected in the Pattern Descriptor. As described in the domain analysis section, each Pattern
-Descriptor has one of more anchors. These are the specific nodes that need to be iterated. While the
-Node Descriptors and Node Relations describe the anchor nodes in the Pattern and their parent nodes,
-the Node Query Expression is used to describe parts of the pattern that are nested in the anchors.
+In the modeling grammar, when a Pattern Descriptor refers to multiple nodes,
+the presence of a Node Descriptor denotes the existence of CSS Node and the
+Node Relation specifies how the Nodes are connected in the Pattern Descriptor.
+As described in the domain analysis section, each Pattern Descriptor has one
+of more targets. These are the specific nodes that need to be iterated. While
+the Node Descriptors and Node Relations describe the target nodes in the
+Pattern and their parent nodes, the Node Query Expression is used to describe
+parts of the pattern that are nested in the targets.
 
-As with the previous two cases, the ontological concept cannot be represented by Node Descriptors
-and Node Relations or by Node Query Expressions taken individually. Their combined use allows
-expressing patterns. For this reason, the constructs are not considered redundant.
+As with the previous two cases, the ontological concept cannot be represented
+by Node Descriptors and Node Relations or by Node Query Expressions taken
+individually. Their combined use allows expressing patterns. For this reason,
+the constructs are not considered redundant.
 
 
 \subsubsection{Construct Overload}
 
-Construct overload emerges when a single modeling construct can represent a number of ontological
-constructs. In the interpretation and representation mappings every language construct is assigned a
-single ontological construct. In this sense, there are not candidates for overload discrepancy.
+Construct overload emerges when a single modeling construct can represent a
+number of ontological constructs. In the interpretation and representation
+mappings every language construct is assigned a single ontological construct.
+In this sense, there are not candidates for overload discrepancy.
 
 \subsubsection{Construct Excess}
 
-Construct excess is a discrepancy in which a modeling construct does not have a mapping to an
-ontological construct. Typically, ontological analysis is performed through comparing the abstract
-syntax of the domain-specific language to the ontology. In the interpretation mapping all constructs
-that belong to the abstract syntax are mapped to an ontological construct. Thus, there are not
-candidates for construct excess from the abstract syntax.
+Construct excess is a discrepancy in which a modeling construct does not have
+a mapping to an ontological construct. Typically, ontological analysis is
+performed through comparing the abstract syntax of the domain-specific
+language to the ontology. In the interpretation mapping all constructs that
+belong to the abstract syntax are mapped to an ontological construct. Thus,
+there are not candidates for construct excess from the abstract syntax.
 
 \subsubsection{Construct Deficit}
 
-Construct deficit appears when an ontological construct does not have a corresponding modeling
-structure. A candidate for such discrepancy is the property Checked of class Stylesheet as it
-appears without a matching construct in the system. However, maintaining the status of a Stylesheet
-is considered outside the scope of the system. Such functionality is highly dependent on the
-specific information offered by the IDE or text editor. Support for this property remains in the
-environment of the system. In this sense, the candidate is not considered an occurrence of deficit.
+Construct deficit appears when an ontological construct does not have a
+corresponding modeling structure. A candidate for such discrepancy is the
+property Checked of class Stylesheet as it appears without a matching
+construct in the system. However, maintaining the status of a Stylesheet is
+considered outside the scope of the system. Such functionality is highly
+dependent on the specific information offered by the IDE or text editor.
+Support for this property remains in the environment of the system. In this
+sense, the candidate is not considered an occurrence of deficit.
 
 
 \subsubsection{Results}
 
-In this section are presented the interpretation and representation mappings between the modeling
-grammar and the designed domain-specific ontology. Further, all types of discrepancies are analyzed
-and argumentation is provided why they should not be considered anomalies. Having the analysis in
-mind, it can be concluded that the ontological analysis provides sufficient evidence to consider the
-designed system both ontologically clear and complete.
+In this section are presented the interpretation and representation mappings
+between the modeling grammar and the designed domain-specific ontology.
+Further, all types of discrepancies are analyzed and argumentation is provided
+why they should not be considered anomalies. Having the analysis in mind, it
+can be concluded that the ontological analysis provides sufficient evidence to
+consider the designed system both ontologically clear and complete.

@@ -41,43 +41,33 @@ as explicit conventions.
 
 \section{Results}
 
-As a result of the searches, a corpus of 165 unique CSS code conventions was accumulated. Sources
-of these conventions include CSS professionals, open-source communities and companies, such as \href{https://google-styleguide.googlecode.com/svn/trunk/htmlcssguide.xml#Protocol}{Google}, \href{http://primercss.io/guidelines/#css}{GitHub}, \href{https://make.wordpress.org/core/handbook/best-practices/coding-standards/css/}{Wordpress}, \href{https://www.drupal.org/node/1887862}{Drupal}. The following list presents a selected set of the discovered conventions:
+As a result of the searches, 28 CSS style guides were discovered. Sources of these conventions include CSS professionals, open-source communities and companies, such as \href{https://google-styleguide.googlecode.com/svn/trunk/htmlcssguide.xml#Protocol}{Google}, \href{http://primercss.io/guidelines/#css}{GitHub}, \href{https://make.wordpress.org/core/handbook/best-practices/coding-standards/css/}{Wordpress}, \href{https://www.drupal.org/node/1887862}{Drupal}. Most of the discovered CSS convention sets were parts of bigger style guides and thus they contain a small number of conventions 5-10. Standalone CSS style guides contain around 10-42 conventions. The total number of conventions in the discovered style guides is 471. However, style guides often share the same conventions and even refer to one another. Because of this overlapping, only one third of the 471 conventions are unique.
+
+Thus, the result of the searches is 151 unique code conventions appearing in 28 CSS style guides. Some of the most popular conventions are listed below: 
 
 \begin{itemize} 
-\item Avoid qualifying ID and class names with type selectors. 
-\item Use RGBA only when opacity is needed.
-\item Use short hexadecimal values. 
-\item CSS files must not include any @charset statements.
-\item Disallow @import. 
-\item When possible, use em instead of pix. 
-\item Avoid using z-indexes when possible. 
-\item Require compatible vendor prefixes. 
-\item Do not use !important. 
-\item Do not use id selectors. 
-\item Id and class names should be lowercase.
-\item All values except the contents of strings should be lowercase.  
-\item HTML tags should be lowercase.
 \item Put a ; at the end of declarations. 
 \item Do not put quotes in URL declarations.
 \item Use short hex values.
 \item Use the shorthand margin property.
 \item Do not use units after 0 values.
 \item Use a leading zero for decimal values.
+\item Avoid qualifying ID and class names with type selectors. 
+\item Use short hexadecimal values. 
+\item When possible, use em instead of pix. 
+\item Avoid using z-indexes when possible. 
+\item Require compatible vendor prefixes. 
+\item Do not use id selectors. 
+\item Id and class names should be lowercase.
+\item All values except the contents of strings should be lowercase.  
+\item HTML tags should be lowercase.
 \item Use single quotes in charsets.
 \item Use single quotes in attribute selectors.
 \item Put one space between the colon and the value of a declaration.
 \item Put one space between the last selector and the block.
 \item One selector per line.
-\item A rule must not contain height and border, border-top, border-bottom, padding, padding-top, or padding-bottom.
-\item A rule must not contain width and border, border-left, border-right, padding, padding-left, or padding-right.
-\item Warning if a property is included in a rule twice and contains the same value.
 \item Forbid empty rules.
 \item A vendor-prefixed property must be followed by a standard property.
-\item Require fallback color. A color property with a RGBA(), HSL(), or HSLA() color without a preceding color property that has an older color format.
-\item A rule that has display: inline-block should not use float.
-\item A rule that has display: block should not use vertical-align.
-\item Use 4 spaces for indentation, no tabs.
 \item No trailing spaces.
 \end{itemize}
 
