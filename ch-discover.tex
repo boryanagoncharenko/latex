@@ -4,46 +4,53 @@
 
 \section{Research Method}
 
-The primary organization responsible for the specification of CSS has not published an official CSS
-style guide. As a result, the CSS community has produced a pool of coding conventions, best
-practices, guidelines and recommendations.
+The primary organization responsible for the specification of CSS has not
+published an official CSS style guide. As a result, the CSS community has
+produced a pool of coding conventions, best practices, guidelines and
+recommendations.
 
-To discover existing CSS code conventions, two searches with the keywords \texttt{CSS code
-conventions} were made using the search engines \url{http://duckduckgo.com} and
-\url{http://google.com}. The first 100 results of each search were analyzed. From each result
-only conventions that refer to plain CSS are taken into account and conventions related to
-preprocessors are ignored. In case the result contains links to other style guides, these
+To discover existing CSS code conventions, two searches with the keywords
+\texttt{CSS code conventions} were made using the search engines
+\url{http://duckduckgo.com} and \url{http://google.com}. The first 100 results
+of each search were analyzed. From each result only conventions that refer to
+plain CSS are taken into account and conventions related to preprocessors are
+ignored. In case the result contains links to other style guides, these
 references are considered as results and analyzed separately.
 
-While searching for conventions, a number of issues were discovered. First, some of the
-conventions do not provide sufficient information to be applied in practice. Such an example is the
-convention \textit{Do not use CSS hacks - try a different approach first} when the style guide does
-not define the meaning of CSS hacks. Such overgeneralized conventions were omitted from the results.
+While searching for conventions, a number of issues were discovered. First,
+some of the conventions do not provide sufficient information to be applied in
+practice. Such an example is the convention \textit{Do not use CSS hacks - try
+a different approach first} when the style guide does not define the meaning
+of CSS hacks. Such overgeneralized conventions were omitted from the results.
 
-Another part of the discovered conventions introduce a discrepancy between their description in
-natural language and the provided code example. An instance of such contradiction is when the
-convention \textit{Nothing but declarations should be indented} is followed by a code snippet
-illustrating that rules in media queries should also be indented. In such cases the convention is
-interpreted as described by the code example.
+Another part of the discovered conventions introduce a discrepancy between
+their description in natural language and the provided code example. An
+instance of such contradiction is when the convention \textit{Nothing but
+declarations should be indented} is followed by a code snippet illustrating
+that rules in media queries should also be indented. In such cases the
+convention is interpreted as described by the code example.
 
-When conventions are not supported with code examples, their description could remain open for
-interpretation. For example, \textit{Rules with more than 4 selectors are not allowed} could be seen
-as forbidding multi-selectors with more than four selectors, or disallowing selectors with more than
-four simple-selectors. All possible interpretations of ambiguous conventions were registered as
-separate conventions.
+When conventions are not supported with code examples, their description could
+remain open for interpretation. For example, \textit{Rules with more than 4
+selectors are not allowed} could be seen as forbidding multi-selectors with
+more than four selectors, or disallowing selectors with more than four simple-
+selectors. All possible interpretations of ambiguous conventions were
+registered as separate conventions.
 
-There are conventions that are not explicitly stated, but could only be inferred by the other rules.
-For example, the convention \textit{You can put long values on multiple lines} states that a long
-value is allowed to appear on several lines. However, this rule implies the presence of another
-convention, that is not explicitly stated. It implies that short values should appear on one line
-and only lengthy values are allowed to appear on multiple. Such implicit conventions were registered
-as explicit conventions.
+There are conventions that are not explicitly stated, but could only be
+inferred by the other rules. For example, the convention \textit{You can put
+long values on multiple lines} states that a long value is allowed to appear
+on several lines. However, this rule implies the presence of another
+convention, that is not explicitly stated. It implies that short values should
+appear on one line and only lengthy values are allowed to appear on multiple.
+Such implicit conventions were registered as explicit conventions.
 
 \section{Results}
 
-As a result of the searches, 28 CSS style guides were discovered. Sources of these conventions include CSS professionals, open-source communities and companies, such as \href{https://google-styleguide.googlecode.com/svn/trunk/htmlcssguide.xml#Protocol}{Google}, \href{http://primercss.io/guidelines/#css}{GitHub}, \href{https://make.wordpress.org/core/handbook/best-practices/coding-standards/css/}{Wordpress}, \href{https://www.drupal.org/node/1887862}{Drupal}. Most of the discovered CSS convention sets were parts of bigger style guides and thus they contain a small number of conventions 5-10. Standalone CSS style guides contain around 10-42 conventions. The total number of conventions in the discovered style guides is 471. However, style guides often share the same conventions and even refer to one another. Because of this overlapping, only one third of the 471 conventions are unique.
+As a result of the searches, 28 CSS style guides were discovered. Sources of these conventions include CSS professionals, open-source communities and companies, such as \href{https://google-styleguide.googlecode.com/svn/trunk/htmlcssguide.xml#Protocol}{Google}, \href{http://primercss.io/guidelines/#css}{GitHub}, \href{https://make.wordpress.org/core/handbook/best-practices/coding-standards/css/}{Wordpress}, \href{https://www.drupal.org/node/1887862}{Drupal}. Most of the discovered CSS convention sets were parts of bigger style guides and thus they contain a small number of conventions 5-10. Standalone CSS style guides contain from 10 to 42 conventions. The total number of conventions in the discovered style guides is 471. However, style guides often share the same conventions and even refer to one another. Because of this overlapping, only one third of the 471 conventions are unique.
 
-Thus, the result of the searches is 151 unique code conventions appearing in 28 CSS style guides. Some of the most popular conventions are listed below: 
+Thus, the result of the searches is 155 unique code conventions appearing in
+28 CSS style guides. Some of the most popular conventions are listed below:
 
 \begin{itemize} 
 \item Put a ; at the end of declarations. 
@@ -71,5 +78,7 @@ Thus, the result of the searches is 151 unique code conventions appearing in 28 
 \item No trailing spaces.
 \end{itemize}
 
-The full list of all discovered conventions along with their sources and explanation of their meaning is available in \href{https://github.com/boryanagoncharenko/CssCoco/blob/master/analysis.md}{CssCoco GitHub repository}.
+The full list of all discovered conventions along with their sources and
+explanation of their meaning is available in \href{https://github.com/boryanag
+oncharenko/CssCoco/blob/master/analysis.md}{CssCoco GitHub repository}.
 

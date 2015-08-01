@@ -31,16 +31,17 @@ depending on the type of constraints they impose. The following three categories
   \end{itemize}
 \end{description}
 
-Conventions in each of the groups were analyzed and their violations were made explicit. While the
-violations of most of the conventions are obvious, some of them require knowledge about the possible
-valid CSS syntax. For example, conventions such as \textit{Avoid id selectors} directly describe
-their violations - id selectors. That said, the convention \textit{Use single quotes in URLs} has
+Conventions in each of the groups were analyzed and their violations were made
+explicit. While the violations of most of the conventions are obvious, some of
+them require knowledge about the grammar of CSS. For example, conventions such
+as \textit{Avoid id selectors} directly describe their violations - id
+selectors. That said, the convention \textit{Use single quotes in URLs} has
 two violations: URLs with single quotes and URL without quotes.
 
 After the violations of each convention were made explicit, the specific actions needed to detect
 these violations were determined. Currently, the detection of violations is performed by developers
 manually or with the partial help of tools. To perform such checks, developers need to understand
-different concepts, e.g. the concept of a rule, HTML element, IDs, etc and perform certain actions,
+different concepts, e.g. the concept of a rule, HTML element, IDs, etc. and perform certain actions,
 such as find a structure, evaluate a constraint etc. The analysis tries to grasp the specific
 concepts and actions used to find violations. To illustrate the process, the analysis of one convention is included. Analysis of all conventions in the corpus is available at
 \href{https://github.com/boryanagoncharenko/CssCoco/blob/master/analysis.md}{CssCoco GitHub
@@ -80,9 +81,9 @@ constructs used to convey conventions in natural language: forbid and require.
 Conventions that forbid describe directly their violations. For example, the
 convention \textit{Disallow @import} specifies that import statements are
 violations. Conventions that use the latter construct describe a pattern and
-once the pattern is found the constraint is evaluated. In case the constraint
+once the pattern is found, a constraint is evaluated. In case the constraint
 is not met, a violation is discovered. For example, the convention
-\textit{class names should be lowercase} requires finding class nodes and then
+\textit{Class names should be lowercase} requires finding class nodes and then
 checking whether they are lowercase.
 
 As the three categories of conventions imply, conventions can reference nodes
@@ -99,8 +100,8 @@ nodes. For example, when the pattern refers to rulesets in media queries, the
 target node is the ruleset and the media query is part of the context.
 Similarly, when a pattern describes a ruleset that contains a float
 declaration, the target node is the ruleset and the float declaration is only
-a constraint. Certain conventions can have more than one target nodes, e.g.
-when two declarations is a ruleset need to be compared.
+a context constraint. Certain conventions can have more than one target nodes,
+e.g. when two declarations is a ruleset need to be compared.
 
 Conventions refer to nodes using their type or function in the CSS program.
 For example, in the snippet \texttt{[class=``test'']} the node test can be
@@ -152,7 +153,7 @@ message 'Do not use import statements.'
 The keyword \textit{forbid} is followed by a description of the node that is
 disallowed. In the current convention, we only need to state its type -
 import. Each convention requires a message clause. The string after the
-\textit{message} keyword will be displayed to the user, when a violation is
+\textit{message} keyword will be displayed to the user when a violation is
 found.
 
 As domain analysis indicates, conventions are often expressed as a pattern that, if found, needs to
@@ -164,7 +165,7 @@ described as follows:
 \begin{lstlisting}[style=mono,language=Java]
 find c=class
 require c.name match lowercase
-message 'All id and class names should be lowercase'
+message 'All class names should be lowercase'
 \end{lstlisting}
 \end{sourcecode}
 
@@ -202,7 +203,7 @@ of type charset. The \texttt{in} keyword description of the pattern indicates th
 is nested in the charset node. In this way, the pattern will match only the strings that appear in a
 charset.
 
-In CssCoco conventions are grouped in contexts that specify what nodes should be ignored when
+In CssCoco, conventions are grouped in contexts that specify what nodes should be ignored when
 searching for patterns. For example, often when rules refer to newlines they completely disregard
 indentation. The convention \textit{Every declaration must be on a new line} requires a newline to
 be present immediately before the declaration. However, when declarations are indented their
@@ -221,7 +222,7 @@ ignore indent
 \end{lstlisting}
 \end{sourcecode}
 
-Contexts have a user-defined name and an optional ignore clause, The \texttt{ignore} keyword is
+Contexts have a user-defined name and an optional ignore clause. The \texttt{ignore} keyword is
 followed by a description of the nodes that need to disregarded.
 
 \subsection{Abstract syntax}
@@ -617,7 +618,7 @@ in the text editor. Currently, the plug-in is implemented for Sublime Text 3.
 The source code of the solution is publicly available at
 \url{https://github.com/boryanagoncharenko/Sublime-CssCoco}.
 
-The plug-in offers a command that find and visualizes violations and also. Similarly to
+The plug-in offers a command that finds and visualizes violations. Similarly to
 other linter tools, rows that contain violations are marked with a color
 border and a gist appears at the side bar. When the cursor is positioned on a
 line that contains a violation, the error message is displayed in the status
@@ -674,7 +675,7 @@ analysis~\cite{moody2009physics}. The main ontological constructs used in the
 BWW ontology are listed in section 2.1.
 
 The designed ontology is presented using several approaches. As recommended by
-Wand and Weber, the ontology is presented using a dictionary comprising
+Wand and Weber, the ontology is described using a dictionary comprising
 definitions of entities in natural text and, second, using Backus-Naur Form
 (BNF) notation~\cite{wand1995deep,rosemann2002developing}. Additionally, a
 system diagram is included to provide a better view of the couplings between
@@ -823,7 +824,7 @@ Most of the definitions in the ontology refer to simple concepts that appear in 
 domain. For example the concept of a Style Guide refers to a collection of coherent conventions. A
 Style Guide on its own does not have any emergent or intrinsic properties and, thus, it is defined
 through the conventions it comprises. Note that in reality a Style Guide may contain a number of
-intrinsic properties, for example a Style Guide may have an author and contributors. Such
+intrinsic properties, for example it may have an author and contributors. Such
 properties, however, are not considered part of the specific domain, and thus lie outside the scope
 of the ontology.
 
@@ -835,7 +836,7 @@ pattern that, when found, additional requirements must be met and in case they a
 violation is discovered. For example, the violation \textit{Do not use id selectors} tells that id
 selectors are violations. The convention \textit{Strings should be with single quotes} states that
 strings must have single quotes, and a violation is discovered if the found string does not.
-Convention types are not related to the meaning of conventions but to the way they are expressed. A
+These convention types are not related to the meaning of conventions but to the way they are expressed. A
 convention with the same meaning could be expressed using both structures: \textit{Strings should be
 with single quotes} and \textit{Forbid strings with double quotes}. Since ontological concepts are
 concerned with the meaning of things and have to be independent of the language used to express
@@ -855,7 +856,7 @@ Constraint requires the subject to exist.
 Since Conventions are used to constraint CSS code, subjects are typically Constructs or their
 properties. A Construct denotes a concrete part of the Stylesheet, e.g. newline, semicolon,
 declaration, ruleset etc. Each Construct exposes a number of properties that are tightly coupled to
-the function of the Construct in the stylesheet. For example, a property construct has properties
+its function in the stylesheet. For example, a property construct has properties
 that indicate whether it is vendor-specific and its release date.
 
 Patterns are composed of Constructs. The Constructs in the Pattern do not need to form a coherent
@@ -927,10 +928,10 @@ Stylesheet, Violation, Violation Log and Style Guide.
 The ontological analysis draws comparison between the designed domain-specific ontology and the
 domain-specific language. It consists of two mappings: representation and interpretation. The former
 mapping matches the ontology to the language and the latter - the language to the ontology.
-Typically ontological analysis is used to compare the abstract syntax of the language constructs to
+Typically, ontological analysis is used to compare the abstract syntax of the language constructs to
 the concepts of an ontology. However, the designed ontology contains concepts that fall outside the
 scope of the abstract syntax. For example, the notion of Violation Log has a corresponding class in
-the system. However, that class denotes the product of the violations search and is not part of the
+the system, however, that class denotes the product of the violations search and is not part of the
 abstract syntax. The particular approach chosen to conduct ontological analysis is to compare the
 abstract syntax of the language to the ontology. Additionally, all remaining ontological constructs
 are mapped to their representation in the whole system. For example, the ontological concept of a
@@ -975,8 +976,8 @@ using multiple structures. Nodes in a pattern are specified using two ways:
 either through using Node Descriptor and Node Relations, or through Node Query
 Expression. The modeling grammar describes the target nodes from the pattern
 and their parent nodes using the former approach, and nodes that are nested in
-the target nodes - using the latter. For example, when a the pattern that
-needs to be matched is a ruleset that contains a z-index property and appears
+the target nodes - using the latter. For example, when the pattern that
+needs to be matched is a ruleset which contains a z-index property and appears
 in a media query, the existence of the media query and the ruleset (and their
 relationship) is described using Node Descriptors and a Node Relation. The
 existence of the property contained in the ruleset is denoted using a Node
@@ -1031,9 +1032,9 @@ following subsections.
 
 \subsubsection{Redundant Constructs} 
 
-Construct redundancy is a type of anomaly in which more than one modeling
+Construct redundancy is a type of discrepancy in which more than one modeling
 construct can represent a single ontological construct. The representation
-mapping illustrates that there are three candidates for this discrepancy.
+mapping illustrates that there are three candidates for this anomaly.
 
 First, the Conventions property of Style Guide is matched to Contexts property
 of Convention Set and the Conventions property of Context. Such mapping is
@@ -1048,7 +1049,7 @@ represent the same ontological concept. In the specific case, however, none of
 the constructs taken individually can express the property. It is their
 combination that represents the concept. Mapping a single ontological concept
 to a combination of modeling grammar constructs is an accepted approach and
-has been done in multiple studies~\cite{gehlert2007toward}. Thus, the two
+has been used in multiple studies~\cite{gehlert2007toward}. Thus, the two
 constructs are not considered redundant.
 
 Second, the Comparison, Is, In, Match, Node Query, And, Or and Not Expressions
@@ -1079,7 +1080,7 @@ In the modeling grammar, when a Pattern Descriptor refers to multiple nodes,
 the presence of a Node Descriptor denotes the existence of CSS Node and the
 Node Relation specifies how the Nodes are connected in the Pattern Descriptor.
 As described in the domain analysis section, each Pattern Descriptor has one
-of more targets. These are the specific nodes that need to be iterated. While
+of more target nodes. These are the specific nodes that need to be iterated. While
 the Node Descriptors and Node Relations describe the target nodes in the
 Pattern and their parent nodes, the Node Query Expression is used to describe
 parts of the pattern that are nested in the targets.
@@ -1100,11 +1101,10 @@ In this sense, there are not candidates for overload discrepancy.
 \subsubsection{Construct Excess}
 
 Construct excess is a discrepancy in which a modeling construct does not have
-a mapping to an ontological construct. Typically, ontological analysis is
-performed through comparing the abstract syntax of the domain-specific
-language to the ontology. In the interpretation mapping all constructs that
-belong to the abstract syntax are mapped to an ontological construct. Thus,
-there are not candidates for construct excess from the abstract syntax.
+a mapping to an ontological construct. In the interpretation mapping all
+constructs that belong to the abstract syntax are mapped to an ontological
+construct. Thus, there are not candidates for construct excess from the
+abstract syntax.
 
 \subsubsection{Construct Deficit}
 
