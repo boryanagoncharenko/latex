@@ -34,7 +34,7 @@ depending on the type of constraints they impose. The following three categories
 Conventions in each of the groups were analyzed and their violations were made
 explicit. While the violations of most of the conventions are obvious, some of
 them require knowledge about the grammar of CSS. For example, conventions such
-as \textit{Avoid id selectors} directly describe their violations - id
+as \textit{Avoid id selectors} directly describe their violations --- id
 selectors. That said, the convention \textit{Use single quotes in URLs} has
 two violations: URLs with single quotes and URL without quotes.
 
@@ -47,21 +47,21 @@ concepts and actions used to find violations. To illustrate the process, the ana
 \href{https://github.com/boryanagoncharenko/CssCoco/blob/master/analysis.md}{CssCoco GitHub
 repository}.
 
+\bigskip
+\begin{boxedminipage}{.95\textwidth}
 \begin{description}
 \item\textbf{Convention:} Disallow empty rules.
 \item\textbf{Author:} \href{https://github.com/CSSLint/csslint/wiki/Disallow-empty-rules}{CSS lint}
 \item\textbf{Violations:} Presence of rulesets that do not contain declarations. In case at least one declaration is present, the ruleset does not violate the convention. Examples include:
-\begin{sourcecode}
+% \begin{sourcecode}
 \begin{lstlisting}[style=mono,language=Java]
 .myclass { }                 /* violation */
 .myclass { /* Comment */ }   /* violation */
 .myclass { color: green; }   /* not violation */
 \end{lstlisting}
-\end{sourcecode}
-
+% \end{sourcecode}
 \item\textbf{Actions:} Recognize rulesets and declarations. Determine whether a ruleset does not contain any declarations.
-
-\item\textbf{Analysis:} The convention aims at getting rid of one type of refactoring leftovers -
+\item\textbf{Analysis:} The convention aims at getting rid of one type of refactoring leftovers ---
 rulesets without declarations. Removing empty rulesets reduces the total size of CSS that
 needs to be processed by the browser. One possible approach for discovering violations of the
 convention at hand is to search the stylesheet for rulesets and then check whether each ruleset
@@ -69,9 +69,9 @@ contains a declaration. To perform this search successfully, developers need to 
 concept of a ruleset and a declaration, i.e. they need to be able to recognize these two CSS
 structures. Further, developers need to determine relations between structures, particularly,
 whether a ruleset contains a declaration.
-
 \end{description}
-
+\end{boxedminipage}
+\bigskip
 
 After all conventions were analyzed, the specific actions and concepts were
 used to extract requirements and draw conclusions about the needed
@@ -124,9 +124,9 @@ nodes organized in a pattern. For example, the convention \textit{A ruleset
 must not contain display and float declarations} requires searching for two
 specific declaration that appear under the same parent node. The nodes in the
 pattern do not have to be immediate relatives. In fact, they can be scattered
-across the tree. For example, the rule \textit{Do not use more than 5 @font-
-face declarations} requires searching for specific nodes that appear anywhere
-in the tree.
+across the tree. For example, the rule \textit{Do not use more than 5
+@font-face declarations} requires searching for specific nodes that appear
+anywhere in the tree.
 
 \section{CssCoco DSL}
 
@@ -151,7 +151,7 @@ message 'Do not use import statements.'
 \end{sourcecode}
 
 The keyword \textit{forbid} is followed by a description of the node that is
-disallowed. In the current convention, we only need to state its type -
+disallowed. In the current convention, we only need to state its type ---
 import. Each convention requires a message clause. The string after the
 \textit{message} keyword will be displayed to the user when a violation is
 found.
@@ -651,12 +651,13 @@ The proof of concept leaves some of the features of the language not implemented
 
 The method chosen for validating the designed domain-specific language is
 ontological analysis, since it is a widely accepted way for evaluating
-software notations ~\cite{opdahl2002ontological,green2000integrated,moody2009physics,parsons1997using,weber1996analytical}. The particular approach used for
-conducting ontological analysis consists of several steps. First, a domain-
-specific ontology is designed. Second, the ontology is used as a reference
-point for the interpretation and representation mappings. Third, emerged
-anomalies are analyzed and conclusion about the quality of the notation is
-made.
+software notations
+~\cite{opdahl2002ontological,green2000integrated,moody2009physics,parsons1997using,weber1996analytical}.
+The particular approach used for conducting ontological analysis consists of
+several steps. First, a domain-specific ontology is designed. Second, the
+ontology is used as a reference point for the interpretation and
+representation mappings. Third, emerged anomalies are analyzed and conclusion
+about the quality of the notation is made.
 
 \subsection{Ontology design}
 
@@ -927,7 +928,7 @@ Stylesheet, Violation, Violation Log and Style Guide.
 
 The ontological analysis draws comparison between the designed domain-specific ontology and the
 domain-specific language. It consists of two mappings: representation and interpretation. The former
-mapping matches the ontology to the language and the latter - the language to the ontology.
+mapping matches the ontology to the language and the latter --- the language to the ontology.
 Typically, ontological analysis is used to compare the abstract syntax of the language constructs to
 the concepts of an ontology. However, the designed ontology contains concepts that fall outside the
 scope of the abstract syntax. For example, the notion of Violation Log has a corresponding class in
@@ -947,9 +948,8 @@ mapping. The left-hand side contains classes from the abstract syntax, followed 
 a representation in the ontology and the right-hand side contains the corresponding ontological
 construct.
 
-\input{ontomapOG}
-\input{ontomapGO}
-
+\input{tab-onto2grammar}
+\input{tab-grammar2onto}
 
 \textbf{Ontological Classes and Subclasses}
 
@@ -976,7 +976,7 @@ using multiple structures. Nodes in a pattern are specified using two ways:
 either through using Node Descriptor and Node Relations, or through Node Query
 Expression. The modeling grammar describes the target nodes from the pattern
 and their parent nodes using the former approach, and nodes that are nested in
-the target nodes - using the latter. For example, when the pattern that
+the target nodes --- using the latter. For example, when the pattern that
 needs to be matched is a ruleset which contains a z-index property and appears
 in a media query, the existence of the media query and the ruleset (and their
 relationship) is described using Node Descriptors and a Node Relation. The
@@ -1061,7 +1061,7 @@ Match and Node Query Expressions. The remaining part of Expressions are And,
 Or and Not. These Expressions are used to combine Constraints into complex
 Constraints. For example, a Context may contain a number of Constraints that
 need to be put together using the And Expression. However, the And Expression
-itself cannot be a Constraint - it is used to build Constraints. In this
+itself cannot be a Constraint --- it is used to build Constraints. In this
 sense, none of the three Expressions can independently represent a Constraint.
 Their combination with the Expressions mapped to the subclasses of Constraint
 expresses the concept of Constraint. Thus, the expressions are not considered

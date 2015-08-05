@@ -70,6 +70,7 @@
 \newlistof{sourcecode}{lol}{\listofsourcecodename}
 \floatstyle{boxed}
 \newfloat{sourcecode}{thp}{lol}[chapter]
+\restylefloat*{sourcecode}
 \floatname{sourcecode}{Listing}
 \renewcommand{\theHsourcecode}{src:\arabic{sourcecode}}
 \newcommand{\sourcecodeautorefname}{Listing}
