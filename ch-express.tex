@@ -23,7 +23,7 @@ depending on the type of constraints they impose. The following three categories
   \item Require a semicolon at the end of the last declaration.
   \item Use strings with single quotes.
   \end{itemize}
-  \item[Programming Style] category consists of conventions that put constraints on how CSS constructs are used to achieve a certain goal. They specify preferred code patterns or anti-patterns. Conventions in this group are used mainly to improve maintenance and performance, or to avoid a bug in a particular implementation. Examples are:
+  \item[Programming Style] category consists of conventions that put constraints on how CSS constructs are used to achieve a certain goal. They specify preferred code patterns or anti-patterns. Conventions in this group are used mainly to improve maintenance and performance, or to avoid issues in a particular implementation. Examples are:
   \begin{itemize}
   \item Do not use the universal selector.
   \item Avoid using !important.
@@ -36,16 +36,16 @@ explicit. While the violations of most of the conventions are obvious, some of
 them require knowledge about the grammar of CSS. For example, conventions such
 as \textit{Avoid id selectors} directly describe their violations --- id
 selectors. That said, the convention \textit{Use single quotes in URLs} has
-two violations: URLs with single quotes and URL without quotes.
+two violations that are valid CSS code: URLs with single quotes and URL
+without quotes.
 
 After the violations of each convention were made explicit, the specific actions needed to detect
 these violations were determined. Currently, the detection of violations is performed by developers
 manually or with the partial help of tools. To perform such checks, developers need to understand
 different concepts, e.g. the concept of a rule, HTML element, IDs, etc. and perform certain actions,
 such as find a structure, evaluate a constraint etc. The analysis tries to grasp the specific
-concepts and actions used to find violations. To illustrate the process, the analysis of one convention is included. Analysis of all conventions in the corpus is available at
-\href{https://github.com/boryanagoncharenko/CssCoco/blob/master/analysis.md}{CssCoco GitHub
-repository}.
+concepts and actions used to find violations. To illustrate the process, the analysis of one convention is included. Analysis of all conventions in the corpus is available at the CssCoco GitHub repository
+\footnote{\url{https://github.com/boryanagoncharenko/CssCoco/blob/master/analysis.md}}.
 
 \bigskip
 \begin{boxedminipage}{.95\textwidth}
@@ -87,13 +87,14 @@ is not met, a violation is discovered. For example, the convention
 checking whether they are lowercase.
 
 As the three categories of conventions imply, conventions can reference nodes
-from the abstract syntax tree, concrete syntax tree and parse tree of CSS. For
-example, the convention \textit{A rule must not contain width and padding
-declarations} accesses concepts that are present in the abstract syntax tree.
-Similarly, the rule \textit{Put a semicolon at the end of the last
-declaration} refers to nodes that are omitted by the abstract syntax tree and
-are present in the concrete syntax tree. All whitespacing and indentation
-conventions target nodes that are relevant only in the parse tree of CSS.
+from the abstract syntax tree, concrete syntax tree and parse tree of
+CSS~\cite{zaytsev2014parsing}. For example, the convention \textit{A rule must
+not contain width and padding declarations} accesses concepts that are present
+in the abstract syntax tree. Similarly, the rule \textit{Put a semicolon at
+the end of the last declaration} refers to nodes that are omitted by the
+abstract syntax tree and are present in the concrete syntax tree. All
+whitespacing and indentation conventions target nodes that are relevant only
+in the parse tree of CSS.
 
 Usually, the patterns described in conventions target one of all described
 nodes. For example, when the pattern refers to rulesets in media queries, the
@@ -231,7 +232,7 @@ This section describes the abstract syntax of the designed domain-specific langu
 the abstract syntax is presented in \autoref{fig:astgeneral}, followed by detailed views of each
 of the subclasses.
 
-\begin{figure}[h!]
+\begin{figure}[h]
   \centering
   \caption{Abstract Syntax Overview}
   \label{fig:astgeneral}
@@ -272,7 +273,7 @@ designates a description of the Node targeted by the relation.
 \end{description}
 
 
-\begin{figure}[h!]
+\begin{figure}[h]
   \centering
   \caption{Abstract Syntax Expressions}
   \label{fig:expressions}
@@ -315,7 +316,7 @@ Attributes \texttt{left} and \texttt{right} represent the first and second opera
 
 \end{description}
 
-\begin{figure}[h!]
+\begin{figure}[h]
   \centering
   \caption{Abstract Syntax Literal Expressions}
   \label{fig:literal}
@@ -340,7 +341,7 @@ Attributes \texttt{left} and \texttt{right} represent the first and second opera
 
 \end{description}
 
-\begin{figure}[h!]
+\begin{figure}[h]
   \centering
   \caption{Abstract Syntax Literal Expressions}
   \label{fig:call}
@@ -357,7 +358,7 @@ Attributes \texttt{left} and \texttt{right} represent the first and second opera
 
 \end{description}
 
-\begin{figure}[h!]
+\begin{figure}[h]
   \centering
   \caption{Abstract Syntax Node Query Expressions}
   \label{fig:nodequery}
@@ -597,10 +598,10 @@ Python package and a plug-in for Sublime Text editor.
 
 The first part of the designed proof of concept comprises the CssCoco
 interpreter. The implementation is done in Python and currently contains 13
-000 lines of code. The source code is available at
-\url{https://github.com/boryanagoncharenko/CssCoco}. The solution was also
-added to the Python Package Index (Pypi)
-\href{https://pypi.python.org/pypi?:action=display&name=csscoco}{repository}
+000 lines of code. The source code is available at CssCoco GitHub repository
+\footnote{\url{https://github.com/boryanagoncharenko/CssCoco}}. The solution was also
+added to the Python Package Index (Pypi) repository
+\footnote{\url{https://pypi.python.org/pypi?:action=display&name=csscoco}}
 and for less than month it has accumulated over 3000 downloads. Once
 installed, the package offers a \texttt{csscoco} command that takes as
 parameters a css and a coco file and returns a list of the discovered
@@ -608,15 +609,15 @@ violations.
 
 The current implementation of the CssCoco interpreter is available only for
 Python 3.4. Additionally, the proof of concept requires nodejs. This
-dependency is added because, the only CSS parser that produces CSS parse
-trees with the required level of details is implemented in nodejs.
+dependency is added because, the only existing CSS parser that produces CSS
+parse trees with the required level of details is implemented in nodejs.
 
 The second part of the proof of concept brings the functionality implemented
 in the Python package to Sublime Text editor. The plug-in uses the
 \texttt{csscoco} command to find violations in CSS files that are being edited
 in the text editor. Currently, the plug-in is implemented for Sublime Text 3.
-The source code of the solution is publicly available at
-\url{https://github.com/boryanagoncharenko/Sublime-CssCoco}.
+The source code of the solution is publicly available at a separate GitHub repository
+\footnote{\url{https://github.com/boryanagoncharenko/Sublime-CssCoco}}.
 
 The plug-in offers a command that finds and visualizes violations. Similarly to
 other linter tools, rows that contain violations are marked with a color
@@ -626,7 +627,7 @@ bar. For example, on \autoref{sublime} the cursor is placed on line 26 and the
 status bar indicates that there should be one space between the colon and the
 value of the declaration.
 
-\begin{figure}[h!]
+\begin{figure}[h]
   \centering
   \caption{
     \label{sublime}
@@ -872,14 +873,14 @@ way composite things are constructed, the same concepts are also expressed using
 
 \begin{snippet}
 \begin{verbatim}
-STYLE_GUIDE    ::= CONVENTION+
-CONVETION      ::= CONTEXT
-CONTEXT        ::= CONSTRAINT+
-CONSTRAINT     ::= EXISTENCE_CONSTRAINT | COMPARISON_CONSTRAINT | TYPE_CONSTRAINT  
-                 | TEXT_CONSTRAINT | SET_CONSTRAINT
-VIOLATION_LOG  ::= VIOLATIONS*
-STYLESHEET     ::= CONSTRUCT+
-PATTERN        ::= CONSTRUCT+
+style_guide    ::= convention+
+convention      ::= context
+context        ::= constraint+
+constraint     ::= existence_constraint | comparison_constraint | type_constraint  
+                 | text_constraint | set_constraint
+violation_log  ::= violation*
+stylesheet     ::= construct+
+pattern        ::= construct+
 \end{verbatim}
 \end{snippet}
 
@@ -895,7 +896,7 @@ While the above grammar presents the composition of things, it does not illustra
 interact with each other. To provide a better understanding of the dynamics between things defined
 in the ontology, a graph of the system is presented in \autoref{fig:couplings}.
 
-\begin{figure}[h!]
+\begin{figure}[h]
   \centering
   \caption{Graph of the system}
   \label{fig:couplings}
@@ -926,7 +927,7 @@ Stylesheet, Violation, Violation Log and Style Guide.
 
 \subsection{Ontological analysis}
 
-The ontological analysis draws comparison between the designed domain-specific ontology and the
+The ontological analysis is a bidirectional mapping between the designed domain-specific ontology and the
 domain-specific language. It consists of two mappings: representation and interpretation. The former
 mapping matches the ontology to the language and the latter --- the language to the ontology.
 Typically, ontological analysis is used to compare the abstract syntax of the language constructs to

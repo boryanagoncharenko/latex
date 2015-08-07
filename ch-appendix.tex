@@ -1,0 +1,97 @@
+% !TEX root = thesis.tex
+\chapter{Concrete Syntax of CssCoco}
+
+This appendix contains all rules presented in the Context Syntax section of the Expressing CSS Code Conventions chapter. The following two snippets present the lexer and parser rules, respectively.
+
+\begin{snippet}
+\begin{verbatim}
+
+Letter : [a-zA-Z] ;
+
+EscapeSequence : "\\" "'" ;
+
+Digit : ZeroDigit | NonZeroDigit ;
+
+NonZeroDigit : [1-9] ;
+
+ZeroDigit : [0] ;
+
+Boolean : 'true' | 'True' | 'false' | 'False' ;
+
+Identifier : (Letter)(Letter|Digit|'_'|'-')* ;
+
+String : "'" (EscapeSequence | ~['])*? "'" ;
+
+Integer : (ZeroDigit | NonZeroDigit Digit*) ;
+
+Decimal : ( NonZeroDigit Digit* | ZeroDigit? ) '.' Digit+ ;
+
+\end{verbatim}
+\end{snippet}
+
+The parser rules of CssCoco are presented in the next snippet.
+
+\begin{snippet}
+\begin{verbatim}
+stylesheet : context* ;
+
+context : Identifier ignore_clause? '{' convention* '}' ;
+
+ignore_clause : 'ignore' (node_descriptor)+ (',' (node_descriptor)+)* ;
+
+convention : 'forbid' pattern 'message' String
+           | 'find' pattern ('where' logic_expr)? ('require'|'forbid') logic_expr 'message' String
+           ;
+
+pattern : node_declaration (('in'|'next-to') node_declaration)*
+        | fork ('in' node_declaration)*
+        ;
+
+fork : '(' node_declaration (',' node_declaration)+ ')' ;
+
+node_declaration : (Identifier '=')? semantic_node ;
+
+node_descriptor : 'unique'? node_type ('{' (logic_expr|repeater) '}')? ;
+
+repeater : Integer ',' Integer? | (',')? Integer ;
+
+logic_expr : '(' logic_expr ')'
+           | 'not' logic_expr
+           | logic_expr 'and' logic_expr
+           | logic_expr 'or' logic_expr
+           | type_expr
+           | arithmetic_expr
+           ;
+
+type_expr : arithmetic_expr operator='is' Identifier
+          | node_descriptor+ ('before' | 'after') type_operand
+          | node_descriptor+ 'between' type_operand 'and' type_operand
+          ;
+
+type_operand : Identifier | semantic_node ;
+
+arithmetic_expr : ('-'|'+') arithmetic_expr
+                | arithmetic_expr ('<'|'>'|'<='|'>='|'=='|'!=') arithmetic_expr
+                | arithmetic_expr ('in'|'not in'|'match'|'not match') arithmetic_expr
+                | call_expression
+                | element
+                ;
+element : Boolean | Decimal | Integer | String | list_ ;
+
+call_expression : call_expression '.' call_expression
+                | Identifier ('(' (element | semantic_node ) ')')? 
+                ;
+
+list_ : '[' list_element (',' list_element)* ']' ;
+
+list_element : Integer | Decimal | String | semantic_node ;
+
+node_type : '(' node_type ')'
+          | 'not' node_type
+          | node_type 'and' node_type
+          | node_type 'or' node_type
+          | Identifier
+          ;
+\end{verbatim}
+\end{snippet}
+
