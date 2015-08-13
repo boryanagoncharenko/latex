@@ -42,10 +42,10 @@ BigData\footnote{\url{https://bigquery.cloud.google.com/}} was used. As a result
 total of 2,331,864 public repositories were found. While the majority of these
 repositories were analyzed successfully, 15\% of the cases could not be
 processed. Specifically, 253,611 repositories have been made private since
-April and are no longer available for download. Additionally, 91,114
+April and are no longer available for download. Additionally, 123,822
 repositories were of extremely large size and could not be handled due to
-memory constraints. As a result, 85.2\% of the repositories were analyzed
-successfully, 10.9\% are no longer in the public space, and 3.9\% are
+memory constraints. As a result, 83.8\% of the repositories were analyzed
+successfully, 10.9\% are no longer in the public space, and 5.3\% are
 extremely large (\autoref{repositories}).
 
 \begin{figure}
@@ -54,15 +54,15 @@ extremely large (\autoref{repositories}).
     \label{repositories}
     Number of analyzed repositories}
   \begin{tikzpicture}
-    \pie[rotate=90, text=legend]{3.9/Unprocessed, 10.9/Gone Private    , 85.2/Processed}
+    \pie[rotate=90, text=legend]{5.3/Unprocessed, 10.9/Gone Private, 83.8/Processed}
   \end{tikzpicture}  
 \end{figure}
 
 
-In the period from January to April 2015, a total of 2,261,941 commits that maintain
+In the period from January to April 2015, a total of 2,282,788 commits that maintain
 any form of CSS were made to the successfully analyzed repositories. The
 number includes commits that contain both preprocessors and plain CSS. More
-than half of them, specifically 1,328,163 of these commits maintain plain CSS,
+than half of them, specifically 1,340,217 of these commits maintain plain CSS,
 while the rest of the commits contain at least one preprocessor file. As a
 result, 58.7\% of all CSS related commits are still maintenance of plain CSS
 (\autoref{commits}).

@@ -13,9 +13,14 @@ Description (Convention) & Description (Convention) \\ \hline
 Context & Pattern Descriptor \\ \hline
 Ignored Constructs (Context) &  Context \\ \hline
 
-Constraint & Comparison, Is, In, Match, Node Query, Not, And, Or Expressions \\ \hline
-Subject (Constraint) & Operand of Expression \\ \hline
-Requirement (Constraint) & Subclasses of Expression \\ \hline
+Constraint Combinator & Not, Or, And Expression \\ \hline
+Number of Subjects (Constraint Combinator) & Operand of Combinator Expressions \\ \hline
+Negation Constraint Combinator & Not Expression \\ \hline
+Disjunction Constraint Combinator & Or Expression \\ \hline
+Conjunction Constraint Combinator & And Expression \\ \hline
+
+Constraint & Comparison, Is, In, Match, Node Query Expressions \\ \hline
+Subject (Constraint) & Operand of Constraint Expressions \\ \hline
 Value (Constraint Subclasses) & Second Operand of Binary Expression \\ \hline
 Existence Constraint & Node Descriptor, Node Relation, Node Query Expression \\ \hline
 Comparison Constraint & Comparison Expression \\ \hline
@@ -36,7 +41,7 @@ Checked (Stylesheet) & - \\ \hline
 Construct & Variable Expression \\ \hline
 Property (Construct) & Call Expression \\ \hline
 Pattern & Css Pattern \\ \hline
-Constructs (Pattern) & Nodes (Css Pattern) \\ \hline
+Number of Constructs (Pattern) & Nodes (Css Pattern) \\ \hline
 \end{longtable}
 \end{center}
 \caption{
