@@ -32,15 +32,18 @@ preference of a particular programming style. Often, code conventions are
 expressed in natural language and it is a responsibility of the developers to
 read, understand and apply them. Typically, developers need to ensure that
 their code complies to a given style guide manually. There are a number of
-tools that can automatically detect violations of conventions, however,
-current solutions remain rigid, laborious or with limited scope.
+tools that can automatically detect violations of conventions. However,
+current solutions remain rigid, laborious or with limited scope. The solution
+presented in this thesis solves this problem. It consists of a domain--specific 
+language that expresses existing CSS conventions and its interpreter
+that finds violations automatically.
 
-This thesis contains answers of three research questions. First, the need for
-CSS conventions is evaluated based on whether CSS is still handcrafted.
-Second, existing CSS code conventions are discovered and analyzed. Third, a
-domain-specific language capable of expressing existing CSS code conventions
-is designed. The thesis contains a specification of the designed domain--specific language and an implementation of its interpreter that detects
-violations automatically.
+First, the need for CSS conventions is evaluated based on whether CSS is still
+handcrafted. Second, existing CSS code conventions are discovered and
+analyzed. Third, a domain-specific language capable of expressing existing CSS
+code conventions is designed. The thesis contains a specification of the
+designed domain--specific language and an implementation of its interpreter
+that detects violations automatically.
 
 }
 
@@ -48,23 +51,20 @@ violations automatically.
 \begin{document}
 \maketitle
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \input{ch-intro}
 \input{ch-back}
 \input{ch-eval}
 \input{ch-discover}
 \input{ch-express}
 \input{ch-conclusion}
-\begin{appendices}
-% \chapter{CssCoco Concrete Syntax}
-\input{ch-appendix}
 
-\end{appendices}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-{%\tiny
+{
 \bibliographystyle{ieeetr}
 \bibliography{thesis}
 }
+
+\begin{appendices}
+\input{ch-appendix}
+\end{appendices}
 
 \end{document}

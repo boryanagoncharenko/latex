@@ -2,6 +2,8 @@
 \chapter{Expressing CSS Code Conventions}
 \label{sec:expressing}
 
+This chapter introduces CssCoco -- a domain--specific language capable of expressing CSS conventions. First, the convention corpus is analyzed and the meaning of conventions is made explicit. Second, the abstract and concrete syntax of CssCoco are defined. Third, an implementation of the language interpreter is presented. Finally, the solution is validated using ontological analysis.
+
 \section{Analysis of conventions corpus}
 
 Code conventions is an umbrella term that comprises rules for whitespacing, comments, indentation,
@@ -53,15 +55,19 @@ concepts and actions used to find violations. To illustrate the process, the ana
 \item\textbf{Convention:} Disallow empty rules.
 \item\textbf{Author:} \href{https://github.com/CSSLint/csslint/wiki/Disallow-empty-rules}{CSS lint}
 \item\textbf{Violations:} Presence of rulesets that do not contain declarations. In case at least one declaration is present, the ruleset does not violate the convention. Examples include:
-% \begin{sourcecode}
+
 \begin{lstlisting}[style=mono,language=Java]
 .myclass { }                 /* violation */
 .myclass { /* Comment */ }   /* violation */
 .myclass { color: green; }   /* not violation */
 \end{lstlisting}
-% \end{sourcecode}
+
 \item\textbf{Actions:} Recognize rulesets and declarations. Determine whether a ruleset does not contain any declarations.
-\item\textbf{Analysis:} The convention aims at getting rid of one type of refactoring leftovers ---
+\end{description}
+\end{boxedminipage}
+\bigskip
+
+The convention aims at getting rid of one type of refactoring leftovers ---
 rulesets without declarations. Removing empty rulesets reduces the total size of CSS that
 needs to be processed by the browser. One possible approach for discovering violations of the
 convention at hand is to search the stylesheet for rulesets and then check whether each ruleset
@@ -69,9 +75,6 @@ contains a declaration. To perform this search successfully, developers need to 
 concept of a ruleset and a declaration, i.e. they need to be able to recognize these two CSS
 structures. Further, developers need to determine relations between structures, particularly,
 whether a ruleset contains a declaration.
-\end{description}
-\end{boxedminipage}
-\bigskip
 
 After all conventions were analyzed, the specific actions and concepts were
 used to extract requirements and draw conclusions about the needed
@@ -87,8 +90,8 @@ is not met, a violation is discovered. For example, the convention
 checking whether they are lowercase.
 
 As the three categories of conventions imply, conventions can reference nodes
-from the abstract syntax tree, concrete syntax tree and parse tree of
-CSS~\cite{zaytsev2014parsing}. For example, the convention \textit{A rule must
+from the abstract syntax tree, concrete syntax tree and parse tree~\cite{zaytsev2014parsing} of
+CSS. For example, the convention \textit{A rule must
 not contain width and padding declarations} accesses concepts that are present
 in the abstract syntax tree. Similarly, the rule \textit{Put a semicolon at
 the end of the last declaration} refers to nodes that are omitted by the
@@ -602,7 +605,7 @@ interpreter. The implementation is done in Python and currently contains 13
 \footnote{\url{https://github.com/boryanagoncharenko/CssCoco}}. The solution was also
 added to the Python Package Index (Pypi) repository
 \footnote{\url{https://pypi.python.org/pypi?:action=display&name=csscoco}}
-and for less than month it has accumulated over 3000 downloads. Once
+and for less than month it has accumulated over 4500 downloads. Once
 installed, the package offers a \texttt{csscoco} command that takes as
 parameters a css and a coco file and returns a list of the discovered
 violations.
@@ -928,7 +931,7 @@ Stylesheet, Violation, Violation Log and Style Guide.
 \subsection{Ontological analysis}
 
 The ontological analysis is a bidirectional mapping between the designed domain-specific ontology and the
-domain-specific language. It consists of two mappings: representation and interpretation. The former
+domain-specific language. It consists of two mappings: representation and interpretation~\cite{moody2009physics}. The former
 mapping matches the ontology to the language and the latter --- the language to the ontology.
 Typically, ontological analysis is used to compare the abstract syntax of the language constructs to
 the concepts of an ontology. However, the designed ontology contains concepts that fall outside the
