@@ -40,12 +40,12 @@ To find repositories that contain a commit in the time internal January--April
 2015, GitHub's public dataset available on Google
 BigData\footnote{\url{https://bigquery.cloud.google.com/}} was used. As a result, a
 total of 2,331,864 public repositories were found. While the majority of these
-repositories were analyzed successfully, 16\% of the cases could not be
+repositories were analyzed successfully, 13\% of the cases could not be
 processed. Specifically, 253,611 repositories have been made private since
-April and are no longer available for download. Additionally, 123,822
+April and are no longer available for download. Additionally, 41,274
 repositories were of extremely large size and could not be handled due to
-memory constraints. As a result, 83.8\% of the repositories were analyzed
-successfully, 10.9\% are no longer in the public space, and 5.3\% are
+memory constraints. As a result, 87.4\% of the repositories were analyzed
+successfully, 10.9\% are no longer in the public space, and 1.8\% are
 extremely large (\autoref{repositories}).
 
 \begin{figure}
@@ -54,7 +54,7 @@ extremely large (\autoref{repositories}).
     \label{repositories}
     Number of analyzed repositories}
   \begin{tikzpicture}
-    \pie[rotate=90, text=legend]{5.3/Unprocessed, 10.9/Gone Private, 83.8/Processed}
+    \pie[rotate=90, text=legend]{1.8/Unprocessed, 10.9/Gone Private, 87.4/Processed}
   \end{tikzpicture}  
 \end{figure}
 

@@ -143,7 +143,7 @@ be enforced on the code and contexts describe the CSS nodes that need to be
 ignored while searching for violations.
 
 The language constructs that define conventions try to resemble the way
-conventions are expressed in natural text. There is a construct that describes
+conventions are expressed in natural language. There is a construct that describes
 directly what is disallowed. For example, the convention \textit{Do not use
 import statements} is expressed in the following way:
 
@@ -180,7 +180,7 @@ above example).
 
 Conventions can put more constraints on a node description in the pattern. For example, the
 convention \textit{Use a leading zero for decimal values} requires finding all nodes of type number
-that have a numeric value in the interval [-1, 1]. Such constraints are expressed as curly brackets
+that have a numeric value in the interval [-1, 1]. Such constraints are put in curly brackets
 immediately after the type of the node.
 
 \begin{sourcecode}
@@ -251,7 +251,10 @@ of the subclasses.
 
 \item\textbf{Convention} represents a rule that enforces specific constraints. Attribute \texttt{pattern} is the pattern that the convention targets. Attribute \texttt{description} is the description of the convention in natural text. This description is displayed to the user when a violation of the convention is discovered.
 
-\item\textbf{PatternDescriptor} represents a description of a node or a combination of related nodes that given convention constraints. Attribute \texttt{root} is the top node described in the pattern. Attribute \texttt{nodes} is a collection of all nodes described by the pattern. Attribute \texttt{relations} is a collection of relationships between the nodes used in the pattern.
+\item\textbf{PatternDescriptor} represents a description of a node or a combination of related nodes that a given convention constraints. Attribute \texttt{root} is the top node described in the pattern. Attribute \texttt{nodes} is a collection of all nodes described by the pattern. Attribute \texttt{relations} is a collection of relationships between the nodes used in the pattern.
+
+\item\textbf{NodeRelation} represents a relation between two Nodes. Attribute \texttt{target\_node}
+designates a description of the Node targeted by the relation.
 
 \item\textbf{NodeDescriptor} is an abstract class that contains a description of a Css Node. Attribute
 \texttt{constraint} is an expression that designates the constraints applied to the node.
@@ -268,8 +271,6 @@ conventions that do not specify exact quantities of whitespace symbols. For exam
 ``put at least one blank line between rules'' sets a lower limit of the number of blank lines, but
 not an upper limit.
 
-\item\textbf{NodeRelation} represents a relation between two Nodes. Attribute \texttt{target\_node}
-designates a description of the Node targeted by the relation.
 
 \end{description}
 
@@ -336,9 +337,9 @@ A detailed view of the expressions in the abstract syntax of CssCoco is presente
 
 \item\textbf{BooleanExpr} represents expression containing a boolean value.
 
-\item\textbf{ListExpr} represents expression containing a list value. The elements of the list are of type LiteralExpr.
-
 \item\textbf{NodeTypeExpr} represents expression containing a string value that describes a node type.
+
+\item\textbf{ListExpr} represents expression containing a list value. The elements of the list are of type LiteralExpr.
 
 \end{description}
 
@@ -418,13 +419,13 @@ ignore_clause : 'ignore' (node_descriptor)+ (',' (node_descriptor)+)* ;
 \end{verbatim}
 \end{snippet}
 
-\item\textbf{convention} represents a single rule in the style guide. Conventions are typically expressed by directly stating what is disallowed or describing a condition that if met, requires additional constraints. The former way of expressing conventions is represented by the \texttt{forbid} conventions. The latter approach uses the structure \texttt{find ... require ...}. To break down complex disallowing conventions, the structure \texttt{find ... forbid ...} has been introduced. This aims at improving readability of conventions. Additionally, the find conventions have a where clause which applies constraints for matching nodes. It is used to expression matching constraints that span over multiple nodes and therefore cannot be present in the node descriptors.
+\item\textbf{convention} represents a single rule in the style guide. Conventions are typically expressed by directly stating what is disallowed or describing a condition that if met, requires additional constraints. The former way of expressing conventions is represented by the \texttt{forbid} conventions. The latter approach uses the structure \texttt{find ... require ...}. To break down complex disallowing conventions, the structure \texttt{find ... forbid ...} has been introduced. This aims at improving readability of conventions. Additionally, conventions have a where clause which applies constraints for matching nodes. It is used to expression matching constraints that span over multiple nodes and therefore cannot be present in the node descriptors.
 
 Abstract Syntax Mapping: ast.Convention.
 
 \begin{snippet}
 \begin{verbatim}
-convention : 'forbid' pattern 'message' String
+convention : 'forbid' pattern ('where' logic_expr)? 'message' String
            | 'find' pattern ('where' logic_expr)? ('require'|'forbid') logic_expr 'message' String
            ;
 \end{verbatim}
@@ -444,7 +445,7 @@ node_declaration : (Identifier '=')? semantic_node ;
 \end{verbatim}
 \end{snippet}
 
-\item\textbf{node\_descriptor} represents a description of a node. It describes the type of the node and its additional constraints. 
+\item\textbf{node\_descriptor} represents a description of a node. It specifies the type of the node and its additional constraints. 
 
 Abstract Syntax Mapping: ast.NodeDescriptor.
 
@@ -603,7 +604,7 @@ interpreter. The implementation is done in Python and currently contains 13
 \footnote{\url{https://github.com/boryanagoncharenko/CssCoco}}. The solution was also
 added to the Python Package Index (Pypi) repository
 \footnote{\url{https://pypi.python.org/pypi?:action=display&name=csscoco}}
-and for less than month it has accumulated over 5000 downloads. The package offers a \texttt{csscoco} command that takes as
+and for less than a month it has accumulated over 5000 downloads. The package offers a \texttt{csscoco} command that takes as
 arguments a .css and a .coco files and returns a list of the discovered violations.
 
 The current implementation of the CssCoco interpreter is available only for
@@ -707,7 +708,7 @@ together to form a coherent set of guidelines.
 \textit{Hereditary Property} \textbf{Ignored Constructs} denotes the description of constructs that should be ignored while searching for the Convention's Context. It is inherited by the Context thing that builds a Convention.
 
 
-\item\textit{Class} \textbf{Context} is a description of a \textbf{Pattern} that the Convention forbids. An individual Context is a \textit{composite thing} that comprises a Constraint or a \textbf{Constraint Combinator}. A violation is discovered when a Pattern in the current stylesheet fulfills all constraints specified by the Constraint or the Constraint Combinator.
+\item\textit{Class} \textbf{Context} is a description of a \textbf{Pattern} that the Convention forbids. An individual Context is a \textit{composite thing} that comprises a \textbf{Constraint} or a \textbf{Constraint Combinator}. A violation is discovered when a Pattern in the current stylesheet fulfills all constraints specified by the Constraint or the Constraint Combinator.
 
 \textit{Property} \textbf{Ignored Constructs} are descriptions of Patterns that need to be disregarded while searching for the current Context. In fact, the property denotes a collection of Contexts.
 
@@ -748,10 +749,10 @@ together to form a coherent set of guidelines.
 
 
 
-\item\textit{Class} \textbf{Constraint} is a specific restriction that needs to be fulfilled. They
-are used in a \textbf{Context} to build a description of a \textbf{Pattern}. Constraints are
+\item\textit{Class} \textbf{Constraint} is a specific restriction that needs to be fulfilled. Constraints
+are used in a Context to build a description of a Pattern. Constraints are
 individual requirements that are imposed on Subjects. Based on the value of the requirement, there
-are different types of Constraints represented below as \textit{subclasses}.
+are different types of Constraints represented below as subclasses.
 
 \textit{Property} \textbf{Subject} indicates the thing that is being constrained.
 
@@ -941,10 +942,7 @@ recursive construct that can comprise Constraints or other Combinators. Differen
 Combinator have different constraints on the number of subjects they combine. In general, they
 require at least one subject. A Violation Log could exist without any Violations in the
 cases when a Stylesheet is checked for conformance to a Style Guide and no violations are
-discovered. Both Stylesheet and Pattern are defined through 1 or more Constructs. Note that the
-concept of Stylesheet does not map to a CSS file, but to the whole CSS code that needs to be
-processed. This is why a Stylesheet requires at least one Construct in
-order to exist.
+discovered. Both Stylesheet and Pattern are defined through 1 or more Constructs.
 
 While the above grammar presents the composition of things, it does not illustrate how things
 interact with each other. To provide a better understanding of the dynamics between things defined
@@ -1017,8 +1015,8 @@ the Pattern Descriptor class.
 
 The ontological concept of Constraint Combinator appears in the modeling grammar as a union of
 expressions: Not Expression, And Expression and Or Expression. The subclasses of Constraint
-Combinators have refined and more specific mappings. For example, the Negation Constraint Combinator
-correspond to the Not Expression and the Conjunction and Disjunction Constraint Combinators map to
+Combinator have refined and more specific mappings. For example, the Negation Constraint Combinator
+corresponds to the Not Expression and the Conjunction and Disjunction Constraint Combinators map to
 And and Or Expressions, respectively.
 
 The ontological concept of Constraint appears in the modeling grammar as a number of Expressions.
@@ -1108,7 +1106,7 @@ all mappings of its subclasses. Thus, the expressions are not considered redunda
 
 Similarly, the Constraint Combinator is mapped to the Not, And and Or Expressions. Again, the
 mapping is a combination of the individual mappings of the Constraint Combinator subclasses. In
-this sense, the Expressions are not considered redundant.
+this sense, the expressions are not considered redundant.
 
 Third, the Existence Constraint is mapped to the Node Descriptor, Node
 Relation and Node Query Expressions. Existence Constraint is a type of
